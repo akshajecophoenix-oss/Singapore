@@ -1,0 +1,13 @@
+{
+  "name": "tca-cloudflare",
+  "version": "1.0.0",
+  "description": "The Climate Architects — Cloudflare Pages + Functions",
+  "scripts": {
+    "dev": "wrangler pages dev public --compatibility-date=2024-01-01",
+    "deploy": "wrangler pages deploy public"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
