@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU Dashboard | The Climate Architects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --db-bg:           #F7F6F3;
+            --db-surface:      #FFFFFF;
+            --db-border:       #E8E5DF;
+            --db-border-mid:   #D5D1C9;
+            --db-ink:          #1A1A1A;
+            --db-ink-mid:      #5C5C5C;
+            --db-ink-muted:    #909090;
+            --db-accent:       #7A9B76;
+            --db-accent-hover: #698A65;
+            --db-accent-tint:  rgba(122,155,118,0.08);
+            --db-accent-border:rgba(122,155,118,0.20);
+            --db-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --db-r:    10px;
+            --db-r-lg: 14px;
+            --db-shadow-xs: 0 1px 3px rgba(0,0,0,0.05);
+            --db-shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+
+            /* Legacy mapping for backend compatibility */
+            --teal: var(--db-accent);
+            --teal-light: var(--db-accent-hover);
+            --teal-dark: var(--db-accent-hover);
+            --teal-glow: var(--db-accent-tint);
+            --teal-10: var(--db-accent-tint);
+            --forest: var(--db-ink);
+            --bg: var(--db-bg);
+            --panel: var(--db-surface);
+            --radius: var(--db-r-lg);
+            --shadow: var(--db-shadow-xs);
+            --text: var(--db-ink);
+            --text-mid: var(--db-ink-mid);
+            --text-soft: var(--db-ink-muted);
+            --danger: #ef4444;
+            --warn: #f59e0b;
+            --success: #10b981;
+            --charcoal: var(--db-surface);
+            --font: var(--db-font);
+            --serif: var(--db-font);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body, p, span, div, button, input, select, label, td, th, li, a {
+            font-family: var(--db-font);
+        }
+
+        body {
+            background: var(--db-bg);
+            color: var(--db-ink);
+            font-family: var(--db-font);
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--db-font);
+            font-weight: 600;
+            color: var(--db-ink);
+            letter-spacing: -0.018em;
+        }
+
+        /* ── SIDEBAR ───────────────────────────────── */
+        .sidebar {
+            width: 256px;
+            background: var(--db-surface);
+            border-right: 1px solid var(--db-border);
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 100;
+            overflow: hidden;
+        }
+        .sidebar-logo {
+            padding: 18px 20px 16px;
+            border-bottom: 1px solid var(--db-border);
+        }
+        .sidebar-logo img {
+            background: transparent !important;
+            mix-blend-mode: multiply !important;
+            height: 52px;
+            width: auto;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .logo-text { display: none; }
+        .logo-sub {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--db-ink-muted);
+            margin-top: 3px;
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow-y: auto;
+        }
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: var(--db-ink-muted);
+            padding: 18px 20px 6px;
+        }
+        .nav-item {
+            padding: 8px 20px;
+            font-size: 13.5px;
+            font-weight: 400;
+            color: var(--db-ink-mid);
+            background: transparent;
+            border-left: 2px solid transparent;
+            display: block;
+            width: 100%;
+            text-align: left;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border-radius: 0;
+            border-top: none;
+            border-right: none;
+            border-bottom: none;
+            text-decoration: none;
+        }
+        .nav-item:hover {
+            background: var(--db-bg);
+            color: var(--db-ink);
+        }
+        .nav-item.active {
+            background: var(--db-accent-tint) !important;
+            color: var(--db-accent) !important;
+            font-weight: 500 !important;
+            border-left-color: var(--db-accent) !important;
+        }
+        .nav-item .icon { display: none; }
+        .nav-badge {
+            margin-left: auto;
+            font-size: 10px;
+            font-weight: 600;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            color: var(--db-ink-muted);
+            padding: 2px 7px;
+            border-radius: 4px;
+            display: inline-block;
+            float: right;
+        }
+        .nav-badge.green {
+            background: var(--db-accent-tint);
+            border-color: var(--db-accent-border);
+            color: var(--db-accent);
+        }
+        .sidebar-footer {
+            padding: 12px 0;
+            border-top: 1px solid var(--db-border);
+            background: var(--db-surface);
+        }
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            font-size: 12.5px;
+            color: var(--db-ink-mid);
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--db-ink-mid);
+            flex-shrink: 0;
+        }
+        .user-info { flex: 1; overflow: hidden; }
+        .user-name { font-weight: 600; color: var(--db-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-role { font-size: 11px; color: var(--db-ink-muted); }
+        .back-btn {
+            font-size: 13px;
+            color: var(--db-ink-muted);
+            padding: 8px 20px;
+            display: block;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: color 0.15s ease;
+            text-align: left;
+            width: 100%;
+            text-decoration: none;
+        }
+        .back-btn:hover { color: var(--db-ink); }
+
+        /* ── MAIN CONTENT ───────────────────────────── */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--db-bg);
+        }
+        .topbar {
+            background: var(--db-surface);
+            border-bottom: 1px solid var(--db-border);
+            height: 52px;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+        .topbar-left img { display: none !important; }
+        .topbar-left h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--db-ink);
+        }
+        .topbar-left p { display: none; }
+        .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+        .pill-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            background: var(--db-accent-tint);
+            color: var(--db-accent);
+            border: 1px solid var(--db-accent-border);
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* ── SCROLL AREA ────────────────────────────── */
+        .page-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+        }
+
+        /* ── VIEWS ──────────────────────────────────── */
+        .view { display: none; animation: fadeUp 0.3s ease both; }
+        .view.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── WELCOME / HERO CARD ─────────────────────── */
+        .overview-hero {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            box-shadow: var(--db-shadow-xs);
+            position: relative;
+            overflow: hidden;
+            color: var(--db-ink);
+        }
+        .overview-hero img { display: none !important; }
+        .hero-eyebrow { display: none; }
+        .hero-title {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--db-ink);
+            margin-bottom: 8px;
+        }
+        .hero-desc {
+            font-size: 13.5px;
+            color: var(--db-ink-mid);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        /* ── BUTTONS ────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--db-font);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-teal,
+        .btn-solid {
+            background: var(--db-accent);
+            color: #fff;
+            border: 1px solid var(--db-accent);
+            border-radius: var(--db-r);
+            padding: 9px 18px;
+            font-size: 13.5px;
+            font-weight: 500;
+            box-shadow: none;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .btn-teal:hover,
+        .btn-solid:hover {
+            background: var(--db-accent-hover);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+        .btn-outline,
+        .btn-ghost {
+            background: var(--db-surface);
+            color: var(--db-ink);
+            border: 1px solid var(--db-border-mid);
+            border-radius: var(--db-r);
+            padding: 9px 18px;
+            font-size: 13.5px;
+            font-weight: 500;
+            box-shadow: none;
+            transition: all 0.15s ease;
+        }
+        .btn-outline:hover,
+        .btn-ghost:hover {
+            background: var(--db-bg);
+            border-color: var(--db-ink-muted);
+            color: var(--db-ink);
+        }
+
+        /* ── STAT CARDS ─────────────────────────────── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 22px 24px;
+            box-shadow: var(--db-shadow-xs);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.15s ease;
+        }
+        .stat-card:hover { box-shadow: var(--db-shadow-sm); }
+        .stat-card .accent-line { display: none !important; }
+
+        .stat-label {
+            font-size: 10.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: var(--db-ink-muted);
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--db-ink);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-value.warn,
+        .stat-value.danger,
+        .stat-value.success { color: var(--db-ink); }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--db-ink-muted);
+            margin-top: 0;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        /* ── SECTION PANEL ──────────────────────────── */
+        .panel {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            box-shadow: var(--db-shadow-xs);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .panel-head {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--db-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .panel-head h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--db-ink);
+        }
+        .panel-body { padding: 16px 20px; }
+
+        /* ── ASSESSMENT ─────────────────────────────── */
+        .assess-header { margin-bottom: 24px; }
+        .assess-header h1 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: var(--db-ink); }
+        .assess-header p { font-size: 13.5px; color: var(--db-ink-mid); }
+
+        .policy-card {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--db-shadow-xs);
+        }
+        .pc-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .pc-num {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--db-ink-muted);
+            margin-right: 8px;
+        }
+        .pc-title { font-size: 14px; font-weight: 600; color: var(--db-ink); }
+        .pc-tag {
+            font-size: 10px;
+            font-weight: 500;
+            padding: 2px 6px;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            color: var(--db-ink-muted);
+            border-radius: 4px;
+        }
+        .pc-criteria {
+            font-size: 13px;
+            color: var(--db-ink-mid);
+            margin-bottom: 14px;
+            padding-left: 0;
+            border-left: none;
+            background: transparent;
+        }
+        .pc-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .ctrl-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--db-ink-muted);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .form-select {
+            width: 100%;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border-mid);
+            border-radius: var(--db-r);
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--db-ink);
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .form-select:focus {
+            border-color: var(--db-accent);
+        }
+        .form-select:disabled { opacity: 0.5; }
+
+        /* ── ROADMAP ────────────────────────────────── */
+        .roadmap-list { list-style: none; padding: 0; }
+        .roadmap-item {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 18px 22px;
+            margin-bottom: 10px;
+            box-shadow: var(--db-shadow-xs);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .road-step {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: var(--db-accent-tint);
+            border: 1px solid var(--db-accent-border);
+            color: var(--db-accent);
+            font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .road-content h4 { font-size: 14px; font-weight: 600; color: var(--db-ink); margin-bottom: 3px; }
+        .road-content p { font-size: 13px; color: var(--db-ink-mid); line-height: 1.55; }
+        .road-tag {
+            font-size: 11px; font-weight: 500;
+            padding: 2px 8px;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            border-radius: 4px;
+            color: var(--db-ink-muted);
+            margin-left: auto;
+            flex-shrink: 0;
+            text-transform: none;
+        }
+
+        /* ── RESOURCES ──────────────────────────────── */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .resource-card {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 16px 20px;
+            margin-bottom: 8px;
+            display: flex; gap: 14px; align-items: flex-start;
+            text-decoration: none; color: inherit;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .resource-card:hover { border-color: var(--db-accent-border); box-shadow: var(--db-shadow-sm); }
+        .res-icon {
+            width: 30px; height: 30px;
+            border-radius: 6px;
+            background: var(--db-accent-tint);
+            border: 1px solid var(--db-accent-border);
+            color: var(--db-accent);
+            font-size: 12px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .res-title { font-size: 13.5px; font-weight: 600; color: var(--db-ink); }
+        .res-desc { font-size: 12.5px; color: var(--db-ink-mid); line-height: 1.45; }
+        .res-type { display: none; }
+
+        /* ── DEADLINES LIST ─────────────────────────── */
+        .deadline-list {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 6px 0;
+            box-shadow: var(--db-shadow-xs);
+            list-style: none;
+        }
+        .deadline-item {
+            padding: 13px 22px;
+            border-bottom: 1px solid var(--db-border);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .deadline-item:last-child { border-bottom: none; }
+        .dl-date {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--db-ink-muted);
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            border-radius: 4px;
+            padding: 2px 8px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+        .dl-date.urgent {
+            color: #ef4444;
+            background: rgba(239,68,68,0.05);
+            border-color: rgba(239,68,68,0.15);
+        }
+        .dl-text { font-size: 13.5px; color: var(--db-ink-mid); line-height: 1.5; }
+        .dl-text strong { color: var(--db-ink); font-weight: 500; }
+
+        /* ── QUICK ACTIONS ──────────────────────────── */
+        .quick-grid .panel:last-child .panel-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .quick-grid .panel:last-child .btn,
+        .quick-grid .panel:last-child a.btn {
+            background: var(--db-surface) !important;
+            border: 1px solid var(--db-border) !important;
+            border-radius: var(--db-r) !important;
+            padding: 12px 16px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: var(--db-ink) !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            text-decoration: none !important;
+            width: 100% !important;
+            box-shadow: none !important;
+            justify-content: flex-start !important;
+        }
+        .quick-grid .panel:last-child .btn:hover,
+        .quick-grid .panel:last-child a.btn:hover {
+            border-color: var(--db-accent-border) !important;
+            background: var(--db-accent-tint) !important;
+            color: var(--db-accent) !important;
+            transform: none !important;
+        }
+        .quick-grid .panel:last-child .btn svg {
+            margin-right: 0 !important;
+            flex-shrink: 0;
+        }
+
+        /* ── TABLES ─────────────────────────────────── */
+        .gap-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--db-surface);
+        }
+        .gap-table th {
+            background: var(--db-bg);
+            padding: 10px 16px;
+            font-size: 10.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--db-ink-muted);
+            border-bottom: 1px solid var(--db-border);
+            text-align: left;
+        }
+        .gap-table td {
+            padding: 12px 16px;
+            font-size: 13.5px;
+            color: var(--db-ink-mid);
+            border-bottom: 1px solid var(--db-border);
+            text-align: left;
+        }
+        .gap-table tr:last-child td { border-bottom: none; }
+        .gap-table tbody tr:hover td { background: var(--db-bg); }
+        .gap-table td:first-child { font-weight: 500; color: var(--db-ink); }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: none;
+            display: inline-block;
+        }
+        .badge-high { background: rgba(239,68,68,0.05); color: #ef4444; border: 1px solid rgba(239,68,68,0.15); }
+        .badge-med  { background: rgba(245,158,11,0.05); color: #f59e0b; border: 1px solid rgba(245,158,11,0.15); }
+        .badge-low  { background: rgba(59,130,246,0.05); color: #3b82f6; border: 1px solid rgba(59,130,246,0.15); }
+
+        .status-red   { color: #ef4444; font-weight: 500; }
+        .status-amber { color: #f59e0b; font-weight: 500; }
+        .status-green { color: #10b981; font-weight: 500; }
+
+        /* ── ARIA CHAT WIDGET ───────────────────────── */
+        .chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+        .fab-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--db-ink);
+            border: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease;
+        }
+        .fab-btn:hover { transform: scale(1.04); }
+        .fab-btn img {
+            filter: brightness(0) invert(1) !important;
+            width: 24px; height: 24px;
+        }
+        .fab-pulse { display: none; }
+
+        .chat-window {
+            position: absolute;
+            bottom: 64px;
+            right: 0;
+            width: 340px;
+            height: 460px;
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            transform: scale(0.9) translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .chat-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        .chat-head {
+            background: var(--db-ink);
+            color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .chat-avatar { display: none; }
+        .chat-head-info { flex: 1; }
+        .chat-head-name { font-size: 13px; font-weight: 500; color: #fff; }
+        .chat-head-status { display: none; }
+        .chat-close-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .chat-close-btn:hover { color: #fff; }
+
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            background: var(--db-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .msg { max-width: 85%; font-size: 13px; line-height: 1.5; }
+        .msg-bot {
+            background: var(--db-surface);
+            color: var(--db-ink);
+            align-self: flex-start;
+            border-radius: 6px;
+            padding: 8px 12px;
+            border: 1px solid var(--db-border);
+            box-shadow: var(--db-shadow-xs);
+        }
+        .msg-user {
+            background: var(--db-accent);
+            color: #fff;
+            align-self: flex-end;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 12px;
+            background: var(--db-surface);
+            border-top: 1px solid var(--db-border);
+        }
+        .suggestion-chip {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: 5px;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: var(--db-ink-mid);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            outline: none;
+        }
+        .suggestion-chip:hover {
+            border-color: var(--db-accent-border);
+            color: var(--db-accent);
+            background: var(--db-accent-tint);
+        }
+        .chat-footer {
+            padding: 10px 12px;
+            background: var(--db-surface);
+            border-top: 1px solid var(--db-border);
+            display: flex;
+            gap: 8px;
+        }
+        .chat-input {
+            flex: 1;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border-mid);
+            border-radius: 6px;
+            padding: 8px 11px;
+            font-size: 13px;
+            font-family: var(--db-font);
+            color: var(--db-ink);
+            outline: none;
+        }
+        .chat-input:focus { border-color: var(--db-accent); }
+        .chat-send {
+            background: var(--db-accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.15s ease;
+        }
+        .chat-send:hover { background: var(--db-accent-hover); }
+
+        /* ── LOGIN + REGISTER FORMS ─────────────────── */
+        #auth-modal {
+            position: fixed; inset: 0;
+            background: rgba(26,26,26,0.3);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #auth-modal > div {
+            background: var(--db-surface) !important;
+            border: 1px solid var(--db-border) !important;
+            border-radius: var(--db-r-lg) !important;
+            padding: 32px 28px !important;
+            max-width: 380px !important;
+            width: 100% !important;
+            box-shadow: var(--db-shadow-sm) !important;
+            position: relative;
+        }
+        #auth-modal img {
+            background: transparent !important;
+            mix-blend-mode: multiply !important;
+        }
+        #auth-modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: var(--db-ink); }
+
+        #auth-modal .chat-input {
+            background: var(--db-bg) !important;
+            border: 1px solid var(--db-border-mid) !important;
+            border-radius: var(--db-r) !important;
+            padding: 9px 13px !important;
+            font-size: 13.5px !important;
+            font-family: var(--db-font) !important;
+            color: var(--db-ink) !important;
+            width: 100% !important;
+            outline: none !important;
+            transition: border-color 0.15s ease;
+        }
+        #auth-modal .chat-input:focus {
+            border-color: var(--db-accent) !important;
+            box-shadow: 0 0 0 3px rgba(122,155,118,0.14) !important;
+        }
+
+        #auth-market-form button {
+            background: var(--db-surface) !important;
+            border: 1px solid var(--db-border) !important;
+            border-radius: var(--db-r-lg) !important;
+            padding: 22px 24px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            width: 100% !important;
+            box-shadow: none !important;
+            margin-bottom: 12px;
+        }
+        #auth-market-form button:hover {
+            border-color: var(--db-accent-border) !important;
+            box-shadow: var(--db-shadow-sm) !important;
+            transform: translateY(-2px) !important;
+            background: var(--db-surface) !important;
+        }
+        #auth-market-form button span { font-size: 24px !important; }
+        #auth-market-form button div div:first-child { font-size: 14px !important; color: var(--db-ink) !important; font-weight: 600 !important; }
+        #auth-market-form button div div:last-child { font-size: 11.5px !important; color: var(--db-ink-muted) !important; }
+
+        /* ── RESPONSIVE ─────────────────────────────── */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .quick-grid { grid-template-columns: 1fr; }
+            .pc-controls { grid-template-columns: 1fr; }
+            .chat-window { width: 320px; }
+        }
+
+        /* ── TOAST ──────────────────────────────────── */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--db-ink);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 6px;
+            z-index: 99999;
+            box-shadow: var(--db-shadow-sm);
+            animation: slideInToast 0.2s ease, fadeOutToast 0.2s 2.8s ease forwards;
+        }
+        @keyframes slideInToast {
+            from { transform: translateY(8px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeOutToast {
+            to { opacity: 0; transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <img src="logo.png?v=4.2" alt="The Climate Architects" style="background: transparent; mix-blend-mode: multiply; height:52px;width:auto;margin-bottom:6px;display:block;">
+        <div class="logo-sub">EU Compliance Platform</div>
+    </div>
+    <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <button class="nav-item active" onclick="showView('overview')">
+            <span class="icon"></span> Overview
+        </button>
+        <button class="nav-item" onclick="showView('assessment')">
+            <span class="icon"></span> ESG Gap Analysis
+        </button>
+        <button class="nav-item" onclick="showView('roadmap')">
+            <span class="icon"></span> Action Roadmap
+        </button>
+        <button class="nav-item" onclick="showView('resources')">
+            <span class="icon"></span> Resource Hub
+        </button>
+        <div class="nav-label" style="margin-top:8px;">Tools</div>
+        <button class="nav-item" onclick="showView('reports')">
+            <span class="icon"></span> My Reports
+            <span class="nav-badge green" id="reports-badge">0</span>
+        </button>
+        <button class="nav-item" id="admin-nav-item" style="display:none;" onclick="showView('admin')">
+            <span class="icon"></span> Admin Panel
+        </button>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-chip" id="user-chip">
+            <div class="user-avatar" id="sidebar-avatar">?</div>
+            <div class="user-info">
+                <div class="user-name" id="sidebar-name">Loading…</div>
+                <div class="user-role" id="sidebar-plan">Free Plan</div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">Back to Website</a>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+    <header class="topbar">
+        <div class="topbar-left" style="display:flex;align-items:center;gap:14px;">
+            <img src="logo.png?v=4.2" alt="The Climate Architects" style="background: transparent; mix-blend-mode: multiply; height:38px;width:auto;object-fit:contain;display:block;">
+            <div>
+                <h2 id="topbar-title">Dashboard Overview</h2>
+                <p id="topbar-sub">European Union — CSRD · CBAM · CSDDD · ESPR · Pay Transparency</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <span class="pill-tag" style="background:rgba(109,40,217,0.12);color:#6d28d9;border-color:#ddd6fe;">EU Market</span>
+            <a href="dashboard-sg.html" class="pill-tag" style="background:rgba(3,105,161,0.1);color:#0369a1;border-color:#bae6fd;text-decoration:none;">Switch to SG →</a>
+            <span class="pill-tag" id="date-tag">—</span>
+        </div>
+    </header>
+
+    <div class="page-body">
+
+        <!-- ══ OVERVIEW VIEW ══ -->
+        <div class="view active" id="view-overview">
+            <div class="overview-hero">
+                <h1 class="hero-title">Your Sustainability Command Centre</h1>
+                <p class="hero-desc">Stay on top of European Union's evolving ESG regulations. Run your compliance audit, build your action plan, and ask our AI advisor anything.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-teal" onclick="showView('assessment')">Run ESG Audit</button>
+                    <button class="btn btn-outline" onclick="openChat()">Ask AI Advisor</button>
+                </div>
+            </div>
+
+            <div class="stats-row" id="overview-stats">
+                <div class="stat-card">
+                    <div class="accent-line"></div>
+                    <div class="stat-label">Compliance Score</div>
+                    <div class="stat-value" id="ov-score">—</div>
+                    <div class="stat-sub">Run audit to calculate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="accent-line danger"></div>
+                    <div class="stat-label">High-Risk Gaps</div>
+                    <div class="stat-value danger" id="ov-high">—</div>
+                    <div class="stat-sub">Immediate action needed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="accent-line warn"></div>
+                    <div class="stat-label">Frameworks Applied</div>
+                    <div class="stat-value warn" id="ov-frameworks">9</div>
+                    <div class="stat-sub">EU directives &amp; regulations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="accent-line success"></div>
+                    <div class="stat-label">Next Deadline</div>
+                    <div class="stat-value success" style="font-size:22px;">31 Mar 26</div>
+                    <div class="stat-sub">CBAM — ACD application deadline</div>
+                </div>
+            </div>
+
+            <div class="quick-grid">
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3>Upcoming Regulatory Deadlines</h3>
+                    </div>
+                    <div class="panel-body" style="padding: 8px 20px;">
+                        <ul class="deadline-list">
+                            <li class="deadline-item"><span class="dl-date urgent">Apr 1, 2026</span><span class="dl-text"><strong>Beverage Container Return Scheme</strong> begins — register producers & retailers.</span></li>
+                            <li class="deadline-item"><span class="dl-date urgent">FY2026-27</span><span class="dl-text"><strong>Carbon Tax</strong> rises to $45/tonne for industrial emitters ≥25,000 tCO2e/yr.</span></li>
+                            <li class="deadline-item"><span class="dl-date">FY2027</span><span class="dl-text"><strong>Mandatory Climate Reporting</strong> for large non-listed firms (Rev ≥S$1B).</span></li>
+                            <li class="deadline-item"><span class="dl-date">Ongoing</span><span class="dl-text"><strong>Mandatory Packaging Reports</strong> — annual submission to NEA required.</span></li>
+                            <li class="deadline-item"><span class="dl-date">Ongoing</span><span class="dl-text"><strong>Energy Manager Appointment</strong> required for companies consuming ≥54 TJ/yr.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="panel-body" style="display:flex;flex-direction:column;gap:10px;">
+                        <button class="btn btn-solid" style="width:100%;justify-content:center;" onclick="showView('assessment')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> Start ESG Audit</button>
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="openChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 2v4M8 5h8M4 11v-2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2M9 16h.01M15 16h.01"/></svg> Ask AI Advisor</button>
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="showView('roadmap')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><polygon points="3 6 3 20 9 16 15 20 21 16 21 2 15 6 9 2 3 6"/><line x1="9" y1="2" x2="9" y2="16"/><line x1="15" y1="6" x2="15" y2="20"/></svg> View Action Roadmap</button>
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="showView('resources')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Browse Resources</button>
+                        <a href="index.html#bookCallModal" class="btn btn-ghost" style="width:100%;justify-content:center;text-align:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Book Expert Call</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ ASSESSMENT VIEW ══ -->
+        <div class="view" id="view-assessment">
+            <div class="assess-header">
+                <h1>EU ESG Compliance Audit</h1>
+                <p>Self-assess against the EU's 9 key regulatory frameworks — CSRD, CBAM, CSDDD, ESPR, PPWR, DIWASS, Pay Transparency, Gender Balance, and VSME. Takes under 5 minutes.</p>
+            </div>
+            <div id="questions-container"></div>
+            <div style="text-align:center; margin-top:36px; padding-bottom:40px;">
+                <button class="btn btn-solid" style="padding:14px 36px;font-size:15px;" onclick="generateReport()">Run AI Gap Analysis</button>
+            </div>
+        </div>
+
+        <!-- ══ RESULTS VIEW ══ -->
+        <div class="view" id="view-results">
+            <div class="result-header">
+                <h1>Your ESG Diagnostic Results</h1>
+                <p>Based on the EU's 2026 regulatory landscape and your inputs — here is your compliance standing across key directives and regulations.</p>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card" id="res-score-card">
+                    <div class="accent-line" id="res-score-accent"></div>
+                    <div class="stat-label">Compliance Score</div>
+                    <div class="stat-value" id="res-score">0%</div>
+                    <div class="stat-sub" id="res-score-text">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="accent-line danger"></div>
+                    <div class="stat-label">High Priority Gaps</div>
+                    <div class="stat-value danger" id="res-high">0</div>
+                    <div class="stat-sub">Items needing immediate action</div>
+                </div>
+                <div class="stat-card">
+                    <div class="accent-line warn"></div>
+                    <div class="stat-label">Applicable Frameworks</div>
+                    <div class="stat-value warn" id="res-applicable">0</div>
+                    <div class="stat-sub">Regulations touching your business</div>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-bottom:28px;">
+                <div class="panel-head">
+                    <h3>Action Plan & Identified Gaps</h3>
+                    <a href="index.html#bookCallModal" class="btn btn-solid" style="padding:8px 16px;font-size:12px;">Get Expert Help →</a>
+                </div>
+                <table class="gap-table">
+                    <thead>
+                        <tr>
+                            <th>Regulation</th>
+                            <th>Current Status</th>
+                            <th>Priority</th>
+                            <th>Required Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gap-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="panel" style="margin-bottom:28px;" id="ai-insight-panel">
+                <div class="panel-head">
+                    <h3>AI Insight Summary</h3>
+                    <span class="pill-tag">Powered by Claude</span>
+                </div>
+                <div class="panel-body" id="ai-insight-body" style="font-size:14px;line-height:1.7;color:var(--text-mid);">
+                    <em style="color:var(--text-soft);">Generating personalised analysis…</em>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:12px;justify-content:center;padding-bottom:40px;">
+                <button class="btn btn-ghost" onclick="showView('assessment')">Retake Assessment</button>
+                <button class="btn btn-ghost" onclick="window.print()">Print Report</button>
+                <button class="btn btn-solid" onclick="showView('roadmap')">View Action Roadmap</button>
+            </div>
+        </div>
+
+        <!-- ══ ROADMAP VIEW ══ -->
+        <div class="view" id="view-roadmap">
+            <div class="assess-header">
+                <h1>EU 90-Day Compliance Roadmap</h1>
+                <p>A structured plan built around the EU's 2026 regulatory deadlines — CBAM registration, PPWR packaging, ESPR unsold goods, Pay Transparency HR audits, and CSRD data collection.</p>
+            </div>
+
+            <div class="quick-grid">
+                <div class="panel">
+                    <div class="panel-head"><h3>Phase-by-Phase Plan</h3></div>
+                    <div class="panel-body" style="padding:8px 24px;">
+                        <ul class="roadmap-list">
+                            <li class="roadmap-item">
+                                <div class="road-step">1</div>
+                                <div class="road-content">
+                                    <h4>Baseline Operational Audit</h4>
+                                    <p>Map your energy, water, waste and emission data against applicable thresholds. Identify which frameworks legally apply to your business.</p>
+                                    <span class="road-tag q1">Week 1–2</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">2</div>
+                                <div class="road-content">
+                                    <h4>Appoint Compliance Officers</h4>
+                                    <p>Register a certified Energy Manager (NEA) and Water Efficiency Manager if applicable. Set up internal reporting cadences.</p>
+                                    <span class="road-tag q1">Week 2–4</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">3</div>
+                                <div class="road-content">
+                                    <h4>Data Collection & Systems</h4>
+                                    <p>Install submetering where required. Begin collecting Scope 1 & 2 emission data. Set up packaging tonnage tracking systems.</p>
+                                    <span class="road-tag q2">Week 4–8</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">4</div>
+                                <div class="road-content">
+                                    <h4>Submit Mandatory Reports</h4>
+                                    <p>File annual energy & water reports to NEA. Submit packaging 3R plans. Register for Carbon Tax if applicable.</p>
+                                    <span class="road-tag q2">Week 8–10</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">5</div>
+                                <div class="road-content">
+                                    <h4>Build Your ESG Strategy</h4>
+                                    <p>Move from compliance to competitive advantage. Set reduction targets, engage stakeholders, and prepare for ISSB climate disclosures.</p>
+                                    <span class="road-tag q3">Week 10–12+</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head"><h3>Key Milestones</h3></div>
+                    <div class="panel-body" style="font-size:13px;color:var(--text-mid);line-height:1.8;display:flex;flex-direction:column;gap:14px;">
+                        <div style="padding:14px;background:var(--bg);border-radius:10px;border-left:3px solid var(--danger);">
+                            <strong style="color:var(--text);display:block;margin-bottom:4px;">Immediate (0–30 days)</strong>
+                            Register with NEA, identify applicable thresholds, appoint compliance leads.
+                        </div>
+                        <div style="padding:14px;background:var(--bg);border-radius:10px;border-left:3px solid var(--warn);">
+                            <strong style="color:var(--text);display:block;margin-bottom:4px;">Short-term (30–60 days)</strong>
+                            Deploy metering infrastructure, start data collection, submit first reports.
+                        </div>
+                        <div style="padding:14px;background:var(--bg);border-radius:10px;border-left:3px solid var(--success);">
+                            <strong style="color:var(--text);display:block;margin-bottom:4px;">Strategic (60–90 days)</strong>
+                            Set reduction targets, prepare ISSB climate disclosures, build investor narrative.
+                        </div>
+                        <a href="index.html#bookCallModal" class="btn btn-solid" style="width:100%;justify-content:center;margin-top:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Get Expert Guidance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ RESOURCES VIEW ══ -->
+        <div class="view" id="view-resources">
+            <div class="assess-header">
+                <h1>EU Resource Hub</h1>
+                <p>Official EU regulatory sources, ESRS templates, CBAM guidance, and EmpCo compliance tools — all sourced from primary EU institutions.</p>
+            </div>
+            <div class="resource-grid">
+                <a href="https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en" target="_blank" class="resource-card">
+                    <div class="res-icon">B</div>
+                    <div class="res-title">EC: CBAM Official Guidance</div>
+                    <div class="res-desc">European Commission official guidance on CBAM — ACD registration, embedded carbon reporting, certificate pricing and surrender mechanism for 2026.</div>
+                    <span class="res-type">Official Guide</span>
+                </a>
+                <a href="https://finance.ec.europa.eu/capital-markets-union-and-financial-markets/company-reporting-and-auditing/company-reporting/corporate-sustainability-reporting_en" target="_blank" class="resource-card">
+                    <div class="res-icon">C</div>
+                    <div class="res-title">EC: CSRD Official Page</div>
+                    <div class="res-desc">Corporate Sustainability Reporting Directive — thresholds (>1,000 employees + >€450M turnover), ESRS standards, waves timeline, and Omnibus I amendments.</div>
+                    <span class="res-type">Official Directive</span>
+                </a>
+                <a href="https://www.efrag.org/en/vsme-digital-template-and-xbrl-taxonomy" target="_blank" class="resource-card">
+                    <div class="res-icon">V</div>
+                    <div class="res-title">EFRAG: VSME Digital Template v1.2</div>
+                    <div class="res-desc">Updated Feb 2026 — Excel-based VSME reporting template and XBRL taxonomy. Essential for SMEs responding to supply chain ESG data requests.</div>
+                    <span class="res-type">Template / Tool</span>
+                </a>
+                <a href="https://commission.europa.eu/business-economy-euro/doing-business-eu/sustainability-due-diligence-responsible-business/corporate-sustainability-due-diligence_en" target="_blank" class="resource-card">
+                    <div class="res-icon">D</div>
+                    <div class="res-title">EC: CSDDD Due Diligence Guide</div>
+                    <div class="res-desc">Corporate Sustainability Due Diligence Directive — applies to >5,000 employees and >€1.5B turnover. Transposition by July 2027; full application July 2028.</div>
+                    <span class="res-type">Official Directive</span>
+                </a>
+                <a href="https://www.gleisslutz.com/en/know-how/new-eu-packaging-regulation-key-requirements-august-2026" target="_blank" class="resource-card">
+                    <div class="res-icon">P</div>
+                    <div class="res-title">PPWR: Packaging Compliance Guide</div>
+                    <div class="res-desc">Key requirements effective August 12, 2026 — 100% recyclable packaging, PFAS ban in food-contact packaging, and digital marking (QR codes/pictograms).</div>
+                    <span class="res-type">Compliance Guide</span>
+                </a>
+                <a href="https://psqr.eu/publications-resources/regulatory-compliance-2026/" target="_blank" class="resource-card">
+                    <div class="res-icon">E</div>
+                    <div class="res-title">ESPR: Ecodesign 2026 Guide</div>
+                    <div class="res-desc">ESPR unsold goods destruction ban (July 19, 2026), Digital Product Passport rollout timeline, and sector-specific ecodesign requirements for textiles and electronics.</div>
+                    <span class="res-type">Compliance Guide</span>
+                </a>
+                <a href="https://mirro.io/blog/eu-pay-transparency/timeline-checklist/" target="_blank" class="resource-card">
+                    <div class="res-icon">T</div>
+                    <div class="res-title">Pay Transparency: HR Checklist</div>
+                    <div class="res-desc">Full compliance checklist for the EU Pay Transparency Directive — salary disclosure in job ads, salary history ban, employee information rights. Deadline: June 7, 2026.</div>
+                    <span class="res-type">HR Checklist</span>
+                </a>
+                <a href="https://era.org.mt/announcements/new-eu-waste-shipment-regulation-and-digital-waste-shipment-system-diwass/" target="_blank" class="resource-card">
+                    <div class="res-icon">W</div>
+                    <div class="res-title">DIWASS: Digital Waste Shipments</div>
+                    <div class="res-desc">From May 21, 2026 all intra-EU transboundary waste shipments must be managed electronically via DIWASS portal. Requires EORI number and EU Login account.</div>
+                    <span class="res-type">Regulatory</span>
+                </a>
+                <div class="resource-card" style="cursor:default;" onclick="openChat()">
+                    <div class="res-icon">AI</div>
+                    <div class="res-title">Ask Aria — EU Advisor</div>
+                    <div class="res-desc">Instant answers on CBAM thresholds, CSRD applicability, CSDDD value chain caps, ESPR deadlines, and all EU 2026 compliance questions.</div>
+                    <span class="res-type" style="cursor:pointer;background:var(--teal);color:#fff;" onclick="openChat()">Open Chat →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ REPORTS VIEW ══ -->
+        <div class="view" id="view-reports">
+            <div class="assess-header">
+                <h1>My Reports</h1>
+                <p>Your saved ESG audit history and compliance progress over time.</p>
+            </div>
+            <div id="reports-loading" style="text-align:center;padding:60px;color:var(--text-soft);">Loading your reports…</div>
+            <div id="reports-empty" style="display:none;" class="panel" style="text-align:center;padding:60px 40px;">
+                
+                <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">No Saved Reports Yet</h3>
+                <p style="font-size:14px;color:var(--text-soft);max-width:360px;margin:0 auto 24px;">Complete an ESG audit and your results will be saved here automatically.</p>
+                <button class="btn btn-solid" onclick="showView('assessment')">Run Your First Audit</button>
+            </div>
+            <div id="reports-list" style="display:none;"></div>
+        </div>
+
+        <!-- ══ ADMIN VIEW ══ -->
+        <div class="view" id="view-admin">
+            <div class="assess-header">
+                <h1>Admin Panel</h1>
+                <p>Platform overview and user management.</p>
+            </div>
+            <div class="stats-row" id="admin-stats-row">
+                <div class="stat-card"><div class="accent-line"></div><div class="stat-label">Total Users</div><div class="stat-value" id="adm-users">—</div></div>
+                <div class="stat-card"><div class="accent-line success"></div><div class="stat-label">New This Week</div><div class="stat-value success" id="adm-new">—</div></div>
+                <div class="stat-card"><div class="accent-line warn"></div><div class="stat-label">Total Audits</div><div class="stat-value warn" id="adm-audits">—</div></div>
+                <div class="stat-card"><div class="accent-line"></div><div class="stat-label">Avg Score</div><div class="stat-value" id="adm-avg">—</div></div>
+            </div>
+            <div class="panel" style="margin-bottom:24px;">
+                <div class="panel-head">
+                    <h3>All Users</h3>
+                    <input id="admin-search" type="text" class="chat-input" style="width:240px;border-radius:8px;" placeholder="Search name / email…" oninput="adminSearch(this.value)">
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="gap-table" id="admin-users-table">
+                        <thead><tr>
+                            <th>Name</th><th>Email</th><th>Company</th><th>Plan</th><th>Audits</th><th>Joined</th><th>Actions</th>
+                        </tr></thead>
+                        <tbody id="admin-users-body"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-soft);">Loading…</td></tr></tbody>
+                    </table>
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;padding:16px 20px;border-top:1px solid var(--border);" id="admin-pagination"></div>
+            </div>
+        </div>
+
+    </div><!-- end .page-body -->
+
+<!-- ══ AUTH MODAL ══ -->
+<div id="auth-modal" style="
+    position:fixed;inset:0;background:rgba(6,30,25,0.7);backdrop-filter:blur(8px);
+    z-index:99999;display:flex;align-items:center;justify-content:center;">
+    <div style="
+        background:var(--panel);border-radius:20px;padding:40px;width:100%;max-width:420px;
+        box-shadow:0 24px 64px rgba(6,78,59,0.25);border:1px solid var(--border-mid);
+        animation:fadeUp 0.4s ease both;position:relative;">
+
+        <div style="text-align:center;margin-bottom:28px;">
+            <img src="logo.png?v=4.2" alt="The Climate Architects" style="background: transparent; mix-blend-mode: multiply; height:48px;margin-bottom:12px;">
+            <h2 style="font-family:var(--serif);font-size:24px;" id="auth-modal-title">European Union · Compliance</h2>
+            <p style="font-size:13px;color:var(--text-soft);margin-top:4px;" id="auth-modal-sub">Sign in to your ESG dashboard</p>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="auth-login-form">
+            <div style="margin-bottom:16px;">
+                <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-mid);display:block;margin-bottom:6px;">Email</label>
+                <input id="login-email" type="email" class="chat-input" style="width:100%;border-radius:10px;padding:12px 16px;font-size:14px;" placeholder="you@company.com">
+            </div>
+            <div style="margin-bottom:24px;">
+                <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-mid);display:block;margin-bottom:6px;">Password</label>
+                <input id="login-password" type="password" class="chat-input" style="width:100%;border-radius:10px;padding:12px 16px;font-size:14px;" placeholder="••••••••" onkeypress="if(event.key==='Enter')doLogin()">
+            </div>
+            <div id="auth-error" style="display:none;color:var(--danger);font-size:13px;margin-bottom:14px;background:#fee2e2;padding:10px 14px;border-radius:8px;"></div>
+            <button class="btn btn-solid" style="width:100%;justify-content:center;padding:14px;" onclick="doLogin()" id="login-btn">Sign In →</button>
+            <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-soft);">
+                No account? <button onclick="switchAuth('register')" style="background:none;border:none;color:var(--teal);font-weight:700;cursor:pointer;font-size:13px;">Create one free</button>
+            </p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="auth-register-form" style="display:none;"></div>
+    </div>
+</div>
+
+<!-- CHAT WIDGET -->
+<div class="chat-fab">
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-head">
+            <div class="chat-avatar" style="background:transparent;padding:4px;overflow:hidden;">
+                <img src="logo.png?v=4.2" alt="TCA" style="background: transparent; mix-blend-mode: multiply; width:30px;height:30px;object-fit:contain;">
+            </div>
+            <div class="chat-head-info">
+                <div class="chat-head-name">Aria — ESG Advisor</div>
+                <div class="chat-head-status"><span class="online-dot"></span> AI Analysis</div>
+            </div>
+            <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-suggestions" id="chatSuggestions">
+            <button class="suggestion-chip" onclick="askSuggestion('When is mandatory climate reporting required?')">Climate reporting?</button>
+            <button class="suggestion-chip" onclick="askSuggestion('What is the CBAM timeline?')">CBAM timeline?</button>
+            <button class="suggestion-chip" onclick="askSuggestion('What is the greenwashing ban?')">Greenwashing ban?</button>
+            <button class="suggestion-chip" onclick="askSuggestion('Key upcoming deadlines?')">Key deadlines?</button>
+        </div>
+        <div class="chat-footer">
+            <input class="chat-input" id="chatInput" type="text" placeholder="Ask about European Union ESG rules…" onkeypress="if(event.key==='Enter') sendMessage()">
+            <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    <button class="fab-btn" onclick="toggleChat()">
+        <img src="logo.png?v=4.2" alt="TCA" style="background: transparent; mix-blend-mode: screen; width:30px;height:30px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="fab-pulse"></span>
+    </button>
+</div>
+
+<script>
+const safeStorage = {
+    getItem: (key) => {
+        try { return window['localStorage'].getItem(key); } catch (e) { return null; }
+    },
+    setItem: (key, val) => {
+        try { window['localStorage'].setItem(key, val); } catch (e) {}
+    },
+    removeItem: (key) => {
+        try { window['localStorage'].removeItem(key); } catch (e) {}
+    }
+};
+
+/* ══════════════════════════════════════════════
+   CONFIG — Set your backend URL here
+══════════════════════════════════════════════ */
+const API_BASE = '/api'; // Cloudflare Pages Functions via /functions/api/
+
+/* ══════════════════════════════════════════════
+   AUTH STATE
+══════════════════════════════════════════════ */
+let currentUser = null;
+let authToken   = safeStorage.getItem('tca_token') || null;
+
+function apiHeaders() {
+    return { 'Content-Type': 'application/json', ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) };
+}
+
+
+/* ══════════════════════════════════════════════
+   CLIENT-SIDE OFFLINE MOCK API FETCH
+══════════════════════════════════════════════ */
+async function apiFetch(path, opts = {}) {
+    const url = new URL('http://localhost' + path);
+    const action = url.searchParams.get('action');
+    const id = url.searchParams.get('id');
+    const method = opts.method ? opts.method.toUpperCase() : 'GET';
+    const body = opts.body ? JSON.parse(opts.body) : null;
+
+    // Fast response delay
+    await new Promise(r => setTimeout(r, 200));
+
+    // Authentication endpoints
+    if (path.startsWith('/auth')) {
+        if (action === 'me') {
+            return {
+                token: authToken || 'mock_token',
+                user: {
+                    full_name: safeStorage.getItem('tca_user_name') || 'Demo User',
+                    email: safeStorage.getItem('tca_user_email') || 'demo@company.com',
+                    company: safeStorage.getItem('tca_user_company') || 'Demo Company Pte Ltd',
+                    industry: 'Technology',
+                    plan: 'pro',
+                    role: 'admin'
+                }
+            };
+        }
+        if (action === 'login') {
+            const email = body.email || 'demo@company.com';
+            const name = email.split('@')[0].toUpperCase();
+            safeStorage.setItem('tca_user_name', name);
+            safeStorage.setItem('tca_user_email', email);
+            safeStorage.setItem('tca_user_company', 'Demo Company');
+            return {
+                token: 'mock_token_123',
+                user: {
+                    full_name: name,
+                    email: email,
+                    company: 'Demo Company',
+                    industry: 'Technology',
+                    plan: 'pro',
+                    role: 'admin'
+                }
+            };
+        }
+        if (action === 'register') {
+            const { full_name, email, company } = body;
+            safeStorage.setItem('tca_user_name', full_name);
+            safeStorage.setItem('tca_user_email', email);
+            safeStorage.setItem('tca_user_company', company);
+            return {
+                token: 'mock_token_123',
+                user: {
+                    full_name,
+                    email,
+                    company,
+                    industry: body.industry || 'Technology',
+                    plan: 'pro',
+                    role: 'admin'
+                }
+            };
+        }
+    }
+
+    // ESG Audits storage (localStorage backed)
+    if (path.startsWith('/audits')) {
+        let audits = JSON.parse(safeStorage.getItem('tca_audits') || '[]');
+        if (method === 'GET') {
+            return audits;
+        }
+        if (method === 'POST') {
+            const newAudit = {
+                id: 'audit_' + Date.now(),
+                created_at: new Date().toISOString(),
+                ...body
+            };
+            audits.unshift(newAudit);
+            safeStorage.setItem('tca_audits', JSON.stringify(audits));
+            return newAudit;
+        }
+        if (method === 'DELETE') {
+            audits = audits.filter(a => a.id !== id);
+            safeStorage.setItem('tca_audits', JSON.stringify(audits));
+            return { success: true };
+        }
+    }
+
+    // AI Advisor Chats
+    if (path.startsWith('/chat')) {
+        if (action === 'insight') {
+            return {
+                insight: "Based on Singapore regulations, your facility shows gaps in Scope 1 emissions reporting. Recommendation: baseline electricity usage data and convert to tCO2e."
+            };
+        }
+        return {
+            reply: "I am the Climate Architects AI Advisor. I can help you with SGX, Carbon Tax, CSRD, and CBAM. Let me know what specific compliance issue you would like to tackle."
+        };
+    }
+
+    // Admin Dashboard stats & users
+    if (path.startsWith('/admin')) {
+        if (action === 'stats') {
+            return {
+                total_users: 154,
+                total_audits: 289,
+                active_plans: { pro: 87, free: 67 }
+            };
+        }
+        if (action === 'users') {
+            return {
+                users: [
+                    { id: '1', full_name: 'Jane Smith', email: 'jane@acme.com', company: 'Acme Pte Ltd', plan: 'pro', role: 'user', created_at: '2026-05-12T08:00:00Z' },
+                    { id: '2', full_name: 'John Doe', email: 'john@capital.com', company: 'Capital Group', plan: 'free', role: 'user', created_at: '2026-06-01T10:30:00Z' }
+                ],
+                total: 2,
+                pages: 1
+            };
+        }
+    }
+
+    return {};
+}
+
+
+// ── Boot: check token ─────────────────────────
+async function boot() {
+    // Client-side auto-authenticate bypass
+    authToken = safeStorage.getItem('tca_token') || 'mock_token';
+    currentUser = {
+        full_name: safeStorage.getItem('tca_user_name') || 'Demo User',
+        email: safeStorage.getItem('tca_user_email') || 'demo@company.com',
+        company: safeStorage.getItem('tca_user_company') || 'Demo Company Pte Ltd',
+        industry: 'Technology',
+        plan: 'pro',
+        role: 'admin'
+    };
+    onLoginSuccess();
+}
+
+function onLoginSuccess() {
+    document.getElementById('auth-modal').style.display = 'none';
+    // Update sidebar user chip
+    const initials = currentUser.full_name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('sidebar-avatar').textContent = initials;
+    document.getElementById('sidebar-name').textContent = currentUser.full_name;
+    document.getElementById('sidebar-plan').textContent = currentUser.plan.charAt(0).toUpperCase() + currentUser.plan.slice(1) + ' Plan';
+    // Show admin nav if admin
+    if (currentUser.role === 'admin') {
+        document.getElementById('admin-nav-item').style.display = 'flex';
+    }
+    // Load report count
+    loadReportsBadge();
+}
+
+function logout() {
+    authToken = null;
+    currentUser = null;
+    safeStorage.removeItem('tca_token');
+    showAuthModal();
+}
+
+/* ══════════════════════════════════════════════
+   AUTH MODAL
+══════════════════════════════════════════════ */
+function showAuthModal() {
+    document.getElementById('auth-modal').style.display = 'flex';
+    switchAuth('login');
+}
+
+function switchAuth(mode) {
+    const isLogin = mode === 'login';
+    document.getElementById('auth-login-form').style.display    = isLogin ? 'block' : 'none';
+    document.getElementById('auth-register-form').style.display = isLogin ? 'none'  : 'block';
+    document.getElementById('auth-modal-title').textContent     = isLogin ? 'European Union · Compliance' : 'Create Account';
+    document.getElementById('auth-modal-sub').textContent       = isLogin ? 'Sign in to your ESG dashboard' : 'Start your ESG compliance journey';
+    document.getElementById('auth-error').style.display = 'none';
+    document.getElementById('auth-error-reg').style.display = 'none';
+}
+
+async function doLogin() {
+    const email    = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl    = document.getElementById('auth-error');
+    const btn      = document.getElementById('login-btn');
+
+    errEl.style.display = 'none';
+    btn.textContent = 'Signing in…'; btn.disabled = true;
+
+    try {
+        const data = await apiFetch('/auth?action=login', { method: 'POST', body: JSON.stringify({ email, password }) });
+        authToken   = data.token;
+        currentUser = data.user;
+        safeStorage.setItem('tca_token', authToken);
+        onLoginSuccess();
+        showToast('Welcome back, ' + currentUser.full_name.split(' ')[0] + '!');
+    } catch (e) {
+        errEl.textContent = e.message;
+        errEl.style.display = 'block';
+    } finally {
+        btn.textContent = 'Sign In'; btn.disabled = false;
+    }
+}
+
+async function doRegister() {
+    const full_name = document.getElementById('reg-name').value.trim();
+    const company   = document.getElementById('reg-company').value.trim();
+    const email     = document.getElementById('reg-email').value.trim();
+    const industry  = document.getElementById('reg-industry').value;
+    const password  = document.getElementById('reg-password').value;
+    const errEl     = document.getElementById('auth-error-reg');
+    const btn       = document.getElementById('register-btn');
+
+    errEl.style.display = 'none';
+    if (!full_name || !email || !password) { errEl.textContent = 'Name, email and password are required.'; errEl.style.display = 'block'; return; }
+
+    btn.textContent = 'Creating account…'; btn.disabled = true;
+
+    try {
+        const data = await apiFetch('/auth?action=register', { method: 'POST', body: JSON.stringify({ full_name, email, company, industry, password }) });
+        authToken   = data.token;
+        currentUser = data.user;
+        safeStorage.setItem('tca_token', authToken);
+        onLoginSuccess();
+        showToast('Account created! Welcome, ' + currentUser.full_name.split(' ')[0] + '.');
+    } catch (e) {
+        errEl.textContent = e.message;
+        errEl.style.display = 'block';
+    } finally {
+        btn.textContent = 'Create Account'; btn.disabled = false;
+    }
+}
+
+/* ══════════════════════════════════════════════
+   NAV & ROUTING
+══════════════════════════════════════════════ */
+const navTitles = {
+    overview:   ['Dashboard Overview',   'Singapore Mandatory ESG Reporting Tool'],
+    assessment: ['ESG Gap Analysis',     'Self-assess against 7 key frameworks'],
+    results:    ['Your Audit Results',   'Compliance gaps and action items'],
+    roadmap:    ['Action Roadmap',       '90-day compliance plan'],
+    resources:  ['Resource Hub',         'Guides, templates & official references'],
+    reports:    ['My Reports',           'Saved audit history'],
+    admin:      ['Admin Panel',          'User management & platform stats'],
+};
+
+function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const el = document.getElementById('view-' + name);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => {
+        if (n.textContent.trim().toLowerCase().includes(
+            name === 'overview' ? 'overview' : name === 'assessment' ? 'esg' :
+            name === 'roadmap' ? 'roadmap' : name === 'resources' ? 'resource' :
+            name === 'reports' ? 'report' : name === 'admin' ? 'admin' : name)) {
+            n.classList.add('active');
+        }
+    });
+    const t = navTitles[name] || ['Dashboard', ''];
+    document.getElementById('topbar-title').textContent = t[0];
+    document.getElementById('topbar-sub').textContent = t[1];
+    document.querySelector('.page-body').scrollTop = 0;
+    if (name === 'reports') loadReports();
+    if (name === 'admin')   loadAdminStats();
+}
+
+document.getElementById('date-tag').textContent = new Date().toLocaleDateString('en-EU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+/* ══════════════════════════════════════════════
+   POLICY DATABASE
+══════════════════════════════════════════════ */
+const policies = [
+    { id: 'cbam',              category: 'Carbon & Trade',   title: 'CBAM — Carbon Border Adjustment Mechanism', priority: 'high', criteria: 'EU importers of iron/steel, cement, aluminium, fertilizers, electricity, or hydrogen with annual imports >50 tonnes.', action: 'Apply for Authorized CBAM Declarant (ACD) status by March 31, 2026. Establish Monitoring, Reporting & Verification (MRV) plan for embedded emissions. Get third-party verification. Purchase CBAM certificates from Feb 2027.' },
+    { id: 'csrd',              category: 'Corporate Reporting', title: 'CSRD — Corporate Sustainability Reporting', priority: 'high', criteria: 'EU companies with >1,000 employees AND >€450M net turnover. Wave 2 applies FY2027; non-EU parents with >€450M EU turnover by FY2028.', action: 'Conduct Double Materiality Assessment (Impact + Financial). Appoint ESRS reporting team. Collect FY2027 Scope 1 & 2 data. Engage external auditors for limited assurance. Use simplified ESRS from June 2026 (61% fewer data points).' },
+    { id: 'csddd',             category: 'Due Diligence',    title: 'CSDDD — Corporate Sustainability Due Diligence', priority: 'high', criteria: 'EU companies with >5,000 employees AND >€1.5B worldwide turnover. Non-EU companies with >€1.5B EU turnover. Phased application from July 2028.', action: 'Map value chain for human rights and environmental risks. Establish grievance mechanisms. Build due diligence management system. Note: Value-Chain Cap prevents requesting data beyond VSME scope from partners <1,000 employees.' },
+    { id: 'espr',              category: 'Circular Economy', title: 'ESPR — Ecodesign for Sustainable Products',   priority: 'high', criteria: 'Producers/importers of textiles, footwear, apparel, electronics, iron/steel, or batteries placed on EU market.', action: 'Stop destruction of unsold goods by July 19, 2026. Disclose quantity/weight of discarded unsold products annually. Prepare Digital Product Passports (DPP) for regulated sectors. Begin DPP rollout for iron/steel/batteries mid-2026.' },
+    { id: 'ppwr',              category: 'Packaging',        title: 'PPWR — Packaging & Packaging Waste Regulation', priority: 'high', criteria: 'All companies placing packaged products on the EU market. Non-EU sellers without EU presence must appoint an Authorized Representative.', action: 'Redesign all packaging to be recyclable by August 12, 2026. Remove PFAS from food-contact packaging. Implement QR codes/pictograms for material composition. Plan for empty space ratio limits (max 50%) by January 2030.' },
+    { id: 'pay_transparency',  category: 'Social / HR',      title: 'Pay Transparency Directive',                 priority: 'med',  criteria: 'All employers in EU Member States hiring or advertising roles. Gender pay gap reporting mandatory for firms >150 employees from June 2027.', action: 'Add salary ranges to all EU job advertisements before June 7, 2026. Remove salary history questions from recruitment process. Establish right-to-information for employees on pay by gender. Conduct pay equity audit — gaps >5% require joint assessment.' },
+    { id: 'gender_boards',     category: 'Governance',       title: 'Gender Balance on Corporate Boards',         priority: 'med',  criteria: 'Large listed companies in EU Member States (excluding SMEs). Targets: 40% non-executive directors or 33% total board seats for underrepresented sex.', action: 'Audit current board composition. Implement transparent, merit-based selection criteria. Achieve targets by June 30, 2026. Member States must enforce penalties for non-compliance.' },
+    { id: 'diwass',            category: 'Waste Management', title: 'DIWASS — Digital Waste Shipment System',     priority: 'med',  criteria: 'All businesses involved in transboundary waste shipments within the EU (notifiers, producers, carriers, treatment facilities).', action: 'Register in DIWASS portal using EU Login account and valid EORI number before May 21, 2026. Migrate all waste notification documents and consignment notes to digital format. Paper forms will no longer be valid.' },
+    { id: 'vsme',              category: 'Voluntary / SME',  title: 'VSME — Voluntary SME Sustainability Reporting', priority: 'low',  criteria: 'Non-listed SMEs with <250 employees. Voluntary but expected by banks, investors, and large corporate clients subject to CSDDD.', action: 'Download EFRAG VSME Digital Template v1.2.0 (released Feb 2026). Complete Basic Module (B1-B11) as minimum. Add Narrative-PAT module for financiers. Use Business Partner Module to satisfy large client ESG data requests — replaces bespoke questionnaires.' },
+];
+
+/* ══════════════════════════════════════════════
+   RENDER ASSESSMENT QUESTIONS
+══════════════════════════════════════════════ */
+function renderQuestions() {
+    const c = document.getElementById('questions-container');
+    c.innerHTML = policies.map((p, i) => `
+        <div class="policy-card">
+            <div class="pc-top">
+                <div style="display:flex;align-items:flex-start;gap:12px;flex:1;">
+                    <div class="pc-num">${i+1}</div>
+                    <div><div class="pc-title">${p.title}</div><span class="pc-tag">${p.category}</span></div>
+                </div>
+            </div>
+            <div class="pc-criteria"><strong>Applies if:</strong> ${p.criteria}</div>
+            <div class="pc-controls">
+                <div class="ctrl-group">
+                    <label>Does this apply to your business?</label>
+                    <select class="form-select apply-select" data-id="${p.id}" onchange="toggleStatus(this)">
+                        <option value="none">— Select —</option>
+                        <option value="yes">Yes, this applies</option>
+                        <option value="no">No, not applicable</option>
+                        <option value="unsure">Not Sure</option>
+                    </select>
+                </div>
+                <div class="ctrl-group">
+                    <label>Current Compliance Status</label>
+                    <select class="form-select status-select" data-id="${p.id}" disabled>
+                        <option value="none">— Select Status —</option>
+                        <option value="compliant">Fully Compliant</option>
+                        <option value="partial">Partial / In Progress</option>
+                        <option value="non_compliant">Non-Compliant</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleStatus(sel) {
+    const id = sel.getAttribute('data-id');
+    const ss = document.querySelector(`.status-select[data-id="${id}"]`);
+    if (sel.value === 'yes') ss.disabled = false;
+    else { ss.disabled = true; ss.value = 'none'; }
+}
+
+/* ══════════════════════════════════════════════
+   GENERATE REPORT + SAVE TO BACKEND
+══════════════════════════════════════════════ */
+let lastAuditData = null;
+
+async function generateReport() {
+    let applicable = 0, compliant = 0, highCount = 0;
+    const gaps = [], answers = {};
+
+    document.querySelectorAll('.apply-select').forEach(sel => {
+        const id = sel.getAttribute('data-id');
+        const applyVal = sel.value;
+        const statusVal = document.querySelector(`.status-select[data-id="${id}"]`).value;
+        const p = policies.find(x => x.id === id);
+        answers[id] = { apply: applyVal, status: statusVal };
+
+        if (applyVal === 'yes') {
+            applicable++;
+            if (statusVal === 'compliant') compliant++;
+            else {
+                if (p.priority === 'high') highCount++;
+                gaps.push({ title: p.title, status: statusVal === 'none' ? 'Status Unknown' : statusVal === 'partial' ? 'Partial' : 'Non-Compliant', action: p.action, priority: p.priority });
+            }
+        } else if (applyVal === 'unsure') {
+            applicable++; highCount++;
+            gaps.push({ title: p.title, status: 'Requires Investigation', action: 'Conduct baseline operational audit to determine if threshold criteria are met.', priority: 'high' });
+        }
+    });
+
+    if (applicable === 0) { showToast('Please select at least one applicable policy first.'); return; }
+
+    const score = Math.round((compliant / applicable) * 100);
+    lastAuditData = { score, applicable, high_gaps: highCount, gaps, answers };
+
+    // Update result cards
+    document.getElementById('res-score').textContent = score + '%';
+    
+    document.getElementById('res-high').textContent = highCount;
+    document.getElementById('res-applicable').textContent = applicable;
+    const scoreText = score >= 80 ? 'Strong compliance posture' : score >= 40 ? 'Moderate — action needed' : 'Critical gaps identified';
+    document.getElementById('res-score-text').textContent = scoreText;
+    const accent = document.getElementById('res-score-accent');
+    accent.className = 'accent-line ' + (score >= 80 ? 'success' : score >= 40 ? 'warn' : 'danger');
+
+    document.getElementById('ov-score').textContent = score + '%';
+    document.getElementById('ov-score').className = 'stat-value ' + (score >= 80 ? 'success' : score >= 40 ? 'warn' : 'danger');
+    document.getElementById('ov-high').textContent = highCount;
+
+    const tbody = document.getElementById('gap-table-body');
+    if (gaps.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--success);font-weight:700;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:8px;color:var(--success);"><polyline points="20 6 9 17 4 12"/></svg> No compliance gaps identified. Excellent work.</td></tr>`;
+    } else {
+        gaps.sort((a,b) => a.priority==='high'?-1:1);
+        tbody.innerHTML = gaps.map(g => {
+            const bc = g.priority==='high'?'badge-high':g.priority==='med'?'badge-med':'badge-low';
+            const pt = g.priority==='high'?'High Risk':g.priority==='med'?'Medium':'Low';
+            const sc = (g.status==='Non-Compliant'||g.status==='Requires Investigation')?'status-red':'status-amber';
+            return `<tr><td style="font-weight:600;">${g.title}</td><td class="${sc}">${g.status}</td><td><span class="badge ${bc}">${pt}</span></td><td style="color:var(--text-mid);line-height:1.5;">${g.action}</td></tr>`;
+        }).join('');
+    }
+
+    showView('results');
+    generateAIInsight(gaps, score, applicable);
+}
+
+/* ══════════════════════════════════════════════
+   AI INSIGHT — via secure backend
+══════════════════════════════════════════════ */
+async function generateAIInsight(gaps, score, applicable) {
+    const insightEl = document.getElementById('ai-insight-body');
+    insightEl.innerHTML = '<div class="msg-typing"><div class="dot-pulse"><span></span><span></span><span></span></div></div>';
+
+    try {
+        const data = await apiFetch('/chat?action=insight', {
+            method: 'POST',
+            body: JSON.stringify({ score, applicable, gaps })
+        });
+        const insight = data.insight || '';
+        insightEl.innerHTML = `<p>${insight}</p>`;
+
+        // Auto-save audit with insight
+        if (lastAuditData) {
+            const saved = await apiFetch('/audits', {
+                method: 'POST',
+                body: JSON.stringify({ ...lastAuditData, ai_insight: insight })
+            });
+            loadReportsBadge();
+            showToast('Audit saved to your reports.');
+        }
+    } catch (e) {
+        const fallback = `Based on your ${score}% score across ${applicable} applicable frameworks, ${gaps.length > 0 ? `you have ${gaps.length} compliance gap(s) to address` : 'you are in good standing'}. The Climate Architects team can help you build a concrete remediation plan.`;
+        insightEl.innerHTML = `<p>${fallback}</p>`;
+        // Try to save without insight
+        if (lastAuditData) {
+            try { await apiFetch('/audits', { method: 'POST', body: JSON.stringify({ ...lastAuditData, ai_insight: fallback }) }); loadReportsBadge(); } catch {}
+        }
+    }
+}
+
+/* ══════════════════════════════════════════════
+   MY REPORTS
+══════════════════════════════════════════════ */
+async function loadReportsBadge() {
+    try {
+        const audits = await apiFetch('/audits');
+        const badge = document.getElementById('reports-badge');
+        badge.textContent = audits.length;
+        badge.style.display = audits.length > 0 ? 'inline-flex' : 'none';
+    } catch {}
+}
+
+async function loadReports() {
+    document.getElementById('reports-loading').style.display = 'block';
+    document.getElementById('reports-empty').style.display = 'none';
+    document.getElementById('reports-list').style.display = 'none';
+
+    try {
+        const audits = await apiFetch('/audits');
+        document.getElementById('reports-loading').style.display = 'none';
+
+        if (audits.length === 0) {
+            document.getElementById('reports-empty').style.display = 'block';
+            return;
+        }
+
+        document.getElementById('reports-list').style.display = 'block';
+        document.getElementById('reports-list').innerHTML = audits.map(a => {
+            const scoreColor = a.score >= 80 ? 'success' : a.score >= 40 ? 'warn' : 'danger';
+            const date = new Date(a.created_at).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' });
+            return `
+            <div class="panel" style="margin-bottom:16px;">
+                <div class="panel-head">
+                    <h3>ESG Audit — ${date}</h3>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="badge badge-${a.high_gaps>0?'high':'low'}">${a.high_gaps} High Gaps</span>
+                        <button onclick="deleteAudit('${a.id}', this)" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;">Delete</button>
+                    </div>
+                </div>
+                <div class="panel-body" style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;">
+                    <div style="text-align:center;min-width:90px;">
+                        <div class="stat-value ${scoreColor}" style="font-size:42px;">${a.score}%</div>
+                        <div class="stat-sub">Compliance Score</div>
+                    </div>
+                    <div>
+                        <p style="font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:12px;">${a.ai_insight || 'No AI insight recorded.'}</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            ${a.gaps.slice(0,3).map(g => `<span class="badge badge-${g.priority==='high'?'high':g.priority==='med'?'med':'low'}">${g.title}</span>`).join('')}
+                            ${a.gaps.length > 3 ? `<span class="badge" style="background:var(--teal-10);color:var(--teal-dark);">+${a.gaps.length-3} more</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    } catch (e) {
+        document.getElementById('reports-loading').innerHTML = `<p style="color:var(--danger);">Could not load reports: ${e.message}</p>`;
+    }
+}
+
+async function deleteAudit(id, btn) {
+    if (!confirm('Delete this audit?')) return;
+    btn.textContent = '…'; btn.disabled = true;
+    try {
+        await apiFetch('/audits?id=' + id, { method: 'DELETE' });
+        loadReports(); loadReportsBadge();
+        showToast('Audit deleted.');
+    } catch (e) { showToast(e.message); btn.textContent = 'Delete'; btn.disabled = false; }
+}
+
+/* ══════════════════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════════════════ */
+let adminPage = 1;
+
+async function loadAdminStats() {
+    try {
+        const s = await apiFetch('/admin?action=stats');
+        document.getElementById('adm-users').textContent  = s.totalUsers;
+        document.getElementById('adm-new').textContent    = '+' + s.newThisWeek;
+        document.getElementById('adm-audits').textContent = s.totalAudits;
+        document.getElementById('adm-avg').textContent    = s.avgScore + '%';
+        loadAdminUsers(1);
+    } catch (e) { showToast('Admin load failed: ' + e.message); }
+}
+
+async function loadAdminUsers(page = 1, search = '') {
+    adminPage = page;
+    const tbody = document.getElementById('admin-users-body');
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-soft);">Loading…</td></tr>`;
+
+    try {
+        const data = await apiFetch(`/admin?action=users&page=${page}${search ? '&search='+encodeURIComponent(search) : ''}`);
+        if (data.users.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-soft);">No users found.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = data.users.map(u => `
+            <tr>
+                <td style="font-weight:600;">${u.full_name}</td>
+                <td style="color:var(--text-mid);">${u.email}</td>
+                <td style="color:var(--text-soft);">${u.company || '—'}</td>
+                <td><span class="badge ${u.plan==='pro'?'badge-med':u.plan==='enterprise'?'badge-high':'badge-low'}">${u.plan}</span></td>
+                <td style="color:var(--text-mid);">—</td>
+                <td style="color:var(--text-soft);font-size:12px;">${new Date(u.created_at).toLocaleDateString('en-SG')}</td>
+                <td>
+                    <select onchange="adminUpdatePlan('${u.id}', this.value)" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border);">
+                        <option ${u.plan==='free'?'selected':''} value="free">Free</option>
+                        <option ${u.plan==='pro'?'selected':''} value="pro">Pro</option>
+                        <option ${u.plan==='enterprise'?'selected':''} value="enterprise">Enterprise</option>
+                    </select>
+                    ${u.id !== currentUser?.id ? `<button onclick="adminDeleteUser('${u.id}', this)" style="margin-left:8px;background:none;border:none;cursor:pointer;color:var(--danger);font-size:13px;">Delete</button>` : ''}
+                </td>
+            </tr>
+        `).join('');
+
+        // Pagination
+        const pag = document.getElementById('admin-pagination');
+        pag.innerHTML = '';
+        for (let i = 1; i <= data.pages; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'btn ' + (i === page ? 'btn-solid' : 'btn-ghost');
+            btn.style.padding = '6px 14px'; btn.style.fontSize = '13px';
+            btn.textContent = i;
+            btn.onclick = () => loadAdminUsers(i, document.getElementById('admin-search').value);
+            pag.appendChild(btn);
+        }
+    } catch (e) { showToast(e.message); }
+}
+
+async function adminUpdatePlan(userId, plan) {
+    try {
+        await apiFetch('/admin?action=user&id=' + userId, { method: 'PATCH', body: JSON.stringify({ plan }) });
+        showToast('Plan updated to ' + plan);
+    } catch (e) { showToast(e.message); }
+}
+
+async function adminDeleteUser(userId, btn) {
+    if (!confirm('Permanently delete this user and all their data?')) return;
+    btn.textContent = '…'; btn.disabled = true;
+    try {
+        await apiFetch('/admin?action=user&id=' + userId, { method: 'DELETE' });
+        loadAdminUsers(adminPage); loadAdminStats();
+        showToast('User deleted.');
+    } catch (e) { showToast(e.message); btn.textContent = 'Delete'; btn.disabled = false; }
+}
+
+let adminSearchTimeout;
+function adminSearch(val) {
+    clearTimeout(adminSearchTimeout);
+    adminSearchTimeout = setTimeout(() => loadAdminUsers(1, val), 350);
+}
+
+/* ══════════════════════════════════════════════
+   CHAT — via secure backend proxy
+══════════════════════════════════════════════ */
+let chatOpen = false;
+let chatHistory = [];
+
+function toggleChat() {
+    chatOpen = !chatOpen;
+    const cw = document.getElementById('chatWindow');
+    if (chatOpen) {
+        cw.classList.add('open');
+        if (chatHistory.length === 0) {
+            const name = currentUser ? currentUser.full_name.split(' ')[0] : 'there';
+            appendBotMessage(`Hi ${name}! I'm Aria, your EU ESG compliance advisor. I can help you navigate the EU's 2026 regulatory landscape — CSRD reporting requirements, CBAM carbon tariffs, CSDDD due diligence, ESPR ecodesign, PPWR packaging rules, Pay Transparency, and more. What would you like to know?`);
+        }
+        setTimeout(() => document.getElementById('chatInput').focus(), 300);
+    } else {
+        cw.classList.remove('open');
+    }
+}
+
+function openChat() { if (!chatOpen) toggleChat(); }
+
+function appendBotMessage(text) {
+    const cb = document.getElementById('chatBody');
+    const d = document.createElement('div');
+    d.className = 'msg msg-bot'; d.innerHTML = text;
+    cb.appendChild(d); cb.scrollTop = cb.scrollHeight;
+    return d;
+}
+
+function appendUserMessage(text) {
+    const cb = document.getElementById('chatBody');
+    const d = document.createElement('div');
+    d.className = 'msg msg-user'; d.textContent = text;
+    cb.appendChild(d); cb.scrollTop = cb.scrollHeight;
+}
+
+function showTyping() {
+    const cb = document.getElementById('chatBody');
+    const d = document.createElement('div');
+    d.className = 'msg-typing'; d.id = 'typing-indicator';
+    d.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
+    cb.appendChild(d); cb.scrollTop = cb.scrollHeight;
+}
+
+function removeTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
+
+async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const btn   = document.getElementById('chatSendBtn');
+    const text  = input.value.trim();
+    if (!text) return;
+
+    document.getElementById('chatSuggestions').style.display = 'none';
+    appendUserMessage(text);
+    input.value = ''; btn.disabled = true;
+    chatHistory.push({ role: 'user', content: text });
+    showTyping();
+
+    try {
+        const data = await apiFetch('/chat', { method: 'POST', body: JSON.stringify({ messages: chatHistory }) });
+        removeTyping();
+        appendBotMessage(data.reply);
+        chatHistory.push({ role: 'assistant', content: data.reply });
+    } catch (e) {
+        removeTyping();
+        const fallback = getFallbackResponse(text.toLowerCase());
+        appendBotMessage(fallback);
+        chatHistory.push({ role: 'assistant', content: fallback });
+    }
+    btn.disabled = false; input.focus();
+}
+
+function askSuggestion(q) { document.getElementById('chatInput').value = q; sendMessage(); }
+
+function getFallbackResponse(q) {
+    if (q.includes('cbam')||q.includes('carbon border')||q.includes('acd')) return '<strong>CBAM (Carbon Border Adjustment Mechanism):</strong> Definitive phase started Jan 1, 2026. Importers of steel, cement, aluminium, fertilizers, electricity, and hydrogen must apply for <strong>Authorized CBAM Declarant (ACD)</strong> status by <strong>March 31, 2026</strong>. Financial penalties apply without ACD. First annual declaration due September 30, 2027.';
+    if (q.includes('csrd')||q.includes('reporting')||q.includes('esrs')) return '<strong>CSRD (Corporate Sustainability Reporting Directive):</strong> Post-Omnibus I thresholds — <strong>&gt;1,000 employees AND &gt;€450M turnover</strong>. Wave 2 companies collect FY2027 data and report in 2028 using simplified ESRS standards (61% fewer data points from June 2026). Double materiality assessment required.';
+    if (q.includes('csddd')||q.includes('due diligence')||q.includes('supply chain')) return '<strong>CSDDD (Corporate Sustainability Due Diligence Directive):</strong> Applies to companies with <strong>&gt;5,000 employees AND &gt;€1.5B turnover</strong> (post-Omnibus I). Requires risk-based human rights and environmental due diligence across value chain. National transposition July 2027; obligations from July 2028. Value-Chain Cap protects SMEs from excessive data requests.';
+    if (q.includes('espr')||q.includes('ecodesign')||q.includes('unsold')||q.includes('dpp')) return '<strong>ESPR (Ecodesign for Sustainable Products):</strong> <strong>July 19, 2026</strong> — ban on destruction of unsold textiles, footwear, clothing, and accessories. Companies must disclose quantities and weight of discarded unsold goods. Digital Product Passports (DPP) rolling out mid-2026 for iron/steel/batteries sectors.';
+    if (q.includes('ppwr')||q.includes('packaging')) return '<strong>PPWR (Packaging & Packaging Waste Regulation):</strong> Effective <strong>August 12, 2026</strong> — all EU packaging must be recyclable by design; PFAS ban in food-contact packaging; digital marking (QR codes or pictograms) for material composition required. Empty space ratio limits (max 50%) come into force January 2030.';
+    if (q.includes('pay transparency')||q.includes('salary')||q.includes('pay gap')) return '<strong>EU Pay Transparency Directive:</strong> National transposition by <strong>June 7, 2026</strong>. Employers must: (1) include salary ranges in all EU job ads, (2) ban salary history questions, (3) give employees right to request pay information by gender. Gender pay gap reporting mandatory for firms with &gt;150 employees from June 2027.';
+    if (q.includes('diwass')||q.includes('waste shipment')||q.includes('digital waste')) return '<strong>DIWASS (Digital Waste Shipment System):</strong> From <strong>May 21, 2026</strong>, all transboundary waste shipments within the EU must use digital notifications — paper forms no longer valid. Register in DIWASS portal using an EU Login account and valid EORI number.';
+    if (q.includes('vsme')||q.includes('sme')||q.includes('voluntary')) return '<strong>VSME (Voluntary Sustainability Reporting Standard for SMEs):</strong> Designed for non-listed SMEs with &lt;250 employees. EFRAG released VSME Digital Template v1.2.0 in February 2026 with Data Migration Tool. Three modules: Basic (B1-B11), Narrative-PAT, and Business Partner. Use to respond to ESG requests from banks, investors, and large corporate clients.';
+    if (q.includes('gender')||q.includes('board')||q.includes('diversity')) return '<strong>Gender Balance on Corporate Boards:</strong> Large listed companies (not SMEs) must achieve <strong>40% of non-executive director seats or 33% of total board seats</strong> for the underrepresented sex by <strong>June 30, 2026</strong>. Member States must establish penalties for non-compliance.';
+    if (q.includes('deadline')||q.includes('when')||q.includes('timeline')) return '<strong>Key EU 2026 Deadlines:</strong><br>• 31 Mar — CBAM ACD application deadline<br>• 21 May — DIWASS digital waste shipments mandatory<br>• 7 Jun — Pay Transparency Directive transposition<br>• 30 Jun — Gender Balance on Boards target<br>• 19 Jul — ESPR unsold goods destruction ban<br>• 12 Aug — PPWR recyclable packaging + PFAS ban<br>• FY2027 — CSRD Wave 2 data collection begins';
+    return 'Great question! For precise EU compliance guidance, book a <a href="index.html#bookCallModal" style="color:var(--teal-dark);font-weight:700;">Discovery Call</a> with our EU ESG experts.';
+}
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+function showToast(msg) {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const t = document.createElement('div');
+    t.className = 'toast'; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+renderQuestions();
+boot();
+
+
+</script>
+</body>
+</html>

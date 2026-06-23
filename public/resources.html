@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Resource Library | The Climate Architects</title>
+    <link rel="stylesheet" href="css/theme.css?v=4.2">
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><img src="logo.png?v=4.2" alt="The Climate Architects Logo"></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            
+            <li>
+                <button class="nav-parent">
+                    Singapore <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">Singapore Services</div>
+                    <a href="audit.html">ESG Readiness Audit <span class="dd-market sg">SG</span></a>
+                    <a href="frameworks.html">ESG Frameworks <span class="dd-market sg">SG</span></a>
+                    <a href="protection.html">Greenwashing Protection <span class="dd-market sg">SG</span></a>
+                </div>
+            </li>
+
+            <li>
+                <button class="nav-parent">
+                    European Union <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">EU Services</div>
+                    <a href="eu-audit.html">CSRD Gap Analysis <span class="dd-market eu">EU</span></a>
+                    <a href="eu-frameworks.html">ESRS Frameworks <span class="dd-market eu">EU</span></a>
+                    <a href="eu-protection.html">Greenwashing (EmpCo) <span class="dd-market eu">EU</span></a>
+                    <a href="eu-cbam.html">CBAM Compliance <span class="dd-market eu">EU</span></a>
+                </div>
+            </li>
+            
+            <li>
+                <button class="nav-parent active">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">Knowledge Hub</div>
+                    <a href="index.html#decarb-lab">Decarbonisation Lab</a>
+                    <a href="resources.html" class="active">Templates Library</a>
+                </div>
+            </li>
+
+            <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+        <div class="nav-cta">
+            
+            <a href="dashboard.html" class="btn btn-ghost-login">Client Login</a>
+            <a href="dashboard.html" class="btn btn-primary">Start Audit</a>
+        </div>
+        <button class="mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li>
+            <button>Singapore <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="audit.html">ESG Readiness Audit</a>
+                <a href="frameworks.html">ESG Frameworks</a>
+                <a href="protection.html">Greenwashing Protection</a>
+            </div>
+        </li>
+        <li>
+            <button>European Union <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="eu-audit.html">CSRD Gap Analysis</a>
+                <a href="eu-frameworks.html">ESRS Frameworks</a>
+                <a href="eu-protection.html">Greenwashing (EmpCo)</a>
+                <a href="eu-cbam.html">CBAM Compliance</a>
+            </div>
+        </li>
+        <li>
+            <button class="active">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer" style="display: flex;">
+                <a href="index.html#decarb-lab">Decarbonisation Lab</a>
+                <a href="resources.html" class="active">Templates Library</a>
+            </div>
+        </li>
+        <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+</div>
+
+<div class="page-header">
+    <div class="section-eyebrow reveal" style="margin-bottom: 16px;">Member Resource Library</div>
+    <h1 class="reveal" style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 16px;">The Climate Architects Resource Library</h1>
+    <p class="reveal delay-1">Exclusive tools, templates, and guides for registered members.</p>
+</div>
+
+<section>
+    <div class="section-container" style="padding-top: 40px; padding-bottom: 80px;">
+        <!-- Visual Lock State Notification -->
+        <div class="reveal" style="background: var(--color-primary-tint); border: 1px solid var(--color-primary-border); border-radius: var(--radius-xl); padding: 20px 24px; margin-bottom: 48px; display: flex; align-items: center; gap: 16px; font-size: 15px; color: var(--color-text);">
+            <div style="font-size: 24px; line-height: 1;">🔒</div>
+            <div style="flex: 1; line-height: 1.5;">
+                <strong>Notice:</strong> These resources are for registered members only. Do not distribute or share outside your organisation.
+            </div>
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; background: var(--color-primary); color: #fff; padding: 4px 10px; border-radius: var(--radius-sm);">
+                Member Access
+            </div>
+        </div>
+
+        <!-- 3-Column Grid of 6 Resource Cards -->
+        <div class="value-props stagger-children" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 64px;">
+            <!-- Card 1 -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                </div>
+                <h3>ESG Gap Analysis Template</h3>
+                <p>Singapore SMEs</p>
+                <a href="#" onclick="return false;" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: auto; font-size: 13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Template
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <h3>CSRD Readiness Checklist</h3>
+                <p>EU-facing businesses</p>
+                <a href="#" onclick="return false;" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: auto; font-size: 13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Checklist
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <h3>Carbon Footprint Starter Kit</h3>
+                <p>Scope 1, 2 & 3 basics</p>
+                <a href="#" onclick="return false;" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: auto; font-size: 13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Starter Kit
+                </a>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <h3>Greenwashing Claim Language Guide</h3>
+                <p>Safe claim templates</p>
+                <a href="#" onclick="return false;" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: auto; font-size: 13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Guide
+                </a>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                        <polyline points="2 17 12 22 22 17"/>
+                        <polyline points="2 12 12 17 22 12"/>
+                    </svg>
+                </div>
+                <h3>CBAM Importer Worksheet</h3>
+                <p>Carbon border adjustment prep</p>
+                <a href="#" onclick="return false;" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: auto; font-size: 13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Worksheet
+                </a>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 19 21 12 17 5 21 12 2"/>
+                    </svg>
+                </div>
+                <h3>90-Day Decarbonisation Roadmap</h3>
+                <p>SME action plan template</p>
+                <a href="#" onclick="return false;" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: auto; font-size: 13px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Roadmap
+                </a>
+            </div>
+        </div>
+
+        <!-- Small footer note -->
+        <div class="reveal" style="text-align: center; border-top: 1px solid var(--color-border); padding-top: 32px; font-size: 13px; color: var(--color-text-muted);">
+            All resources are proprietary to The Climate Architects. Redistribution or republication is prohibited.
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div>
+            <a href="index.html" class="footer-logo"><img src="logo.png?v=4.2" alt="The Climate Architects Logo"></a>
+            <p style="font-size: 15px; max-width: 300px;">Helping SMEs transition to sustainability across Singapore and European markets. Without enterprise consulting costs.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Singapore</h3>
+            <ul class="footer-links">
+                <li><a href="audit.html">ESG Audit</a></li>
+                <li><a href="frameworks.html">Frameworks</a></li>
+                <li><a href="protection.html">Greenwashing Protection</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>European Union</h3>
+            <ul class="footer-links">
+                <li><a href="eu-audit.html">CSRD Audit</a></li>
+                <li><a href="eu-frameworks.html">ESRS Frameworks</a></li>
+                <li><a href="eu-protection.html">EmpCo Protection</a></li>
+                <li><a href="eu-cbam.html">CBAM Compliance</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul class="footer-links">
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="dashboard.html">Client Portal</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; 2026 The Climate Architects. All rights reserved.</span>
+        <span style="display:flex;gap:24px;align-items:center;">
+            <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">🇸🇬</span> Singapore</span>
+            <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">🇪🇺</span> European Union</span>
+        </span>
+    </div>
+</footer>
+
+<script src="js/main.js?v=3.1"></script>
+</body>
+</html>

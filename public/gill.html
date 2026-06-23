@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Calculator | The Climate Architects</title>
+    <link rel="stylesheet" href="css/theme.css?v=4.2">
+    <style>
+        
+        
+        /* Interactive Calculator Styling */
+        .calc-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            background: var(--color-bg-white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-md);
+        }
+        .calc-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .calc-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .calc-label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-text-dark);
+            display: flex;
+            justify-content: space-between;
+        }
+        .calc-label span:last-child {
+            color: var(--color-primary-sage);
+        }
+        .calc-input-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--color-border);
+            outline: none;
+        }
+        .calc-input-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-primary-sage);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .calc-input-range::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .calc-results {
+            background: var(--color-bg-cream);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .calc-total {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--color-text-dark);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .calc-breakdown {
+            width: 100%;
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .calc-bar-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+        .calc-bar-label {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+        .calc-bar-bg {
+            height: 8px;
+            background: var(--color-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .calc-bar-fill {
+            height: 100%;
+            background: var(--color-primary-sage);
+            width: 0%;
+            transition: width 0.4s var(--transition-premium);
+        }
+        
+        @media(max-width: 768px) {
+            .calc-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><img src="logo.png?v=4.2" alt="The Climate Architects Logo"></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            
+            <li>
+                <button class="nav-parent">
+                    Singapore <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">Singapore Services</div>
+                    <a href="audit.html">ESG Readiness Audit <span class="dd-market sg">SG</span></a>
+                    <a href="frameworks.html">ESG Frameworks <span class="dd-market sg">SG</span></a>
+                    <a href="protection.html">Greenwashing Protection <span class="dd-market sg">SG</span></a>
+                </div>
+            </li>
+
+            <li>
+                <button class="nav-parent">
+                    European Union <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">EU Services</div>
+                    <a href="eu-audit.html" >CSRD Gap Analysis <span class="dd-market eu">EU</span></a>
+                    <a href="eu-frameworks.html" >ESRS Frameworks <span class="dd-market eu">EU</span></a>
+                    <a href="eu-protection.html" >Greenwashing (EmpCo) <span class="dd-market eu">EU</span></a>
+                    <a href="eu-cbam.html" >CBAM Compliance <span class="dd-market eu">EU</span></a>
+                </div>
+            </li>
+            
+            <li>
+                <button class="nav-parent">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">Knowledge Hub</div>
+                    <a href="index.html#decarb-lab">Decarbonisation Lab</a>
+                    <a href="resources.html">Templates Library</a>
+                </div>
+            </li>
+
+            <li><a href="gill.html" class="active">Calculator</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+        <div class="nav-cta">
+            
+            <a href="dashboard.html" class="btn btn-ghost-login">Client Login</a>
+            <a href="dashboard.html" class="btn btn-primary">Start Audit</a>
+        </div>
+        <button class="mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li>
+            <button>Singapore <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="audit.html">ESG Readiness Audit</a>
+                <a href="frameworks.html">ESG Frameworks</a>
+                <a href="protection.html">Greenwashing Protection</a>
+            </div>
+        </li>
+        <li>
+            <button>European Union <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="eu-audit.html">CSRD Gap Analysis</a>
+                <a href="eu-frameworks.html">ESRS Frameworks</a>
+                <a href="eu-protection.html">Greenwashing (EmpCo)</a>
+                <a href="eu-cbam.html">CBAM Compliance</a>
+            </div>
+        </li>
+        <li>
+            <button>Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="index.html#decarb-lab">Decarbonisation Lab</a>
+                <a href="resources.html">Templates Library</a>
+            </div>
+        </li>
+        <li><a href="gill.html">Calculator</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+</div>
+
+<div class="page-header">
+    <h1 class="reveal">Carbon Calculator</h1>
+    <p class="reveal delay-1">Estimate Your Business Emissions Instantly</p>
+</div>
+
+<section>
+    <div class="section-container">
+        <div class="calc-container reveal">
+            <div class="calc-sliders">
+                <h3 style="margin-bottom:12px;">Emissions Inputs</h3>
+                
+                <div class="calc-group">
+                    <div class="calc-label"><span>Electricity Consumption</span><span id="label-elec">5,000 kWh/yr</span></div>
+                    <input type="range" class="calc-input-range" id="input-elec" min="0" max="50000" step="500" value="5000" oninput="updateCalculator()">
+                </div>
+                
+                <div class="calc-group">
+                    <div class="calc-label"><span>Fuel Combustion (Liters)</span><span id="label-fuel">2,000 L/yr</span></div>
+                    <input type="range" class="calc-input-range" id="input-fuel" min="0" max="20000" step="200" value="2000" oninput="updateCalculator()">
+                </div>
+                
+                <div class="calc-group">
+                    <div class="calc-label"><span>Company Vehicles</span><span id="label-vehicles">15,000 km/yr</span></div>
+                    <input type="range" class="calc-input-range" id="input-vehicles" min="0" max="100000" step="1000" value="15000" oninput="updateCalculator()">
+                </div>
+                
+                <div class="calc-group">
+                    <div class="calc-label"><span>Business Flights</span><span id="label-flights">10 flights/yr</span></div>
+                    <input type="range" class="calc-input-range" id="input-flights" min="0" max="50" step="1" value="10" oninput="updateCalculator()">
+                </div>
+            </div>
+            
+            <div class="calc-results">
+                <h3>Estimated Annual Carbon Footprint</h3>
+                <div class="calc-total"><span id="total-emissions">8.4</span> <span style="font-size:16px; font-weight:700;">tCO2e</span></div>
+                <p style="font-size:13px; color:var(--color-text-muted);">Calculated using standard SG/EU grid factor benchmarks.</p>
+                
+                <div class="calc-breakdown">
+                    <div class="calc-bar-wrap">
+                        <div class="calc-bar-label"><span>Scope 1 (Direct Fuels & Vehicles)</span><span id="breakdown-s1">3.2 t</span></div>
+                        <div class="calc-bar-bg"><div class="calc-bar-fill" id="bar-s1"></div></div>
+                    </div>
+                    <div class="calc-bar-wrap">
+                        <div class="calc-bar-label"><span>Scope 2 (Electricity Usage)</span><span id="breakdown-s2">2.2 t</span></div>
+                        <div class="calc-bar-bg"><div class="calc-bar-fill" id="bar-s2"></div></div>
+                    </div>
+                    <div class="calc-bar-wrap">
+                        <div class="calc-bar-label"><span>Scope 3 (Flights & Travel)</span><span id="breakdown-s3">3.0 t</span></div>
+                        <div class="calc-bar-bg"><div class="calc-bar-fill" id="bar-s3"></div></div>
+                    </div>
+                </div>
+                
+                <a href="dashboard.html" class="btn btn-primary" style="margin-top:28px; width:100%;">Get Free Audit Verification</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function updateCalculator() {
+        const elec = parseFloat(document.getElementById('input-elec').value);
+        const fuel = parseFloat(document.getElementById('input-fuel').value);
+        const vehicles = parseFloat(document.getElementById('input-vehicles').value);
+        const flights = parseFloat(document.getElementById('input-flights').value);
+        
+        document.getElementById('label-elec').textContent = elec.toLocaleString() + ' kWh/yr';
+        document.getElementById('label-fuel').textContent = fuel.toLocaleString() + ' L/yr';
+        document.getElementById('label-vehicles').textContent = vehicles.toLocaleString() + ' km/yr';
+        document.getElementById('label-flights').textContent = flights + ' flights/yr';
+        
+        // Benchmark emission factors
+        const scope1 = (fuel * 2.68 / 1000) + (vehicles * 0.12 / 1000); // 2.68kg/L CO2, 120g/km
+        const scope2 = (elec * 0.43 / 1000); // 0.43kg/kWh grid factor
+        const scope3 = (flights * 300 / 1000); // 300kg per flight average
+        
+        const total = scope1 + scope2 + scope3;
+        
+        document.getElementById('total-emissions').textContent = total.toFixed(1);
+        
+        document.getElementById('breakdown-s1').textContent = scope1.toFixed(1) + ' t';
+        document.getElementById('breakdown-s2').textContent = scope2.toFixed(1) + ' t';
+        document.getElementById('breakdown-s3').textContent = scope3.toFixed(1) + ' t';
+        
+        // Percentages
+        const maxVal = Math.max(scope1, scope2, scope3, 1.0);
+        document.getElementById('bar-s1').style.width = (scope1 / maxVal * 100) + '%';
+        document.getElementById('bar-s2').style.width = (scope2 / maxVal * 100) + '%';
+        document.getElementById('bar-s3').style.width = (scope3 / maxVal * 100) + '%';
+    }
+    
+    // Initial calculation
+    window.addEventListener('load', () => {
+        setTimeout(updateCalculator, 100);
+    });
+</script>
+<footer>
+    <div class="footer-content">
+        <div>
+            <a href="index.html" class="footer-logo"><img src="logo.png?v=4.2" alt="The Climate Architects Logo"></a>
+            <p style="font-size: 15px; max-width: 300px;">Helping SMEs transition to sustainability across Singapore and European markets. Without enterprise consulting costs.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Singapore</h3>
+            <ul class="footer-links">
+                <li><a href="audit.html">ESG Audit</a></li>
+                <li><a href="frameworks.html">Frameworks</a></li>
+                <li><a href="protection.html">Greenwashing Protection</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>European Union</h3>
+            <ul class="footer-links">
+                <li><a href="eu-audit.html">CSRD Audit</a></li>
+                <li><a href="eu-frameworks.html">ESRS Frameworks</a></li>
+                <li><a href="eu-protection.html">EmpCo Protection</a></li>
+                <li><a href="eu-cbam.html">CBAM Compliance</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul class="footer-links">
+                <li><a href="gill.html">Calculator</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="dashboard.html">Client Portal</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; 2026 The Climate Architects. All rights reserved.</span>
+        <span style="display:flex;gap:24px;align-items:center;">
+            <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">🇸🇬</span> Singapore</span>
+            <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">🇪🇺</span> European Union</span>
+        </span>
+    </div>
+</footer>
+<script src="js/main.js?v=3.1"></script>
+</body>
+</html>

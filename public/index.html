@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESG Compliance Platform | The Climate Architects — Singapore & EU</title>
+    <meta name="description" content="Affordable ESG readiness audits for Singapore SMEs and EU-facing businesses. Avoid greenwashing liability while meeting supply chain ESG demands.">
+    
+    <link rel="stylesheet" href="css/theme.css?v=4.2">
+    
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><img src="logo.png?v=4.2" alt="The Climate Architects Logo"></a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            
+            <li>
+                <button class="nav-parent">
+                    Singapore <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">Singapore Services</div>
+                    <a href="audit.html">ESG Readiness Audit <span class="dd-market sg">SG</span></a>
+                    <a href="frameworks.html">ESG Frameworks <span class="dd-market sg">SG</span></a>
+                    <a href="protection.html">Greenwashing Protection <span class="dd-market sg">SG</span></a>
+                </div>
+            </li>
+
+            <li>
+                <button class="nav-parent">
+                    European Union <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">EU Services</div>
+                    <a href="eu-audit.html">CSRD Gap Analysis <span class="dd-market eu">EU</span></a>
+                    <a href="eu-frameworks.html">ESRS Frameworks <span class="dd-market eu">EU</span></a>
+                    <a href="eu-protection.html">Greenwashing (EmpCo) <span class="dd-market eu">EU</span></a>
+                    <a href="eu-cbam.html">CBAM Compliance <span class="dd-market eu">EU</span></a>
+                </div>
+            </li>
+            
+            <li>
+                <button class="nav-parent">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+                <div class="nav-dropdown">
+                    <div class="dropdown-section-label">Knowledge Hub</div>
+                    <a href="#decarb-lab">Decarbonisation Lab</a>
+                    <a href="resources.html">Templates Library</a>
+                </div>
+            </li>
+
+
+            <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+        <div class="nav-cta">
+            
+            <a href="dashboard.html" class="btn btn-ghost-login">Client Login</a>
+            <a href="dashboard.html" class="btn btn-primary">Start Audit</a>
+        </div>
+        <button class="mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li>
+            <button>Singapore <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="audit.html">ESG Readiness Audit</a>
+                <a href="frameworks.html">ESG Frameworks</a>
+                <a href="protection.html">Greenwashing Protection</a>
+            </div>
+        </li>
+        <li>
+            <button>European Union <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="eu-audit.html">CSRD Gap Analysis</a>
+                <a href="eu-frameworks.html">ESRS Frameworks</a>
+                <a href="eu-protection.html">Greenwashing (EmpCo)</a>
+                <a href="eu-cbam.html">CBAM Compliance</a>
+            </div>
+        </li>
+        <li>
+            <button>Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <div class="mobile-sub-drawer">
+                <a href="#decarb-lab">Decarbonisation Lab</a>
+                <a href="resources.html">Templates Library</a>
+            </div>
+        </li>
+
+        <li><a href="pricing.html">Pricing</a></li>
+    </ul>
+</div>
+
+
+<div class="hero">
+    <div class="hero-container">
+        <div class="hero-content-box">
+            <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> Now covering Singapore & European Union</div>
+            <h1>ESG Compliance, <em>Simplified</em><br>for Growing Businesses</h1>
+            <p class="hero-subheading">Gap analysis tools, regulatory roadmaps, and AI-powered guidance — across Singapore and EU markets — all under $300/month.</p>
+            <div class="hero-ctas">
+                <a href="dashboard.html" class="btn btn-primary" style="padding:16px 36px;font-size:16px;">Start Free Audit</a>
+                <button class="btn btn-secondary" onclick="openModal('bookCall')" style="padding:16px 36px;font-size:16px;">Book Discovery Call</button>
+            </div>
+            <span class="hero-trust">Trusted by 200+ SMEs across Asia-Pacific</span>
+            <div class="hero-markets">
+                <a href="#chambers" class="hero-market-btn" onclick="switchChamber('sg')">
+                    <span class="hm-flag">🇸🇬</span>
+                    <div class="hm-text">
+                        <div class="hm-title">Singapore</div>
+                        <div class="hm-sub">SGX · Carbon Tax · ECA · NEA</div>
+                    </div>
+                </a>
+                <a href="#chambers" class="hero-market-btn" onclick="switchChamber('eu')">
+                    <span class="hm-flag">🇪🇺</span>
+                    <div class="hm-text">
+                        <div class="hm-title">European Union</div>
+                        <div class="hm-sub">CSRD · CBAM · CSDDD · EmpCo</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- Animated Radar Graphic -->
+        <div class="hero-graphic" id="hero-graphic">
+            <div class="radar-wrapper">
+                <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="radar-svg">
+                    <!-- Concentric circles -->
+                    <circle class="radar-circle-dashed outer" cx="200" cy="200" fill="none" r="150" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1"></circle>
+                    <circle class="radar-circle-dashed middle" cx="200" cy="200" fill="none" r="100" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1"></circle>
+                    <circle class="radar-circle-dashed inner" cx="200" cy="200" fill="none" r="50" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1"></circle>
+                    
+                    <!-- Axes -->
+                    <line class="radar-axis" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1" x1="200" x2="200" y1="50" y2="350"></line>
+                    <line class="radar-axis" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1" x1="50" x2="350" y1="200" y2="200"></line>
+                    <line class="radar-axis" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1" x1="94" x2="306" y1="94" y2="306"></line>
+                    <line class="radar-axis" stroke="currentColor" stroke-dasharray="2 2" stroke-width="1" x1="94" x2="306" y1="306" y2="94"></line>
+                    
+                    <!-- Radar Sweep Line -->
+                    <line class="radar-sweep" x1="200" y1="200" x2="200" y2="50" stroke="currentColor" stroke-width="1.5" opacity="0.45"></line>
+                    
+                    <!-- Polygon -->
+                    <polygon class="radar-polygon" fill="rgba(71, 102, 69, 0.1)" points="200,80 290,120 320,200 270,300 150,280 80,220 120,110" stroke="currentColor" stroke-width="1.5"></polygon>
+                    
+                    <!-- Nodes -->
+                    <circle class="radar-dot" cx="200" cy="80" fill="currentColor" r="4"></circle>
+                    <circle class="radar-dot" cx="290" cy="120" fill="currentColor" r="4"></circle>
+                    <circle class="radar-dot" cx="320" cy="200" fill="currentColor" r="4"></circle>
+                    <circle class="radar-dot" cx="270" cy="300" fill="currentColor" r="4"></circle>
+                    <circle class="radar-dot" cx="150" cy="280" fill="currentColor" r="4"></circle>
+                    <circle class="radar-dot" cx="80" cy="220" fill="currentColor" r="4"></circle>
+                    <circle class="radar-dot" cx="120" cy="110" fill="currentColor" r="4"></circle>
+                    
+                    <!-- Center Node -->
+                    <circle cx="200" cy="200" fill="currentColor" r="8"></circle>
+                </svg>
+                
+                <!-- Absolute positioned HTML labels overlaying the glass panel -->
+                <span class="radar-label label-csrd">CSRD</span>
+                <span class="radar-label label-cbam">CBAM</span>
+                <span class="radar-label label-csddd">CSDDD</span>
+                <span class="radar-label label-empco">EmpCo</span>
+                <span class="radar-label label-eca">ECA</span>
+                <span class="radar-label label-nea">NEA</span>
+                <span class="radar-label label-sgx">SGX</span>
+                <span class="radar-label label-tca">TCA</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-strip">
+    <div class="stats-inner">
+        <div class="stat-item reveal"><div class="stat-num" data-count="2">2</div><div class="stat-label">Markets Covered</div></div>
+        <div class="stat-item reveal delay-1"><div class="stat-num" data-count="20+">20+</div><div class="stat-label">Regulations Tracked</div></div>
+    </div>
+</div>
+
+<section id="solutions">
+    <div class="section-container">
+        <h2 class="section-title reveal" style="text-align: center;">Winning in climate action means winning in business.</h2>
+        <div class="action-grid reveal stagger-children">
+            <div class="action-card">
+                <h3>Decarbonisation platform</h3>
+                <p>Reducing your emissions across and beyond your value chain.</p>
+                <svg class="action-arrow" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+            <div class="action-card">
+                <h3>Compliance reporting</h3>
+                <p>Aligning with relevant international standards, e.g. for CSRD compliant outputs.</p>
+                <svg class="action-arrow" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+            <div class="action-card">
+                <h3>Climate project portfolio</h3>
+                <p>Building a future-proof carbon credit portfolio with expert guidance.</p>
+                <svg class="action-arrow" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+            <div class="action-card">
+                <h3>Communicate climate action</h3>
+                <p>Positioning your business with transparency, for impact and value.</p>
+                <svg class="action-arrow" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="section-container reveal">
+        <div class="sme-box">
+            <div class="section-eyebrow">What We Do</div>
+            <h2 class="section-title">Why focus on sustainability?</h2>
+            <p style="font-weight: 600; margin-bottom: 20px; color: var(--color-text); font-size: 16px;">What it means for your SME:</p>
+            <p>
+                Small and Medium Enterprises (SMEs) face mounting pressure from international supply chains, stricter regulations, and shifting investor demands. The issue? Enterprise-level sustainability consulting is too expensive, and doing nothing risks losing critical contracts and facing greenwashing liabilities.
+            </p>
+            <p>
+                <strong>That's where we step in.</strong> The Climate Architects provides an affordable, tech-enabled decarbonisation platform. We help you navigate the complexities of emissions tracking, communicate your climate action clearly, and turn sustainability mandates into a competitive advantage.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="chambers">
+    <div class="section-container">
+        <div class="reveal" style="margin-bottom: 56px;">
+            <div class="section-eyebrow">Choose Your Market</div>
+            <h2 class="section-title">Two Markets. One Platform.</h2>
+            <p class="section-subtitle">Select your operating market to access the regulations, tools, and guidance tailored specifically to your compliance obligations.</p>
+        </div>
+        <div class="chamber-cards reveal">
+            <a href="audit.html" class="chamber-card sg">
+                <span class="cc-flag">🇸🇬</span>
+                <div class="cc-title">Singapore</div>
+                <p class="cc-desc">Navigate SGX reporting, Carbon Tax, Energy Conservation Act, and water/waste obligations under Singapore's compliance-by-sector framework.</p>
+                <div class="cc-regs">
+                    <span class="cc-reg-tag">SGX Reporting</span>
+                    <span class="cc-reg-tag">Carbon Tax (CPA)</span>
+                    <span class="cc-reg-tag">WEMP</span>
+                </div>
+                <div class="cc-arrow">Explore Singapore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </a>
+            <a href="eu-audit.html" class="chamber-card eu">
+                <span class="cc-flag">🇪🇺</span>
+                <div class="cc-title">European Union</div>
+                <p class="cc-desc">Prepare for CSRD reporting, CBAM carbon border charges, CSDDD due diligence, and EmpCo greenwashing enforcement across EU markets.</p>
+                <div class="cc-regs">
+                    <span class="cc-reg-tag">CSRD / ESRS</span>
+                    <span class="cc-reg-tag">CBAM</span>
+                    <span class="cc-reg-tag">EmpCo</span>
+                </div>
+                <div class="cc-arrow">Explore EU <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<div id="regulations-preview">
+    <div class="chambers-strip">
+        <div class="cs-inner">
+            <button class="cs-tab active" id="tab-sg" onclick="switchChamber('sg')">🇸🇬 Singapore Regulations</button>
+            <button class="cs-tab" id="tab-eu" onclick="switchChamber('eu')">🇪🇺 EU Regulations</button>
+        </div>
+    </div>
+
+    <div class="chamber-content active" id="chamber-sg">
+        <section>
+            <div class="section-container">
+                <div class="reveal">
+                    <div class="section-eyebrow">Singapore Regulatory Framework</div>
+                    <h2 class="section-title">What Applies to Your Singapore Business</h2>
+                    <p class="section-subtitle">Key binding regulations under Singapore's sector-based compliance approach. Most SMEs are affected by 3–5 of these.</p>
+                </div>
+                <div class="reg-table-wrap reveal">
+                    <table class="reg-table">
+                        <thead>
+                            <tr><th>Regulation</th><th>Applies To</th><th>Deadline</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SGX Sustainability Reporting</td>
+                                <td>All SGX-listed companies</td>
+                                <td>4 months after FY end</td>
+                                <td><span class="reg-badge rb-binding">Binding</span></td>
+                            </tr>
+                            <tr>
+                                <td>Climate Reporting (Non-listed)</td>
+                                <td>Revenue ≥S$1B + Assets ≥S$500M</td>
+                                <td>From FY2027</td>
+                                <td><span class="reg-badge rb-upcoming">Upcoming</span></td>
+                            </tr>
+                            <tr>
+                                <td>Carbon Tax (CPA)</td>
+                                <td>Industrial facilities ≥25,000 tCO2e/year</td>
+                                <td>S$45/tonne from 2026</td>
+                                <td><span class="reg-badge rb-binding">Binding</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mandatory Energy Management (ECA)</td>
+                                <td>Companies using ≥54 TJ/year</td>
+                                <td>Ongoing annual</td>
+                                <td><span class="reg-badge rb-binding">Binding</span></td>
+                            </tr>
+                            <tr>
+                                <td>Water Efficiency (WEMP)</td>
+                                <td>Premises using ≥60,000 m³/year</td>
+                                <td>Annual PUB submission</td>
+                                <td><span class="reg-badge rb-binding">Binding</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mandatory Packaging Reporting</td>
+                                <td>≥S$10M turnover + ≥50 tonnes packaging</td>
+                                <td>Annual NEA submission</td>
+                                <td><span class="reg-badge rb-binding">Binding</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center; margin-top: 24px;">
+                    <a href="audit.html" class="btn btn-outline">Explore Singapore Services</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="chamber-content" id="chamber-eu">
+        <section>
+            <div class="section-container">
+                <div class="reveal">
+                    <div class="section-eyebrow">EU Regulatory Framework</div>
+                    <h2 class="section-title">What Applies to Your EU-Facing Business</h2>
+                    <p class="section-subtitle">The EU's compliance-by-design framework — stricter, broader scope, with substantial financial penalties for non-compliance.</p>
+                </div>
+                <div class="reg-table-wrap reveal">
+                    <table class="reg-table">
+                        <thead>
+                            <tr><th>Regulation</th><th>Threshold / Scope</th><th>Key Deadline</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CSRD — Corporate Sustainability Reporting</td>
+                                <td>&gt;1,000 employees + &gt;€450M turnover</td>
+                                <td>FY2027 data (report 2028)</td>
+                                <td><span class="reg-badge rb-binding">Binding</span></td>
+                            </tr>
+                            <tr>
+                                <td>CBAM — Carbon Border Adjustment</td>
+                                <td>Importers of steel, cement, aluminium, fertilizers, electricity, hydrogen</td>
+                                <td>ACD by 31 Mar 2026</td>
+                                <td><span class="reg-badge rb-active">Active Now</span></td>
+                            </tr>
+                            <tr>
+                                <td>EmpCo — Greenwashing Prohibition</td>
+                                <td>All companies marketing to EU consumers</td>
+                                <td>Enforcement Sept 27, 2026</td>
+                                <td><span class="reg-badge rb-upcoming">Upcoming</span></td>
+                            </tr>
+                            <tr>
+                                <td>CSDDD — Due Diligence Directive</td>
+                                <td>&gt;5,000 employees + &gt;€1.5B turnover</td>
+                                <td>Phase 1: July 2029</td>
+                                <td><span class="reg-badge rb-upcoming">Upcoming</span></td>
+                            </tr>
+                            <tr>
+                                <td>ESPR — Ecodesign (unsold goods ban)</td>
+                                <td>Textiles, footwear, electronics producers</td>
+                                <td>July 19, 2026</td>
+                                <td><span class="reg-badge rb-upcoming">Upcoming</span></td>
+                            </tr>
+                            <tr>
+                                <td>Pay Transparency Directive</td>
+                                <td>All employers in EU member states</td>
+                                <td>National laws from June 7, 2026</td>
+                                <td><span class="reg-badge rb-upcoming">Upcoming</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center; margin-top: 24px;">
+                    <a href="eu-audit.html" class="btn btn-outline">Explore EU Services</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<section id="core-services">
+    <div class="section-container">
+        <div class="reveal">
+            <div class="section-eyebrow">Core Services</div>
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-subtitle">Tailored sustainability solutions for growing businesses — across Singapore and EU markets.</p>
+        </div>
+        <div class="value-props stagger-children">
+            <div class="value-card reveal delay-1">
+                <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+                <h3>ESG Readiness Audit</h3>
+                <p>Establish baseline carbon, water, waste, and energy metrics. Identify your 3 highest-impact gaps across applicable regulations — in 48 hours.</p>
+                <div style="display:flex; gap:8px; margin-bottom: 28px;">
+                    <span class="badge-sg">SG</span>
+                    <span class="badge-eu">EU</span>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:auto;">
+                    <a href="audit.html" class="btn btn-outline" style="flex:1;justify-content:center;font-size:13px;">SG Audit</a>
+                    <a href="eu-audit.html" class="btn btn-outline" style="flex:1;justify-content:center;font-size:13px;">CSRD Audit</a>
+                </div>
+            </div>
+            <div class="value-card reveal delay-2">
+                <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <h3>Greenwashing Protection</h3>
+                <p>Substantiate every environmental claim before regulators come knocking. Data verification, "Claim Safe" language templates, and monitoring alerts.</p>
+                <div style="display:flex; gap:8px; margin-bottom: 28px;">
+                    <span class="badge-sg">SG</span>
+                    <span class="badge-eu">EU (EmpCo)</span>
+                </div>
+                <a href="protection.html" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:auto;">View Protection Plan</a>
+            </div>
+            <div class="value-card reveal delay-3">
+                <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
+                <h3>ESG Frameworks</h3>
+                <p>Stop framework confusion. We match your business profile to the right standard — GRI, ISSB, ESRS, SGX-aligned — and build the reporting structure.</p>
+                <div style="display:flex; gap:8px; margin-bottom: 28px;">
+                    <span class="badge-sg">SG</span>
+                    <span class="badge-eu">EU</span>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:auto;">
+                    <a href="frameworks.html" class="btn btn-outline" style="flex:1;justify-content:center;font-size:13px;">SG Frameworks</a>
+                    <a href="eu-frameworks.html" class="btn btn-outline" style="flex:1;justify-content:center;font-size:13px;">EU Frameworks</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-modern reveal">
+            <p>"The Climate Architects identified $18k/year energy savings we didn't know existed. Now our largest buyer sees us as a low-risk supplier."</p>
+            <span>— Manufacturing SME, Jurong Industrial Estate</span>
+        </div>
+    </div>
+</section>
+
+<section id="thought-leadership">
+    <div class="section-container reveal">
+        <div style="text-align:center; margin-bottom: 48px;">
+            <div class="section-eyebrow">Thought Leadership</div>
+            <h2 class="section-title">Why Your Brain Ignores Climate Change</h2>
+            <p class="section-subtitle" style="margin: 0 auto;">Discover the psychological barriers holding back your sustainability goals and learn how to overcome the action gap in your business.</p>
+        </div>
+        <div style="max-width: 840px; margin: 0 auto;">
+            <div class="video-wrapper" id="video-container">
+                <iframe 
+                    id="yt-iframe"
+                    src="https://www.youtube.com/embed/C4Uwn8BF388?rel=0&modestbranding=1&enablejsapi=1" 
+                    title="Why Your Brain Ignores Climate Change" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    onerror="showVideoFallback()">
+                </iframe>
+            </div>
+            <div id="video-fallback" style="display:none; background:rgba(20,20,25,0.8); border: 1px solid var(--panel-border); backdrop-filter: blur(10px); border-radius:var(--radius-lg); padding:64px 32px; text-align:center;">
+                <div style="font-size:56px; margin-bottom:24px;">▶</div>
+                <p style="color:var(--color-white); font-size:20px; font-weight:800; margin-bottom:12px;">Why Your Brain Ignores Climate Change</p>
+                <p style="color:var(--color-text-mid); font-size:15px; margin-bottom:32px;">Video embedding is restricted — watch directly on YouTube</p>
+                <a href="https://www.youtube.com/watch?v=C4Uwn8BF388" target="_blank" class="btn btn-primary">
+                    Watch on YouTube →
+                </a>
+            </div>
+        </div>
+        <script>
+            window.addEventListener('message', function(e) {
+                if (e.data && typeof e.data === 'string') {
+                    try {
+                        const d = JSON.parse(e.data);
+                        if (d.event === 'onError') showVideoFallback();
+                    } catch(err) {}
+                }
+            });
+            function showVideoFallback() {
+                document.querySelector('.video-wrapper').style.display = 'none';
+                document.getElementById('video-fallback').style.display = 'block';
+            }
+            if (window.location.protocol === 'file:') {
+                setTimeout(showVideoFallback, 800);
+            }
+        </script>
+    </div>
+</section>
+
+<section id="decarb-lab" style="background: #ffffff; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="section-container reveal">
+        <div style="text-align: center; margin-bottom: 56px;">
+            <div class="section-eyebrow">Community Platform</div>
+            <h2 class="section-title">The Decarbonisation Lab</h2>
+            <p class="section-subtitle" style="margin: 24px auto 20px; max-width: 920px; text-align: left; font-size: 16px; line-height: 1.8; color: var(--color-text-mid);">
+                <strong>Sustainability Simplified</strong> — We recognise that for many SMEs, sustainability can feel complex, costly, and difficult to navigate, often seen as a regulatory burden rather than an opportunity. The Decarbonisation Lab is designed to simplify this journey. We provide tailored, practical solutions that help businesses reduce costs, improve efficiency, and build clear pathways toward decarbonisation. Through structured templates, guided support, and access to The Climate Architects' carbon tracking platform, we enable enterprises to measure, manage, and communicate their progress effectively. We do not provide legal advice.
+            </p>
+            <p style="font-size: 15px; color: var(--color-text-muted); font-weight: 500; max-width: 920px; margin: 0 auto; text-align: left; border-top: 1px solid var(--color-border); padding-top: 20px;">
+                A networking platform bridging knowledge and implementation — connecting students, professionals, startups, and businesses to accelerate real-world climate action.
+            </p>
+        </div>
+
+        <div class="value-props stagger-children" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px; margin-bottom: 64px;">
+            <!-- Card 1 — For Students -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/>
+                    </svg>
+                </div>
+                <h3>For Students</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--color-text-mid);">
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Work on real-world decarbonisation projects with SMEs</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Build practical skills in sustainability, policy, and climate strategy</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Connect with industry professionals and mentors</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Gain experience that strengthens academic and career pathways</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 2 — For Professionals -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                </div>
+                <h3>For Professionals</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--color-text-mid);">
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Share expertise through mentorship and advisory roles</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Access a network of emerging talent and collaborators</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Post job, internship, and project opportunities</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Engage in meaningful, impact-driven work beyond traditional roles</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 3 — For Businesses (SMEs) -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                        <line x1="9" y1="22" x2="9" y2="16"/>
+                        <line x1="15" y1="22" x2="15" y2="16"/>
+                        <line x1="9" y1="16" x2="15" y2="16"/>
+                        <path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M12 6h.01M12 10h.01"/>
+                    </svg>
+                </div>
+                <h3>For Businesses (SMEs)</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--color-text-mid);">
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Receive guided support to navigate sustainability regulations</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Access affordable, research-driven decarbonisation strategies</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Collaborate with motivated student teams and experienced professionals</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Build long-term sustainability capacity within your organization</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 4 — For Startups -->
+            <div class="value-card reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2S8 7 8 12c0 2.2 1.8 4 4 4s4-1.8 4-4c0-5-4-10-4-10z"/>
+                        <path d="M12 16v4"/>
+                        <path d="M8 16c-1.7 0-3-1.3-3-3v-1"/>
+                        <path d="M16 16c1.7 0 3-1.3 3-3v-1"/>
+                    </svg>
+                </div>
+                <h3>For Startups</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--color-text-mid);">
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Pilot and test climate solutions in real-world SME contexts</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Connect with partners, collaborators, and early adopters</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Gain visibility within a sustainability-focused ecosystem</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3" style="margin-top: 4px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Access talent, research support, and strategic insights</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Waitlist CTA -->
+        <div class="reveal" style="text-align: center; background: var(--color-bg-subtle); border: 1px solid var(--color-border); padding: 48px 32px; border-radius: var(--radius-2xl); max-width: 800px; margin: 0 auto; box-shadow: var(--shadow-sm);">
+            <h3 style="font-size: 24px; font-weight: 700; color: var(--color-text); margin-bottom: 8px; letter-spacing: -0.02em;">Join the Lab</h3>
+            <p style="font-size: 15px; color: var(--color-text-mid); margin-bottom: 24px;">Whether you're a student, professional, SME, or startup — there's a role for you.</p>
+            <button class="btn btn-primary" onclick="openModal('bookCall')" style="padding: 14px 36px; font-size: 15px;">Join the Waitlist</button>
+        </div>
+    </div>
+</section>
+
+<div class="cta-section">
+    <div style="max-width: 720px; margin: 0 auto;" class="reveal">
+        <h2>Start Your ESG Compliance Journey</h2>
+        <p>Free gap analysis for Singapore and EU markets. No obligation. Results in 48 hours.</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <a href="dashboard.html" class="btn btn-primary" style="padding:13px 32px;font-size:15px;">Start Free Audit</a>
+            <button class="btn btn-secondary" onclick="openModal('bookCall')" style="padding:13px 32px;font-size:15px;">Book a Call</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div>
+            <a href="index.html" class="footer-logo"><img src="logo.png?v=4.2" alt="The Climate Architects"></a>
+            <p class="footer-tagline">Helping SMEs transition to sustainability across Singapore and European markets. Without enterprise consulting costs.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Singapore</h3>
+            <ul class="footer-links">
+                <li><a href="audit.html">ESG Audit</a></li>
+                <li><a href="frameworks.html">Frameworks</a></li>
+                <li><a href="protection.html">Greenwashing Protection</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>European Union</h3>
+            <ul class="footer-links">
+                <li><a href="eu-audit.html">CSRD Audit</a></li>
+                <li><a href="eu-frameworks.html">ESRS Frameworks</a></li>
+                <li><a href="eu-protection.html">EmpCo Protection</a></li>
+                <li><a href="eu-cbam.html">CBAM Compliance</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul class="footer-links">
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="dashboard.html">Client Portal</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; 2026 The Climate Architects. All rights reserved.</span>
+        <span style="display:flex;gap:20px;align-items:center;">
+            <span style="display:flex;align-items:center;gap:6px;"><span>🇸🇬</span> Singapore</span>
+            <span style="display:flex;align-items:center;gap:6px;"><span>🇪🇺</span> European Union</span>
+        </span>
+    </div>
+</footer>
+
+<div class="modal" id="bookCallModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div class="modal-title">Book a Discovery Call</div>
+        <p class="modal-sub">30 minutes with an ESG specialist. We review your situation and outline a compliance roadmap.</p>
+        <div id="callSuccess" style="display:none;text-align:center;padding:32px 0;">
+            <div style="width:64px;height:64px;background:var(--color-primary-sage-tint);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-sage)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div style="font-size:24px;font-weight:800;margin-bottom:12px;color:var(--color-text-dark);">Call Booked!</div>
+            <p style="color:var(--color-text-mid);font-size:15px;line-height:1.6;">We'll confirm your time slot via email within a few hours.</p>
+        </div>
+        <form id="callForm" onsubmit="submitFormGlobal(event)">
+            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" id="call_name" class="form-input" required placeholder="Jane Smith"></div>
+            <div class="form-group"><label class="form-label">Email Address *</label><input type="email" id="call_email" class="form-input" required placeholder="jane@company.com"></div>
+            <div class="form-group"><label class="form-label">Company *</label><input type="text" id="call_company" class="form-input" required placeholder="Acme Pte. Ltd."></div>
+            <div class="form-group">
+                <label class="form-label">Best Time to Call (SGT) *</label>
+                <select id="call_timeslot" class="form-input" style="color:var(--color-text-mid);" required onchange="this.style.color='white'">
+                    <option value="" disabled selected>Select time</option>
+                    <option value="9am">9:00 AM</option>
+                    <option value="10am">10:00 AM</option>
+                    <option value="2pm">2:00 PM</option>
+                    <option value="3pm">3:00 PM</option>
+                </select>
+            </div>
+            <div id="callError" style="display:none;color:#fca5a5;font-size:14px;margin-bottom:16px;padding:12px;background:rgba(220,38,38,0.2);border:1px solid rgba(220,38,38,0.4);border-radius:8px;"></div>
+            <button type="submit" id="callBtn" class="form-submit">Confirm Call</button>
+        </form>
+    </div>
+</div>
+
+<script src="js/main.js?v=3.1"></script>
+<script>
+    // Page-specific JS
+    function switchChamber(market) {
+        document.querySelectorAll('.chamber-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.cs-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('chamber-' + market).classList.add('active');
+        document.getElementById('tab-' + market).classList.add('active');
+        
+        const element = document.getElementById('regulations-preview');
+        const navHeight = document.getElementById('navbar').offsetHeight;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+            top: elementPosition - navHeight - 20, 
+            behavior: 'smooth'
+        });
+    }
+</script>
+</body>
+</html>

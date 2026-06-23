@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard | The Climate Architects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --db-bg:           #F7F6F3;
+            --db-surface:      #FFFFFF;
+            --db-border:       #E8E5DF;
+            --db-border-mid:   #D5D1C9;
+            --db-ink:          #1A1A1A;
+            --db-ink-mid:      #5C5C5C;
+            --db-ink-muted:    #909090;
+            --db-accent:       #7A9B76;
+            --db-accent-hover: #698A65;
+            --db-accent-tint:  rgba(122,155,118,0.08);
+            --db-accent-border:rgba(122,155,118,0.20);
+            --db-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --db-r:    10px;
+            --db-r-lg: 14px;
+            --db-shadow-xs: 0 1px 3px rgba(0,0,0,0.05);
+            --db-shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+
+            /* Legacy mapping for backend compatibility */
+            --teal: var(--db-accent);
+            --teal-light: var(--db-accent-hover);
+            --teal-dark: var(--db-accent-hover);
+            --teal-glow: var(--db-accent-tint);
+            --teal-10: var(--db-accent-tint);
+            --forest: var(--db-ink);
+            --bg: var(--db-bg);
+            --panel: var(--db-surface);
+            --radius: var(--db-r-lg);
+            --shadow: var(--db-shadow-xs);
+            --text: var(--db-ink);
+            --text-mid: var(--db-ink-mid);
+            --text-soft: var(--db-ink-muted);
+            --danger: #ef4444;
+            --warn: #f59e0b;
+            --success: #10b981;
+            --charcoal: var(--db-surface);
+            --font: var(--db-font);
+            --serif: var(--db-font);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body, p, span, div, button, input, select, label, td, th, li, a {
+            font-family: var(--db-font);
+        }
+
+        body {
+            background: var(--db-bg);
+            color: var(--db-ink);
+            font-family: var(--db-font);
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--db-font);
+            font-weight: 600;
+            color: var(--db-ink);
+            letter-spacing: -0.018em;
+        }
+
+        /* ── SIDEBAR ───────────────────────────────── */
+        .sidebar {
+            width: 256px;
+            background: var(--db-surface);
+            border-right: 1px solid var(--db-border);
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 100;
+            overflow: hidden;
+        }
+        .sidebar-logo {
+            padding: 18px 20px 16px;
+            border-bottom: 1px solid var(--db-border);
+        }
+        .sidebar-logo img {
+            background: transparent !important;
+            mix-blend-mode: multiply !important;
+            height: 36px;
+            width: auto;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .logo-text { display: none; }
+        .logo-sub {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--db-ink-muted);
+            margin-top: 3px;
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow-y: auto;
+        }
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: var(--db-ink-muted);
+            padding: 18px 20px 6px;
+        }
+        .nav-item {
+            padding: 8px 20px;
+            font-size: 13.5px;
+            font-weight: 400;
+            color: var(--db-ink-mid);
+            background: transparent;
+            border-left: 2px solid transparent;
+            display: block;
+            width: 100%;
+            text-align: left;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border-radius: 0;
+            border-top: none;
+            border-right: none;
+            border-bottom: none;
+            text-decoration: none;
+        }
+        .nav-item:hover {
+            background: var(--db-bg);
+            color: var(--db-ink);
+        }
+        .nav-item.active {
+            background: var(--db-accent-tint) !important;
+            color: var(--db-accent) !important;
+            font-weight: 500 !important;
+            border-left-color: var(--db-accent) !important;
+            background: rgba(122,155,118,0.07) !important;
+        }
+        .nav-item .icon { display: inline-flex; margin-right: 10px; opacity: 0.5; vertical-align: middle; }
+        .nav-item.active .icon { opacity: 1; }
+        .nav-item:hover .icon { opacity: 0.8; }
+        .nav-badge {
+            margin-left: auto;
+            font-size: 10px;
+            font-weight: 600;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            color: var(--db-ink-muted);
+            padding: 2px 7px;
+            border-radius: 4px;
+            display: inline-block;
+            float: right;
+        }
+        .nav-badge.green {
+            background: var(--db-accent-tint);
+            border-color: var(--db-accent-border);
+            color: var(--db-accent);
+        }
+        .sidebar-footer {
+            padding: 12px 0;
+            border-top: 1px solid var(--db-border);
+            background: var(--db-surface);
+            padding-top: 4px;
+        }
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            font-size: 12.5px;
+            color: var(--db-ink-mid);
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--db-ink-mid);
+            flex-shrink: 0;
+        }
+        .user-info { flex: 1; overflow: hidden; }
+        .user-name { font-weight: 600; color: var(--db-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-role { font-size: 11px; color: var(--db-ink-muted); }
+        .back-btn {
+            font-size: 13px;
+            color: var(--db-ink-muted);
+            padding: 8px 20px;
+            display: block;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: color 0.15s ease;
+            text-align: left;
+            width: 100%;
+            text-decoration: none;
+        }
+        .back-btn:hover { color: var(--db-ink); }
+
+        /* ── MAIN CONTENT ───────────────────────────── */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--db-bg);
+        }
+        .topbar {
+            background: var(--db-surface);
+            border-bottom: 1px solid var(--db-border);
+            height: 56px;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+
+        .topbar-left h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--db-ink);
+        }
+        .topbar-left p { display: block; font-size: 11px; color: var(--db-ink-muted); margin-top: 1px; }
+        .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+        .pill-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            background: var(--db-accent-tint);
+            color: var(--db-accent);
+            border: 1px solid var(--db-accent-border);
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* ── SCROLL AREA ────────────────────────────── */
+        .page-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 36px 40px;
+        }
+
+        /* ── VIEWS ──────────────────────────────────── */
+        .view { display: none; animation: fadeUp 0.3s ease both; }
+        .view.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── WELCOME / HERO CARD ─────────────────────── */
+        .overview-hero {
+    background: linear-gradient(135deg, #F7F6F3 0%, rgba(122,155,118,0.06) 100%);
+    border: 1px solid var(--db-border);
+    border-top: 2px solid var(--db-accent);
+    border-radius: var(--db-r-lg);
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+        .overview-hero img { display: none !important; }
+        .hero-eyebrow { display: none; }
+        .hero-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--db-ink);
+            margin-bottom: 8px;
+        }
+        .hero-desc {
+            font-size: 14px;
+            color: var(--db-ink-mid);
+            max-width: 540px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        /* ── BUTTONS ────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--db-font);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-teal,
+        .btn-solid {
+            background: var(--db-accent);
+            color: #fff;
+            border: 1px solid var(--db-accent);
+            border-radius: var(--db-r);
+            padding: 9px 18px;
+            font-size: 13.5px;
+            font-weight: 500;
+            box-shadow: none;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .btn-teal:hover,
+        .btn-solid:hover {
+            background: var(--db-accent-hover);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+        .btn-outline,
+        .btn-ghost {
+            background: var(--db-surface);
+            color: var(--db-ink);
+            border: 1px solid var(--db-border-mid);
+            border-radius: var(--db-r);
+            padding: 9px 18px;
+            font-size: 13.5px;
+            font-weight: 500;
+            box-shadow: none;
+            transition: all 0.15s ease;
+        }
+        .btn-outline:hover,
+        .btn-ghost:hover {
+            background: var(--db-bg);
+            border-color: var(--db-ink-muted);
+            color: var(--db-ink);
+        }
+
+        /* ── STAT CARDS ─────────────────────────────── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 22px 24px;
+            box-shadow: var(--db-shadow-xs);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.15s ease;
+        }
+        .stat-card { transition: box-shadow 0.15s ease, transform 0.15s ease; }
+        .stat-card:hover { box-shadow: var(--db-shadow-sm); transform: translateY(-1px); }
+        .stat-card .accent-line { display: none !important; }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.10em;
+            color: var(--db-ink-muted);
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--db-ink);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-value.danger { color: #dc2626; }
+        .stat-value.warn   { color: var(--db-ink); }
+        .stat-value.success { color: var(--db-accent); }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--db-ink-muted);
+            margin-top: 0;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: 3fr 1.2fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        /* ── SECTION PANEL ──────────────────────────── */
+        .panel {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            box-shadow: var(--db-shadow-xs);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .panel-head {
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--db-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .panel-head h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--db-ink);
+            letter-spacing: -0.01em;
+        }
+        .panel-body { padding: 16px 24px; }
+
+        /* ── ASSESSMENT ─────────────────────────────── */
+        .assess-header { margin-bottom: 24px; }
+        .assess-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--db-ink);
+            margin-bottom: 8px;
+        }
+        .assess-header p {
+            font-size: 13.5px;
+            color: var(--db-ink-muted);
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .policy-card {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--db-shadow-xs);
+        }
+        .pc-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .pc-num {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--db-ink-muted);
+            margin-right: 8px;
+        }
+        .pc-title { font-size: 14px; font-weight: 600; color: var(--db-ink); }
+        .pc-tag {
+            font-size: 10px;
+            font-weight: 500;
+            padding: 2px 6px;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            color: var(--db-ink-muted);
+            border-radius: 4px;
+        }
+        .pc-criteria {
+            font-size: 13px;
+            color: var(--db-ink-mid);
+            margin-bottom: 14px;
+            padding-left: 0;
+            border-left: none;
+            background: transparent;
+        }
+        .pc-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .ctrl-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--db-ink-muted);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .form-select {
+            width: 100%;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border-mid);
+            border-radius: var(--db-r);
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--db-ink);
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .form-select:focus {
+            border-color: var(--db-accent);
+        }
+        .form-select:disabled { opacity: 0.5; }
+
+        /* ── ROADMAP ────────────────────────────────── */
+        .roadmap-list { list-style: none; padding: 0; }
+        .roadmap-item {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 18px 22px;
+            margin-bottom: 10px;
+            box-shadow: var(--db-shadow-xs);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .road-step {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: var(--db-accent-tint);
+            border: 1px solid var(--db-accent-border);
+            color: var(--db-accent);
+            font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .road-content h4 { font-size: 14px; font-weight: 600; color: var(--db-ink); margin-bottom: 3px; }
+        .road-content p { font-size: 13px; color: var(--db-ink-mid); line-height: 1.55; }
+        .road-tag {
+            font-size: 11px; font-weight: 500;
+            padding: 2px 8px;
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            border-radius: 4px;
+            color: var(--db-ink-muted);
+            margin-left: auto;
+            flex-shrink: 0;
+            text-transform: none;
+        }
+
+        /* ── RESOURCES ──────────────────────────────── */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .resource-card {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 16px 20px;
+            margin-bottom: 0;
+            display: flex; gap: 14px; align-items: flex-start;
+            text-decoration: none; color: inherit;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .resource-card:hover { border-color: var(--db-accent-border); box-shadow: var(--db-shadow-sm); }
+        .res-icon {
+            width: 30px; height: 30px;
+            border-radius: 6px;
+            background: var(--db-accent-tint);
+            border: 1px solid var(--db-accent-border);
+            color: var(--db-accent);
+            font-size: 12px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .res-title { font-size: 13.5px; font-weight: 600; color: var(--db-ink); }
+        .res-desc { font-size: 12.5px; color: var(--db-ink-mid); line-height: 1.45; }
+        .res-type { display: none; }
+
+        /* ── DEADLINES LIST ─────────────────────────── */
+        .deadline-list {
+            background: var(--db-surface);
+            border: 1px solid var(--db-border);
+            border-radius: var(--db-r-lg);
+            padding: 6px 0;
+            box-shadow: var(--db-shadow-xs);
+            list-style: none;
+        }
+        .deadline-item {
+            padding: 13px 22px;
+            border-bottom: 1px solid var(--db-border);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .deadline-item:last-child { border-bottom: none; }
+        .dl-date {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--db-ink-muted);
+            background: var(--db-bg);
+            border: 1px solid var(--db-border);
+            border-radius: 4px;
+            padding: 2px 8px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+        .dl-date.urgent {
+            color: #ef4444;
+            background: rgba(239,68,68,0.05);
+            border-color: rgba(239,68,68,0.15);
+        }
+        .dl-text { font-size: 13.5px; color: var(--db-ink-mid); line-height: 1.5; }
+        .dl-text strong { color: var(--db-ink); font-weight: 500; }
+
+        /* ── QUICK ACTIONS ──────────────────────────── */
+        .quick-grid .panel:last-child .panel-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .quick-grid .panel:last-child .btn,
+        .quick-grid .panel:last-child a.btn {
+            background: var(--db-surface) !important;
+            border: 1px solid var(--db-border) !important;
+            border-radius: var(--db-r) !important;
+            padding: 12px 16px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: var(--db-ink) !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            text-decoration: none !important;
+            width: 100% !important;
+            box-shadow: none !important;
+            justify-content: flex-start !important;
+        }
+        .quick-grid .panel:last-child .btn:hover,
+        .quick-grid .panel:last-child a.btn:hover {
+            border-color: var(--db-accent-border) !important;
+            background: var(--db-accent-tint) !important;
+            color: var(--db-accent) !important;
+            transform: none !important;
+        }
+        .quick-grid .panel:last-child .btn svg {
+            margin-right: 0 !important;
+            flex-shrink: 0;
+        }
+
+        /* ── TABLES ─────────────────────────────────── */
+        .gap-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--db-surface);
+        }
+        .gap-table th {
+            background: var(--db-bg);
+            padding: 10px 16px;
+            font-size: 10.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--db-ink-muted);
+            border-bottom: 1px solid var(--db-border);
+            text-align: left;
+        }
+        .gap-table td {
+            padding: 12px 16px;
+            font-size: 13.5px;
+            color: var(--db-ink-mid);
+            border-bottom: 1px solid var(--db-border);
+            text-align: left;
+        }
+        .gap-table tr:last-child td { border-bottom: none; }
+        .gap-table tbody tr:hover td { background: var(--db-bg); }
+        .gap-table td:first-child { font-weight: 500; color: var(--db-ink); }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: none;
+            display: inline-block;
+        }
+        .badge-high { background: rgba(239,68,68,0.05); color: #ef4444; border: 1px solid rgba(239,68,68,0.15); }
+        .badge-med  { background: rgba(245,158,11,0.05); color: #f59e0b; border: 1px solid rgba(245,158,11,0.15); }
+        .badge-low  { background: rgba(59,130,246,0.05); color: #3b82f6; border: 1px solid rgba(59,130,246,0.15); }
+
+        .status-red   { color: #ef4444; font-weight: 500; }
+        .status-amber { color: #f59e0b; font-weight: 500; }
+        .status-green { color: #10b981; font-weight: 500; }
+
+
+
+        /* ── LOGIN + REGISTER FORMS ─────────────────── */
+        #auth-modal {
+            position: fixed; inset: 0;
+            background: rgba(26,26,26,0.3);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #auth-modal > div {
+            background: var(--db-surface) !important;
+            border: 1px solid var(--db-border) !important;
+            border-radius: var(--db-r-lg) !important;
+            padding: 32px 28px !important;
+            max-width: 380px !important;
+            width: 100% !important;
+            box-shadow: var(--db-shadow-sm) !important;
+            position: relative;
+        }
+        #auth-modal img {
+            background: transparent !important;
+            mix-blend-mode: multiply !important;
+        }
+        #auth-modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: var(--db-ink); }
+
+        #auth-modal .chat-input {
+            background: var(--db-bg) !important;
+            border: 1px solid var(--db-border-mid) !important;
+            border-radius: var(--db-r) !important;
+            padding: 9px 13px !important;
+            font-size: 13.5px !important;
+            font-family: var(--db-font) !important;
+            color: var(--db-ink) !important;
+            width: 100% !important;
+            outline: none !important;
+            transition: border-color 0.15s ease;
+        }
+        #auth-modal .chat-input:focus {
+            border-color: var(--db-accent) !important;
+            box-shadow: 0 0 0 3px rgba(122,155,118,0.14) !important;
+        }
+
+        #auth-market-form button {
+            background: var(--db-surface) !important;
+            border: 1px solid var(--db-border) !important;
+            border-radius: var(--db-r-lg) !important;
+            padding: 22px 24px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            width: 100% !important;
+            box-shadow: none !important;
+            margin-bottom: 12px;
+        }
+        #auth-market-form button:hover {
+            border-color: var(--db-accent-border) !important;
+            box-shadow: var(--db-shadow-sm) !important;
+            transform: translateY(-2px) !important;
+            background: var(--db-surface) !important;
+        }
+        #auth-market-form button span { font-size: 24px !important; }
+        #auth-market-form button div div:first-child { font-size: 14px !important; color: var(--db-ink) !important; font-weight: 600 !important; }
+        #auth-market-form button div div:last-child { font-size: 11.5px !important; color: var(--db-ink-muted) !important; }
+
+        .page-body.no-pad {
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+
+        /* ── ARIA FULL-SIZE VIEW ─────────────────────── */
+        #view-aria {
+            /* fills the entire .page-body when .no-pad is active */
+            height: 100%;
+        }
+
+        #aria-history-panel {
+            transition: width 0.22s ease, min-width 0.22s ease, opacity 0.22s ease;
+        }
+        #aria-history-panel.collapsed {
+            width: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            border-right: none !important;
+            opacity: 0;
+        }
+        /* Show delete button on hover of history items */
+        .aria-history-item:hover .delete-chat-btn {
+            display: flex !important;
+        }
+        /* Centered reading column inside ariaBody */
+        #ariaBody > * {
+            max-width: 760px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── RESPONSIVE ─────────────────────────────── */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .quick-grid { grid-template-columns: 1fr; }
+            .pc-controls { grid-template-columns: 1fr; }
+
+            /* Mobile chat layout overrides */
+            #aria-history-panel {
+                position: fixed !important;
+                left: 0;
+                top: 56px;
+                bottom: 0;
+                height: calc(100vh - 56px) !important;
+                z-index: 10000;
+                transform: translateX(-100%);
+                transition: transform 0.2s ease-in-out !important;
+                width: 220px !important;
+                background: var(--db-surface) !important;
+                box-shadow: 4px 0 12px rgba(0,0,0,0.15) !important;
+            }
+            #aria-history-panel.open {
+                transform: translateX(0) !important;
+            }
+            #aria-history-panel.collapsed {
+                width: 220px !important;
+                min-width: 220px !important;
+            }
+            #aria-history-panel button[onclick="toggleAriaHistoryCollapse()"] {
+                display: none !important;
+            }
+
+            #aria-context-panel {
+                position: fixed !important;
+                right: 0;
+                top: 56px;
+                bottom: 0;
+                height: calc(100vh - 56px) !important;
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.2s ease-in-out !important;
+                width: 240px !important;
+                background: var(--db-surface) !important;
+                box-shadow: -4px 0 12px rgba(0,0,0,0.15) !important;
+                display: none;
+            }
+            #aria-context-panel.open {
+                display: flex !important;
+                transform: translateX(0) !important;
+            }
+
+            #aria-toggle-history {
+                display: flex !important;
+            }
+            #aria-toggle-context {
+                display: flex !important;
+            }
+
+            .aria-msg-user, .aria-msg-bot {
+                max-width: 88% !important;
+            }
+            
+            #ariaBody {
+                padding: 20px 24px !important;
+            }
+            
+            #aria-input-bar {
+                padding: 12px 16px !important;
+            }
+        }
+
+        /* ── TOAST ──────────────────────────────────── */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--db-ink);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 6px;
+            z-index: 99999;
+            box-shadow: var(--db-shadow-sm);
+            animation: slideInToast 0.2s ease, fadeOutToast 0.2s 2.8s ease forwards;
+        }
+        @keyframes slideInToast {
+            from { transform: translateY(8px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeOutToast {
+            to { opacity: 0; transform: translateY(-4px); }
+        }
+
+.view-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--db-ink);
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+}
+.view-subtitle {
+    font-size: 13.5px;
+    color: var(--db-ink-muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+@keyframes ariaPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.aria-msg-bot {
+    align-self: flex-start;
+    max-width: 72%;
+    background: var(--db-surface);
+    border: 1px solid var(--db-border);
+    border-radius: 4px 14px 14px 14px;
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--db-ink);
+    box-shadow: var(--db-shadow-xs);
+}
+
+.aria-msg-user {
+    align-self: flex-end;
+    max-width: 72%;
+    background: var(--db-accent);
+    border-radius: 14px 4px 14px 14px;
+    padding: 12px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #fff;
+}
+
+.aria-typing {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 18px;
+    background: var(--db-surface);
+    border: 1px solid var(--db-border);
+    border-radius: 4px 14px 14px 14px;
+    box-shadow: var(--db-shadow-xs);
+}
+
+.aria-typing span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--db-ink-muted);
+    animation: ariaDot 1.2s ease infinite;
+}
+.aria-typing span:nth-child(2) { animation-delay: 0.2s; }
+.aria-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes ariaDot {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <img src="logo.png?v=4.2" alt="The Climate Architects" style="background: transparent; mix-blend-mode: multiply; height:36px;width:auto;margin-bottom:6px;display:block;">
+        <div class="logo-sub">ESG Intelligence Platform</div>
+        <div style="height:1px;background:linear-gradient(90deg,rgba(122,155,118,0.3),transparent);margin-top:16px;margin-left:-20px;margin-right:-20px;"></div>
+    </div>
+    <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <button class="nav-item active" onclick="showView('overview')">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Overview
+        </button>
+        <button class="nav-item" onclick="showView('assessment')">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span> ESG Gap Analysis
+        </button>
+        <button class="nav-item" onclick="showView('roadmap')">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 3 20 9 16 15 20 21 16 21 2 15 6 9 2 3 6"/></svg></span> Action Roadmap
+        </button>
+        <button class="nav-item" onclick="showView('resources')">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span> Resource Hub
+        </button>
+        <button class="nav-item" onclick="showView('aria')" style="margin-top:2px;">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+            Ask AI Advisor
+        </button>
+        <div class="nav-label" style="margin-top:8px;">Tools</div>
+        <button class="nav-item" onclick="showView('reports')">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> My Reports
+            <span class="nav-badge green" id="reports-badge">0</span>
+        </button>
+        <button class="nav-item" id="admin-nav-item" style="display:none;" onclick="showView('admin')">
+            <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span> Admin Panel
+        </button>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-chip" id="user-chip">
+            <div class="user-avatar" id="sidebar-avatar">?</div>
+            <div class="user-info">
+                <div class="user-name" id="sidebar-name">Loading…</div>
+                <div class="user-role" id="sidebar-plan">Free Plan</div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">Back to Website</a>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+    <header class="topbar">
+        <div class="topbar-left" style="display:flex;align-items:center;gap:14px;">
+            
+            <div>
+                <h2 id="topbar-title">Dashboard Overview</h2>
+                <p id="topbar-sub">Singapore Mandatory ESG Reporting Tool</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button onclick="showMarketModal()" style="font-size:12px;font-weight:500;color:var(--db-ink-muted);background:transparent;border:1px solid var(--db-border);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.color=getComputedStyle(document.documentElement).getPropertyValue('--db-ink');this.style.borderColor='var(--db-border-mid')" onmouseout="this.style.color=getComputedStyle(document.documentElement).getPropertyValue('--db-ink-muted');this.style.borderColor='var(--db-border)'">Switch Market →</button>
+            <span class="pill-tag">SG Compliance</span>
+            <span class="pill-tag" id="date-tag">—</span>
+        </div>
+    </header>
+
+    <div class="page-body">
+
+        <!-- ══ OVERVIEW VIEW ══ -->
+        <div class="view active" id="view-overview">
+            <div class="overview-hero">
+                <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(122,155,118,0.05);pointer-events:none;"></div>
+                <h1 class="hero-title">Your Sustainability Command Centre</h1>
+                <p class="hero-desc">Stay on top of Singapore's evolving ESG regulations. Run your compliance audit, build your action plan, and ask our AI advisor anything.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-teal" onclick="showView('assessment')">Run ESG Audit</button>
+                    <button class="btn btn-outline" onclick="showView('aria')">Ask AI Advisor</button>
+                </div>
+            </div>
+
+            <div class="stats-row" id="overview-stats">
+                <div class="stat-card">
+                    <div style="width:32px;height:32px;border-radius:8px;background:var(--db-accent-tint);border:1px solid var(--db-accent-border);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--db-accent)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                    <div class="stat-label">Compliance Score</div>
+                    <div class="stat-value" id="ov-score">—</div>
+                    <div class="stat-sub">Run audit to calculate</div>
+                </div>
+                <div class="stat-card">
+                    <div style="width:32px;height:32px;border-radius:8px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                    <div class="stat-label">High-Risk Gaps</div>
+                    <div class="stat-value danger" id="ov-high">—</div>
+                    <div class="stat-sub">Immediate action needed</div>
+                </div>
+                <div class="stat-card">
+                    <div style="width:32px;height:32px;border-radius:8px;background:var(--db-accent-tint);border:1px solid var(--db-accent-border);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--db-accent)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                    <div class="stat-label">Frameworks Applied</div>
+                    <div class="stat-value warn" id="ov-frameworks">7</div>
+                    <div class="stat-sub">SG regulatory frameworks</div>
+                </div>
+                <div class="stat-card">
+                    <div style="width:32px;height:32px;border-radius:8px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                    <div class="stat-label">Next Deadline</div>
+                    <div class="stat-value success">Apr 2026</div>
+                    <div class="stat-sub">Beverage Container Return</div>
+                </div>
+            </div>
+
+            <div class="quick-grid">
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3>Upcoming Regulatory Deadlines</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="deadline-list">
+                            <li class="deadline-item"><span class="dl-date urgent">Apr 1, 2026</span><span class="dl-text"><strong>Beverage Container Return Scheme</strong> begins — register producers & retailers.</span></li>
+                            <li class="deadline-item"><span class="dl-date urgent">FY2026-27</span><span class="dl-text"><strong>Carbon Tax</strong> rises to $45/tonne for industrial emitters ≥25,000 tCO2e/yr.</span></li>
+                            <li class="deadline-item"><span class="dl-date">FY2027</span><span class="dl-text"><strong>Mandatory Climate Reporting</strong> for large non-listed firms (Rev ≥S$1B).</span></li>
+                            <li class="deadline-item"><span class="dl-date">Ongoing</span><span class="dl-text"><strong>Mandatory Packaging Reports</strong> — annual submission to NEA required.</span></li>
+                            <li class="deadline-item"><span class="dl-date">Ongoing</span><span class="dl-text"><strong>Energy Manager Appointment</strong> required for companies consuming ≥54 TJ/yr.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="panel-body" style="display:flex;flex-direction:column;gap:10px;">
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="showView('assessment')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> Start ESG Audit</button>
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="showView('aria')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 2v4M8 5h8M4 11v-2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2M9 16h.01M15 16h.01"/></svg> Ask AI Advisor</button>
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="showView('roadmap')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><polygon points="3 6 3 20 9 16 15 20 21 16 21 2 15 6 9 2 3 6"/><line x1="9" y1="2" x2="9" y2="16"/><line x1="15" y1="6" x2="15" y2="20"/></svg> View Action Roadmap</button>
+                        <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="showView('resources')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Browse Resources</button>
+                        <a href="index.html#bookCallModal" class="btn btn-ghost" style="width:100%;justify-content:center;text-align:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Book Expert Call</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ ASSESSMENT VIEW ══ -->
+        <div class="view" id="view-assessment">
+            <div class="assess-header">
+                <h1 class="view-title">ESG Readiness Audit</h1>
+                <p class="view-subtitle">Self-assess against Singapore's 7 key ESG regulatory frameworks. Takes under 3 minutes.</p>
+            </div>
+            <div id="questions-container"></div>
+            <div style="text-align:center; margin-top:36px; padding-bottom:40px;">
+                <button class="btn btn-solid" style="padding:14px 36px;font-size:15px;" onclick="generateReport()">Run AI Gap Analysis</button>
+            </div>
+        </div>
+
+        <!-- ══ RESULTS VIEW ══ -->
+        <div class="view" id="view-results">
+            <div class="result-header">
+                <h1>Your ESG Diagnostic Results</h1>
+                <p>Based on Singapore's regulatory frameworks and your inputs — here is your current standing.</p>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card" id="res-score-card">
+                    <div id="res-score-accent" style="display:none;"></div>
+                    <div class="stat-label">Compliance Score</div>
+                    <div class="stat-value" id="res-score">0%</div>
+                    <div class="stat-sub" id="res-score-text">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">High Priority Gaps</div>
+                    <div class="stat-value danger" id="res-high">0</div>
+                    <div class="stat-sub">Items needing immediate action</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Applicable Frameworks</div>
+                    <div class="stat-value warn" id="res-applicable">0</div>
+                    <div class="stat-sub">Regulations touching your business</div>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-bottom:28px;">
+                <div class="panel-head">
+                    <h3>Action Plan & Identified Gaps</h3>
+                    <a href="index.html#bookCallModal" class="btn btn-solid" style="padding:8px 16px;font-size:12px;">Get Expert Help →</a>
+                </div>
+                <table class="gap-table">
+                    <thead>
+                        <tr>
+                            <th>Regulation</th>
+                            <th>Current Status</th>
+                            <th>Priority</th>
+                            <th>Required Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gap-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="panel" style="margin-bottom:28px;" id="ai-insight-panel">
+                <div class="panel-head">
+                    <h3>AI Insight Summary</h3>
+                    <span class="pill-tag">Powered by Claude</span>
+                </div>
+                <div class="panel-body" id="ai-insight-body" style="font-size:14px;line-height:1.7;color:var(--text-mid);">
+                    <em style="color:var(--text-soft);">Generating personalised analysis…</em>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:12px;justify-content:center;padding-bottom:40px;">
+                <button class="btn btn-ghost" onclick="showView('assessment')">Retake Assessment</button>
+                <button class="btn btn-ghost" onclick="window.print()">Print Report</button>
+                <button class="btn btn-solid" onclick="showView('roadmap')">View Action Roadmap</button>
+            </div>
+        </div>
+
+        <!-- ══ ROADMAP VIEW ══ -->
+        <div class="view" id="view-roadmap">
+            <div class="assess-header">
+                <h1 class="view-title">90-Day Action Roadmap</h1>
+                <p class="view-subtitle">A structured plan to move from gaps to compliance — built on Singapore's regulatory requirements.</p>
+            </div>
+
+            <div class="quick-grid">
+                <div class="panel">
+                    <div class="panel-head"><h3>Phase-by-Phase Plan</h3></div>
+                    <div class="panel-body">
+                        <ul class="roadmap-list">
+                            <li class="roadmap-item">
+                                <div class="road-step">1</div>
+                                <div class="road-content">
+                                    <h4>Baseline Operational Audit</h4>
+                                    <p>Map your energy, water, waste and emission data against applicable thresholds. Identify which frameworks legally apply to your business.</p>
+                                    <span class="road-tag q1">Week 1–2</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">2</div>
+                                <div class="road-content">
+                                    <h4>Appoint Compliance Officers</h4>
+                                    <p>Register a certified Energy Manager (NEA) and Water Efficiency Manager if applicable. Set up internal reporting cadences.</p>
+                                    <span class="road-tag q1">Week 2–4</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">3</div>
+                                <div class="road-content">
+                                    <h4>Data Collection & Systems</h4>
+                                    <p>Install submetering where required. Begin collecting Scope 1 & 2 emission data. Set up packaging tonnage tracking systems.</p>
+                                    <span class="road-tag q2">Week 4–8</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">4</div>
+                                <div class="road-content">
+                                    <h4>Submit Mandatory Reports</h4>
+                                    <p>File annual energy & water reports to NEA. Submit packaging 3R plans. Register for Carbon Tax if applicable.</p>
+                                    <span class="road-tag q2">Week 8–10</span>
+                                </div>
+                            </li>
+                            <li class="roadmap-item">
+                                <div class="road-step">5</div>
+                                <div class="road-content">
+                                    <h4>Build Your ESG Strategy</h4>
+                                    <p>Move from compliance to competitive advantage. Set reduction targets, engage stakeholders, and prepare for ISSB climate disclosures.</p>
+                                    <span class="road-tag q3">Week 10–12+</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head"><h3>Key Milestones</h3></div>
+                    <div class="panel-body" style="font-size:13px;color:var(--text-mid);line-height:1.8;display:flex;flex-direction:column;gap:14px;">
+                        <div style="padding:14px 16px;background:var(--db-bg);border-radius:var(--db-r);border:1px solid var(--db-border);">
+                            <strong style="color:var(--text);display:block;margin-bottom:4px;">Immediate (0–30 days)</strong>
+                            Register with NEA, identify applicable thresholds, appoint compliance leads.
+                        </div>
+                        <div style="padding:14px 16px;background:var(--db-bg);border-radius:var(--db-r);border:1px solid var(--db-border);">
+                            <strong style="color:var(--text);display:block;margin-bottom:4px;">Short-term (30–60 days)</strong>
+                            Deploy metering infrastructure, start data collection, submit first reports.
+                        </div>
+                        <div style="padding:14px 16px;background:var(--db-bg);border-radius:var(--db-r);border:1px solid var(--db-border);">
+                            <strong style="color:var(--text);display:block;margin-bottom:4px;">Strategic (60–90 days)</strong>
+                            Set reduction targets, prepare ISSB climate disclosures, build investor narrative.
+                        </div>
+                        <a href="index.html#bookCallModal" class="btn btn-solid" style="width:100%;justify-content:center;margin-top:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-right:8px; display:inline-block; vertical-align:middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Get Expert Guidance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ RESOURCES VIEW ══ -->
+        <div class="view" id="view-resources">
+            <div class="assess-header">
+                <h1 class="view-title">Resource Hub</h1>
+                <p class="view-subtitle">Guides, templates, and official references to accelerate your ESG compliance journey.</p>
+            </div>
+            <div class="resource-grid">
+                <a href="https://www.nea.gov.sg/our-services/climate-change-energy-efficiency/energy-efficiency/industrial-sector/mandatory-energy-management-practices" target="_blank" class="resource-card">
+                    <div class="res-icon">E</div>
+                    <div class="res-title">NEA: Mandatory Energy Management</div>
+                    <div class="res-desc">Official guidelines for companies consuming ≥54 TJ annually, including Energy Manager requirements.</div>
+                    <span class="res-type">Official Guide</span>
+                </a>
+                <a href="https://www.nea.gov.sg/our-services/waste-management/mandatory-packaging-reporting" target="_blank" class="resource-card">
+                    <div class="res-icon">P</div>
+                    <div class="res-title">NEA: Mandatory Packaging Reporting</div>
+                    <div class="res-desc">Requirements for brand owners and importers with >S$10M turnover supplying packaged products.</div>
+                    <span class="res-type">Official Guide</span>
+                </a>
+                <a href="https://www.pub.gov.sg/savewater/atwork/waterefficency" target="_blank" class="resource-card">
+                    <div class="res-icon">W</div>
+                    <div class="res-title">PUB: Water Efficiency Management</div>
+                    <div class="res-desc">WEMP guidelines for premises consuming ≥60,000 m³ per year. Includes metering and submission rules.</div>
+                    <span class="res-type">Official Guide</span>
+                </a>
+                <a href="https://www.sgx.com/sustainable-finance/esg-reporting" target="_blank" class="resource-card">
+                    <div class="res-icon">C</div>
+                    <div class="res-title">SGX: ESG Reporting Framework</div>
+                    <div class="res-desc">Listed company mandatory climate disclosures and the roadmap for ISSB IFRS S1 & S2 adoption.</div>
+                    <span class="res-type">Regulatory</span>
+                </a>
+                <a href="https://www.acra.gov.sg/legislation/climate-reporting" target="_blank" class="resource-card">
+                    <div class="res-icon">G</div>
+                    <div class="res-title">ACRA: Climate Reporting (Non-listed)</div>
+                    <div class="res-desc">Mandatory CRD requirements for large non-listed companies from FY2027 (Rev ≥S$1B).</div>
+                    <span class="res-type">Regulatory</span>
+                </a>
+                <div class="resource-card" style="cursor:pointer;" onclick="showView('aria')">
+                    <div class="res-icon">AI</div>
+                    <div class="res-title">Ask Our AI Advisor</div>
+                    <div class="res-desc">Get instant answers on any Singapore ESG regulation, deadline, or compliance requirement.</div>
+                    <span class="res-type" style="cursor:pointer;background:var(--teal);color:#fff;" onclick="showView('aria'); event.stopPropagation();">Open Chat →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ REPORTS VIEW ══ -->
+        <div class="view" id="view-reports">
+            <div class="assess-header">
+                <h1 class="view-title">My Reports</h1>
+                <p class="view-subtitle">Your saved ESG audit history and compliance progress over time.</p>
+            </div>
+            <div id="reports-loading" style="text-align:center;padding:60px;color:var(--text-soft);">Loading your reports…</div>
+            <div id="reports-empty" style="display:none;" class="panel">
+<div style="text-align:center;padding:72px 40px;">
+    <div style="width:48px;height:48px;border-radius:12px;background:var(--db-accent-tint);border:1px solid var(--db-accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--db-accent)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    </div>
+    <h3 style="font-size:15px;font-weight:600;color:var(--db-ink);margin-bottom:6px;">No saved reports yet</h3>
+    <p style="font-size:13px;color:var(--db-ink-muted);max-width:300px;margin:0 auto 24px;line-height:1.6;">Complete your first ESG audit and results will be saved here automatically.</p>
+    <button class="btn btn-solid" onclick="showView('assessment')" style="padding:10px 22px;font-size:13.5px;">Run Your First Audit</button>
+</div>
+            </div>
+            <div id="reports-list" style="display:none;"></div>
+        </div>
+
+        <!-- ══ ASK AI ADVISOR VIEW ══ -->
+        <div class="view" id="view-aria">
+            <div id="aria-backdrop" onclick="closeAriaDrawers()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:9998;backdrop-filter:blur(2px);"></div>
+            <div style="display:flex;height:calc(100vh - 56px);gap:0;background:var(--db-bg);position:relative;overflow:hidden;">
+                <!-- LEFT: Conversation History Panel (220px) -->
+                <div id="aria-history-panel" style="width:220px;flex-shrink:0;background:var(--db-surface);border-right:1px solid var(--db-border);display:flex;flex-direction:column;padding:0;overflow:hidden;">
+                    <div style="padding:16px 16px 12px;border-bottom:1px solid var(--db-border);flex-shrink:0;">
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--db-ink-muted);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;width:100%;">
+                            <span>Conversations</span>
+                            <!-- Collapse chevron -->
+                            <button onclick="toggleAriaHistoryCollapse()" title="Collapse sidebar" style="background:transparent;border:none;cursor:pointer;color:var(--db-ink-muted);padding:2px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:color 0.15s ease;" onmouseover="this.style.color='var(--db-ink)'" onmouseout="this.style.color='var(--db-ink-muted)'">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                            </button>
+                        </div>
+                        <button onclick="newAriaChat()" style="display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;background:transparent;border:1px solid var(--db-accent-border);border-radius:8px;font-size:12.5px;font-weight:500;color:var(--db-accent);cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.background='var(--db-accent-tint)'" onmouseout="this.style.background='transparent'">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            New Chat
+                        </button>
+                    </div>
+                    <div id="aria-history-list" style="flex:1;overflow-y:auto;padding:8px;"></div>
+                </div>
+
+                <!-- CENTER: Main Chat Area (flex-grow) -->
+                <div style="flex:1;display:flex;flex-direction:column;min-width:0;background:var(--db-bg);">
+                    <!-- Chat topbar -->
+                    <div style="background:var(--db-surface);border-bottom:1px solid var(--db-border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <!-- Hamburger Icon (visible on mobile only) -->
+                            <button id="aria-toggle-history" onclick="toggleAriaHistoryDrawer()" style="display:none;background:transparent;border:none;cursor:pointer;color:var(--db-ink);padding:6px;margin-right:-2px;align-items:center;justify-content:center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            </button>
+                            <!-- Restore desktop sidebar icon (visible only when collapsed) -->
+                            <button id="aria-restore-history" onclick="toggleAriaHistoryCollapse()" style="display:none;background:transparent;border:none;cursor:pointer;color:var(--db-ink-muted);padding:6px;align-items:center;justify-content:center;border-radius:4px;transition:color 0.15s ease;" onmouseover="this.style.color='var(--db-ink)'" onmouseout="this.style.color='var(--db-ink-muted)'">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                            <div style="width:7px;height:7px;border-radius:50%;background:var(--db-accent);animation:ariaPulse 2.5s ease infinite;"></div>
+                            <span style="font-size:14px;font-weight:600;color:var(--db-ink);">Aria &mdash; ESG Advisor</span>
+                            <!-- Muted plain-text badge, no box -->
+                            <span style="font-size:11px;color:var(--db-ink-muted);">Powered by Claude</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <button onclick="newAriaChat()" style="font-size:12px;color:var(--db-ink-muted);background:transparent;border:1px solid var(--db-border);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:var(--db-font);transition:all 0.15s ease;" onmouseover="this.style.borderColor='var(--db-border-mid)';this.style.color='var(--db-ink)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.color='var(--db-ink-muted)'">New chat</button>
+                            <!-- Context Toggle Icon (visible on mobile only) -->
+                            <button id="aria-toggle-context" onclick="toggleAriaContextDrawer()" style="display:none;background:transparent;border:1px solid var(--db-border);border-radius:6px;padding:5px 8px;cursor:pointer;color:var(--db-ink-muted);align-items:center;justify-content:center;transition:all 0.15s ease;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Message thread: 40px top/bottom, 64px horizontal, column capped at 760px and centred by the CSS rule above -->
+                    <div id="ariaBody" style="flex:1;overflow-y:auto;padding:40px 64px;display:flex;flex-direction:column;gap:16px;"></div>
+
+                    <!-- Input bar -->
+                    <div id="aria-input-bar" style="background:var(--db-surface);border-top:1px solid var(--db-border);padding:16px 24px;flex-shrink:0;">
+                        <div style="display:flex;gap:10px;align-items:flex-end;max-width:760px;margin:0 auto;">
+                            <textarea id="ariaInput" rows="1" placeholder="Ask Aria anything about ESG compliance…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAriaMessage();}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'" style="flex:1;background:var(--db-bg);border:1px solid var(--db-border-mid);border-radius:10px;padding:12px 16px;font-size:14px;font-family:var(--db-font);color:var(--db-ink);resize:none;outline:none;transition:border-color 0.15s ease;line-height:1.5;min-height:44px;max-height:120px;" onfocus="this.style.borderColor='var(--db-accent)';this.style.boxShadow='0 0 0 3px rgba(122,155,118,0.12)'" onblur="this.style.borderColor='var(--db-border-mid)';this.style.boxShadow='none'"></textarea>
+                            <button id="ariaSendBtn" onclick="sendAriaMessage()" style="width:40px;height:40px;border-radius:10px;background:var(--db-accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s ease,transform 0.15s ease;" onmouseover="this.style.background='var(--db-accent-hover)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--db-accent)';this.style.transform='translateY(0)'">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </div>
+                        <p style="text-align:center;font-size:11px;color:var(--db-ink-muted);margin-top:8px;">Aria provides guidance only. Not legal advice.</p>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Context Panel (240px) -->
+                <div id="aria-context-panel" style="width:240px;flex-shrink:0;background:var(--db-surface);border-left:1px solid var(--db-border);display:flex;flex-direction:column;overflow-y:auto;">
+                    <div style="padding:16px;">
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--db-ink-muted);margin-bottom:14px;">Context</div>
+
+                        <!-- Active market -->
+                        <div style="margin-bottom:20px;">
+                            <div style="font-size:11px;font-weight:600;color:var(--db-ink-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Active Market</div>
+                            <span id="aria-market-badge" style="font-size:11px;font-weight:600;padding:4px 10px;background:var(--db-accent-tint);color:var(--db-accent);border:1px solid var(--db-accent-border);border-radius:5px;">Singapore</span>
+                        </div>
+
+                        <!-- Quick reference -->
+                        <div style="margin-bottom:20px;">
+                            <div style="font-size:11px;font-weight:600;color:var(--db-ink-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">Quick Reference</div>
+                            <div style="display:flex;flex-direction:column;gap:4px;">
+                                <button onclick="sendAriaMessage('Explain the SGX ESG reporting requirements')" style="text-align:left;padding:7px 10px;background:var(--db-bg);border:1px solid var(--db-border);border-radius:6px;font-size:12px;color:var(--db-ink-mid);cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.borderColor='var(--db-accent-border)';this.style.color='var(--db-accent)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.color='var(--db-ink-mid)'">SGX Reporting</button>
+                                <button onclick="sendAriaMessage('Explain the Carbon Tax at $45/tonne threshold')" style="text-align:left;padding:7px 10px;background:var(--db-bg);border:1px solid var(--db-border);border-radius:6px;font-size:12px;color:var(--db-ink-mid);cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.borderColor='var(--db-accent-border)';this.style.color='var(--db-accent)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.color='var(--db-ink-mid)'">Carbon Tax $45/t</button>
+                                <button onclick="sendAriaMessage('What is the CSRD threshold for reporting?')" style="text-align:left;padding:7px 10px;background:var(--db-bg);border:1px solid var(--db-border);border-radius:6px;font-size:12px;color:var(--db-ink-mid);cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.borderColor='var(--db-accent-border)';this.style.color='var(--db-accent)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.color='var(--db-ink-mid)'">CSRD threshold</button>
+                                <button onclick="sendAriaMessage('Explain EmpCo and its September 2026 deadline')" style="text-align:left;padding:7px 10px;background:var(--db-bg);border:1px solid var(--db-border);border-radius:6px;font-size:12px;color:var(--db-ink-mid);cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.borderColor='var(--db-accent-border)';this.style.color='var(--db-accent)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.color='var(--db-ink-mid)'">EmpCo Sept 2026</button>
+                                <button onclick="sendAriaMessage('What is CBAM and the ACD deadline?')" style="text-align:left;padding:7px 10px;background:var(--db-bg);border:1px solid var(--db-border);border-radius:6px;font-size:12px;color:var(--db-ink-mid);cursor:pointer;transition:all 0.15s ease;font-family:var(--db-font);" onmouseover="this.style.borderColor='var(--db-accent-border)';this.style.color='var(--db-accent)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.color='var(--db-ink-mid)'">CBAM ACD</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="font-size:11px;font-weight:600;color:var(--db-ink-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Disclaimer</div>
+                            <p style="font-size:11px;color:var(--db-ink-muted);line-height:1.55;">Aria provides ESG guidance only. Not legal advice. Consult a qualified professional for legal decisions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ ADMIN VIEW ══ -->
+        <div class="view" id="view-admin">
+            <div class="assess-header">
+                <h1 class="view-title">Admin Panel</h1>
+                <p class="view-subtitle">Platform overview and user management.</p>
+            </div>
+            <div class="stats-row" id="admin-stats-row">
+                <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value" id="adm-users">—</div></div>
+                <div class="stat-card"><div class="stat-label">New This Week</div><div class="stat-value success" id="adm-new">—</div></div>
+                <div class="stat-card"><div class="stat-label">Total Audits</div><div class="stat-value warn" id="adm-audits">—</div></div>
+                <div class="stat-card"><div class="stat-label">Avg Score</div><div class="stat-value" id="adm-avg">—</div></div>
+            </div>
+            <div class="panel" style="margin-bottom:24px;">
+                <div class="panel-head">
+                    <h3>All Users</h3>
+                    <input id="admin-search" type="text" class="chat-input" style="width:240px;border-radius:8px;" placeholder="Search name / email…" oninput="adminSearch(this.value)">
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="gap-table" id="admin-users-table">
+                        <thead><tr>
+                            <th>Name</th><th>Email</th><th>Company</th><th>Plan</th><th>Audits</th><th>Joined</th><th>Actions</th>
+                        </tr></thead>
+                        <tbody id="admin-users-body"><tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-soft);">Loading…</td></tr></tbody>
+                    </table>
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;padding:16px 20px;border-top:1px solid var(--border);" id="admin-pagination"></div>
+            </div>
+        </div>
+
+    </div><!-- end .page-body -->
+
+<!-- ══ AUTH MODAL ══ -->
+<div id="auth-modal" style="
+    position:fixed;inset:0;background:rgba(26,26,26,0.4);backdrop-filter:blur(8px);
+    z-index:99999;display:flex;align-items:center;justify-content:center;">
+    <div style="
+        background:var(--panel);border-radius:20px;padding:40px;width:100%;max-width:420px;
+        box-shadow:0 24px 64px rgba(0,0,0,0.10);border:1px solid var(--db-border);
+        animation:fadeUp 0.4s ease both;position:relative;">
+
+        <div style="text-align:center;margin-bottom:28px;">
+            <img src="logo.png?v=4.2" alt="The Climate Architects" style="background: transparent; mix-blend-mode: multiply; height:48px;margin-bottom:12px;">
+            <h2 style="font-family:var(--serif);font-size:24px;" id="auth-modal-title">Welcome Back</h2>
+            <p style="font-size:13px;color:var(--text-soft);margin-top:4px;" id="auth-modal-sub">Sign in to your ESG dashboard</p>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="auth-login-form" style="display:none;"></div>
+
+        <!-- MARKET SELECTION (shown after login) -->
+        <div id="auth-market-form" style="display:none;">
+            <p style="font-size:13px;color:var(--text-mid);text-align:center;margin-bottom:24px;line-height:1.6;">Select the market dashboard you want to access. You can switch between markets at any time.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <button onclick="goToMarket('sg')" style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:var(--db-surface);border:1px solid var(--db-border);border-radius:var(--db-r-lg);cursor:pointer;transition:all 0.2s ease;text-align:left;font-family:var(--db-font);width:100%;" onmouseover="this.style.borderColor='rgba(122,155,118,0.4)';this.style.background='rgba(122,155,118,0.04)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.background='var(--db-surface)'">
+                    <span style="font-size:28px;">🇸🇬</span>
+                    <div>
+                        <div style="font-size:14px;font-weight:600;color:var(--db-ink);">Singapore</div>
+                        <div style="font-size:12px;color:var(--db-ink-muted);margin-top:2px;">SGX Reporting · Carbon Tax · ECA · WEMP</div>
+                    </div>
+                    <svg style="margin-left:auto;flex-shrink:0;color:var(--db-ink-muted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <button onclick="goToMarket('eu')" style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:var(--db-surface);border:1px solid var(--db-border);border-radius:var(--db-r-lg);cursor:pointer;transition:all 0.2s ease;text-align:left;font-family:var(--db-font);width:100%;" onmouseover="this.style.borderColor='rgba(122,155,118,0.4)';this.style.background='rgba(122,155,118,0.04)'" onmouseout="this.style.borderColor='var(--db-border)';this.style.background='var(--db-surface)'">
+                    <span style="font-size:28px;">🇪🇺</span>
+                    <div>
+                        <div style="font-size:14px;font-weight:600;color:var(--db-ink);">European Union</div>
+                        <div style="font-size:12px;color:var(--db-ink-muted);margin-top:2px;">CSRD · CBAM · CSDDD · EmpCo · Pay Transparency</div>
+                    </div>
+                    <svg style="margin-left:auto;flex-shrink:0;color:var(--db-ink-muted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="auth-register-form" style="display:none;"></div>
+    </div>
+</div>
+
+
+
+<script>
+const safeStorage = {
+    getItem: (key) => {
+        try { return window['localStorage'].getItem(key); } catch (e) { return null; }
+    },
+    setItem: (key, val) => {
+        try { window['localStorage'].setItem(key, val); } catch (e) {}
+    },
+    removeItem: (key) => {
+        try { window['localStorage'].removeItem(key); } catch (e) {}
+    }
+};
+
+/* ══════════════════════════════════════════════
+   CONFIG — Set your backend URL here
+══════════════════════════════════════════════ */
+const API_BASE = '/api'; // Cloudflare Pages Functions via /functions/api/
+
+/* ══════════════════════════════════════════════
+   AUTH STATE
+══════════════════════════════════════════════ */
+let currentUser = null;
+let authToken   = safeStorage.getItem('tca_token') || null;
+
+function apiHeaders() {
+    return { 'Content-Type': 'application/json', ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) };
+}
+
+
+/* ══════════════════════════════════════════════
+   CLIENT-SIDE OFFLINE MOCK API FETCH
+══════════════════════════════════════════════ */
+async function apiFetch(path, opts = {}) {
+    const url = new URL('http://localhost' + path);
+    const action = url.searchParams.get('action');
+    const id = url.searchParams.get('id');
+    const method = opts.method ? opts.method.toUpperCase() : 'GET';
+    const body = opts.body ? JSON.parse(opts.body) : null;
+
+    // Fast response delay
+    await new Promise(r => setTimeout(r, 200));
+
+    // Authentication endpoints
+    if (path.startsWith('/auth')) {
+        if (action === 'me') {
+            return {
+                token: authToken || 'mock_token',
+                user: {
+                    full_name: safeStorage.getItem('tca_user_name') || 'Demo User',
+                    email: safeStorage.getItem('tca_user_email') || 'demo@company.com',
+                    company: safeStorage.getItem('tca_user_company') || 'Demo Company Pte Ltd',
+                    industry: 'Technology',
+                    plan: 'pro',
+                    role: 'admin'
+                }
+            };
+        }
+        if (action === 'login') {
+            const email = body.email || 'demo@company.com';
+            const name = email.split('@')[0].toUpperCase();
+            safeStorage.setItem('tca_user_name', name);
+            safeStorage.setItem('tca_user_email', email);
+            safeStorage.setItem('tca_user_company', 'Demo Company');
+            return {
+                token: 'mock_token_123',
+                user: {
+                    full_name: name,
+                    email: email,
+                    company: 'Demo Company',
+                    industry: 'Technology',
+                    plan: 'pro',
+                    role: 'admin'
+                }
+            };
+        }
+        if (action === 'register') {
+            const { full_name, email, company } = body;
+            safeStorage.setItem('tca_user_name', full_name);
+            safeStorage.setItem('tca_user_email', email);
+            safeStorage.setItem('tca_user_company', company);
+            return {
+                token: 'mock_token_123',
+                user: {
+                    full_name,
+                    email,
+                    company,
+                    industry: body.industry || 'Technology',
+                    plan: 'pro',
+                    role: 'admin'
+                }
+            };
+        }
+    }
+
+    // ESG Audits storage (localStorage backed)
+    if (path.startsWith('/audits')) {
+        let audits = JSON.parse(safeStorage.getItem('tca_audits') || '[]');
+        if (method === 'GET') {
+            return audits;
+        }
+        if (method === 'POST') {
+            const newAudit = {
+                id: 'audit_' + Date.now(),
+                created_at: new Date().toISOString(),
+                ...body
+            };
+            audits.unshift(newAudit);
+            safeStorage.setItem('tca_audits', JSON.stringify(audits));
+            return newAudit;
+        }
+        if (method === 'DELETE') {
+            audits = audits.filter(a => a.id !== id);
+            safeStorage.setItem('tca_audits', JSON.stringify(audits));
+            return { success: true };
+        }
+    }
+
+    // AI Advisor Chats
+    if (path.startsWith('/chat')) {
+        if (action === 'insight') {
+            return {
+                insight: "Based on Singapore regulations, your facility shows gaps in Scope 1 emissions reporting. Recommendation: baseline electricity usage data and convert to tCO2e."
+            };
+        }
+        return {
+            reply: "I am the Climate Architects AI Advisor. I can help you with SGX, Carbon Tax, CSRD, and CBAM. Let me know what specific compliance issue you would like to tackle."
+        };
+    }
+
+    // Admin Dashboard stats & users
+    if (path.startsWith('/admin')) {
+        if (action === 'stats') {
+            return {
+                total_users: 154,
+                total_audits: 289,
+                active_plans: { pro: 87, free: 67 }
+            };
+        }
+        if (action === 'users') {
+            return {
+                users: [
+                    { id: '1', full_name: 'Jane Smith', email: 'jane@acme.com', company: 'Acme Pte Ltd', plan: 'pro', role: 'user', created_at: '2026-05-12T08:00:00Z' },
+                    { id: '2', full_name: 'John Doe', email: 'john@capital.com', company: 'Capital Group', plan: 'free', role: 'user', created_at: '2026-06-01T10:30:00Z' }
+                ],
+                total: 2,
+                pages: 1
+            };
+        }
+    }
+
+    return {};
+}
+
+
+// ── Boot: check token ─────────────────────────
+async function boot() {
+    // Client-side auto-authenticate bypass
+    authToken = safeStorage.getItem('tca_token') || 'mock_token';
+    currentUser = {
+        full_name: safeStorage.getItem('tca_user_name') || 'Demo User',
+        email: safeStorage.getItem('tca_user_email') || 'demo@company.com',
+        company: safeStorage.getItem('tca_user_company') || 'Demo Company Pte Ltd',
+        industry: 'Technology',
+        plan: 'pro',
+        role: 'admin'
+    };
+    // Hide auth modal immediately — no market selector on load
+    document.getElementById('auth-modal').style.display = 'none';
+
+    // Populate sidebar user info
+    const nameEl = document.getElementById('sidebar-name');
+    const planEl = document.getElementById('sidebar-plan');
+    const avatarEl = document.getElementById('sidebar-avatar');
+    if (nameEl) nameEl.textContent = currentUser.full_name;
+    if (planEl) planEl.textContent = currentUser.plan === 'pro' ? 'Pro Plan' : 'Free Plan';
+    if (avatarEl) avatarEl.textContent = currentUser.full_name.charAt(0).toUpperCase();
+
+    // Restore saved view and chat state
+    const savedView = safeStorage.getItem('tca_active_view') || 'overview';
+    showView(savedView);
+}
+
+function onLoginSuccess() {
+    // Show market selection screen instead of closing modal
+    document.getElementById('auth-login-form').style.display = 'none';
+    document.getElementById('auth-register-form').style.display = 'none';
+    document.getElementById('auth-market-form').style.display = 'block';
+    document.getElementById('auth-modal-title').textContent = 'Choose Your Market';
+    document.getElementById('auth-modal-sub').textContent = 'Which region would you like to access today?';
+}
+
+function goToMarket(market) {
+    safeStorage.setItem('tca_market', market);
+    const isFree = !currentUser || currentUser.plan === 'free';
+    if (market === 'sg') {
+        window.location.href = isFree ? 'dashboard-sg-free.html' : 'dashboard-sg.html';
+    } else {
+        window.location.href = isFree ? 'dashboard-eu-free.html' : 'dashboard-eu.html';
+    }
+}
+
+function logout() {
+    authToken = null;
+    currentUser = null;
+    safeStorage.removeItem('tca_token');
+    showAuthModal();
+}
+
+/* ══════════════════════════════════════════════
+   AUTH MODAL
+══════════════════════════════════════════════ */
+function showAuthModal() {
+    document.getElementById('auth-modal').style.display = 'flex';
+    switchAuth('login');
+}
+
+function switchAuth(mode) {
+    const isLogin = mode === 'login';
+    document.getElementById('auth-login-form').style.display    = isLogin ? 'block' : 'none';
+    document.getElementById('auth-register-form').style.display = isLogin ? 'none'  : 'block';
+    document.getElementById('auth-modal-title').textContent     = isLogin ? 'Welcome Back' : 'Create Account';
+    document.getElementById('auth-modal-sub').textContent       = isLogin ? 'Sign in to your ESG dashboard' : 'Start your ESG compliance journey';
+    document.getElementById('auth-error').style.display = 'none';
+    document.getElementById('auth-error-reg').style.display = 'none';
+}
+
+async function doLogin() {
+    const email    = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl    = document.getElementById('auth-error');
+    const btn      = document.getElementById('login-btn');
+
+    errEl.style.display = 'none';
+    btn.textContent = 'Signing in…'; btn.disabled = true;
+
+    try {
+        const data = await apiFetch('/auth?action=login', { method: 'POST', body: JSON.stringify({ email, password }) });
+        authToken   = data.token;
+        currentUser = data.user;
+        safeStorage.setItem('tca_token', authToken);
+        onLoginSuccess();
+        showToast('Welcome back, ' + currentUser.full_name.split(' ')[0] + '!');
+    } catch (e) {
+        errEl.textContent = e.message;
+        errEl.style.display = 'block';
+    } finally {
+        btn.textContent = 'Sign In'; btn.disabled = false;
+    }
+}
+
+async function doRegister() {
+    const full_name = document.getElementById('reg-name').value.trim();
+    const company   = document.getElementById('reg-company').value.trim();
+    const email     = document.getElementById('reg-email').value.trim();
+    const industry  = document.getElementById('reg-industry').value;
+    const password  = document.getElementById('reg-password').value;
+    const errEl     = document.getElementById('auth-error-reg');
+    const btn       = document.getElementById('register-btn');
+
+    errEl.style.display = 'none';
+    if (!full_name || !email || !password) { errEl.textContent = 'Name, email and password are required.'; errEl.style.display = 'block'; return; }
+
+    btn.textContent = 'Creating account…'; btn.disabled = true;
+
+    try {
+        const data = await apiFetch('/auth?action=register', { method: 'POST', body: JSON.stringify({ full_name, email, company, industry, password }) });
+        authToken   = data.token;
+        currentUser = data.user;
+        safeStorage.setItem('tca_token', authToken);
+        onLoginSuccess();
+        showToast('Account created! Welcome, ' + currentUser.full_name.split(' ')[0] + '.');
+    } catch (e) {
+        errEl.textContent = e.message;
+        errEl.style.display = 'block';
+    } finally {
+        btn.textContent = 'Create Account'; btn.disabled = false;
+    }
+}
+
+/* ══════════════════════════════════════════════
+   NAV & ROUTING
+══════════════════════════════════════════════ */
+const navTitles = {
+    overview:   ['Dashboard Overview',   'Singapore Mandatory ESG Reporting Tool'],
+    assessment: ['ESG Gap Analysis',     'Self-assess against 7 key frameworks'],
+    results:    ['Your Audit Results',   'Compliance gaps and action items'],
+    roadmap:    ['Action Roadmap',       '90-day compliance plan'],
+    resources:  ['Resource Hub',         'Guides, templates & official references'],
+    reports:    ['My Reports',           'Saved audit history'],
+    admin:      ['Admin Panel',          'User management & platform stats'],
+    aria:       ['AI Advisor',           'Aria — ESG Compliance Assistant'],
+};
+
+function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const el = document.getElementById('view-' + name);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => {
+        if (n.textContent.trim().toLowerCase().includes(
+            name === 'overview' ? 'overview' : name === 'assessment' ? 'esg' :
+            name === 'roadmap' ? 'roadmap' : name === 'resources' ? 'resource' :
+            name === 'reports' ? 'report' : name === 'admin' ? 'admin' : name === 'aria' ? 'advisor' : name)) {
+            n.classList.add('active');
+        }
+    });
+    const t = navTitles[name] || ['Dashboard', ''];
+    document.getElementById('topbar-title').textContent = t[0];
+    document.getElementById('topbar-sub').textContent = t[1];
+    
+    // Toggle no-pad class on .page-body
+    const pageBody = document.querySelector('.page-body');
+    if (pageBody) {
+        pageBody.classList.toggle('no-pad', name === 'aria');
+    }
+
+    if (name === 'aria') {
+        renderHistoryList();
+        const activeId = safeStorage.getItem('aria_active_id');
+        const conversations = loadConversations();
+        if (activeId && conversations[activeId]) {
+            loadConversation(activeId);
+        } else {
+            const keys = Object.keys(conversations);
+            if (keys.length > 0) {
+                keys.sort((a, b) => conversations[b].updated_at - conversations[a].updated_at);
+                loadConversation(keys[0]);
+            } else {
+                newAriaChat();
+            }
+        }
+    } else {
+        if (pageBody) pageBody.scrollTop = 0;
+    }
+
+    if (name === 'reports') loadReports();
+    if (name === 'admin')   loadAdminStats();
+    
+    safeStorage.setItem('tca_active_view', name);
+}
+
+document.getElementById('date-tag').textContent = new Date().toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' });
+
+/* ══════════════════════════════════════════════
+   POLICY DATABASE
+══════════════════════════════════════════════ */
+const policies = [
+    { id: 'carbon_tax',        category: 'Environmental',    title: 'Carbon Tax (CPA)',                          priority: 'high', criteria: 'Industrial facilities with emissions ≥25,000 tCO2e/year.',                          action: 'Register with NEA; implement emissions verification; budget for $45/tonne from 2026-27.' },
+    { id: 'energy_mgmt',       category: 'Environmental',    title: 'Mandatory Energy Management Practices',     priority: 'high', criteria: 'Companies with operational control consuming ≥54 TJ of energy annually.',             action: 'Appoint certified Energy Manager; submit annual energy use reports to NEA.' },
+    { id: 'water_efficiency',  category: 'Water Management', title: 'Water Efficiency (WEMP)',                   priority: 'high', criteria: 'Premises consuming ≥60,000 m³ of water annually.',                                    action: 'Appoint Water Efficiency Manager; submit WEMP records; install private water meters.' },
+    { id: 'packaging',         category: 'Waste Management', title: 'Mandatory Packaging Reporting',             priority: 'med',  criteria: 'Brand owners/importers with >S$10M turnover supplying packaged goods.',                action: 'Submit annual packaging reports to NEA; develop & submit 3R plans.' },
+    { id: 'food_waste',        category: 'Waste Management', title: 'Food Waste Segregation & Treatment',        priority: 'med',  criteria: 'Industrial/commercial buildings generating significant food waste.',                    action: 'Allocate space for on-site treatment; segregate food waste; submit waste reports.' },
+    { id: 'climate_reporting', category: 'Governance',       title: 'Climate Reporting (Non-listed)',            priority: 'high', criteria: 'Large non-listed companies: Revenue ≥S$1B AND Assets ≥S$500M.',                        action: 'Prepare annual climate-related disclosures per ISSB standards (Scope 1 & 2). Starts FY2027.' },
+    { id: 'e_waste',           category: 'Waste Management', title: 'Extended Producer Responsibility (E-waste)',priority: 'low',  criteria: 'Producers or retailers of regulated electrical and electronic products.',               action: 'Register with NEA; track product records; join Producer Responsibility Scheme (PRS).' },
+];
+
+/* ══════════════════════════════════════════════
+   RENDER ASSESSMENT QUESTIONS
+══════════════════════════════════════════════ */
+function renderQuestions() {
+    const c = document.getElementById('questions-container');
+    c.innerHTML = policies.map((p, i) => `
+        <div class="policy-card">
+            <div class="pc-top">
+                <div style="display:flex;align-items:flex-start;gap:12px;flex:1;">
+                    <div class="pc-num">${i+1}</div>
+                    <div><div class="pc-title">${p.title}</div><span class="pc-tag">${p.category}</span></div>
+                </div>
+            </div>
+            <div class="pc-criteria"><strong>Applies if:</strong> ${p.criteria}</div>
+            <div class="pc-controls">
+                <div class="ctrl-group">
+                    <label>Does this apply to your business?</label>
+                    <select class="form-select apply-select" data-id="${p.id}" onchange="toggleStatus(this)">
+                        <option value="none">— Select —</option>
+                        <option value="yes">Yes, this applies</option>
+                        <option value="no">No, not applicable</option>
+                        <option value="unsure">Not Sure</option>
+                    </select>
+                </div>
+                <div class="ctrl-group">
+                    <label>Current Compliance Status</label>
+                    <select class="form-select status-select" data-id="${p.id}" disabled>
+                        <option value="none">— Select Status —</option>
+                        <option value="compliant">Fully Compliant</option>
+                        <option value="partial">Partial / In Progress</option>
+                        <option value="non_compliant">Non-Compliant</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleStatus(sel) {
+    const id = sel.getAttribute('data-id');
+    const ss = document.querySelector(`.status-select[data-id="${id}"]`);
+    if (sel.value === 'yes') ss.disabled = false;
+    else { ss.disabled = true; ss.value = 'none'; }
+}
+
+/* ══════════════════════════════════════════════
+   GENERATE REPORT + SAVE TO BACKEND
+══════════════════════════════════════════════ */
+let lastAuditData = null;
+
+async function generateReport() {
+    let applicable = 0, compliant = 0, highCount = 0;
+    const gaps = [], answers = {};
+
+    document.querySelectorAll('.apply-select').forEach(sel => {
+        const id = sel.getAttribute('data-id');
+        const applyVal = sel.value;
+        const statusVal = document.querySelector(`.status-select[data-id="${id}"]`).value;
+        const p = policies.find(x => x.id === id);
+        answers[id] = { apply: applyVal, status: statusVal };
+
+        if (applyVal === 'yes') {
+            applicable++;
+            if (statusVal === 'compliant') compliant++;
+            else {
+                if (p.priority === 'high') highCount++;
+                gaps.push({ title: p.title, status: statusVal === 'none' ? 'Status Unknown' : statusVal === 'partial' ? 'Partial' : 'Non-Compliant', action: p.action, priority: p.priority });
+            }
+        } else if (applyVal === 'unsure') {
+            applicable++; highCount++;
+            gaps.push({ title: p.title, status: 'Requires Investigation', action: 'Conduct baseline operational audit to determine if threshold criteria are met.', priority: 'high' });
+        }
+    });
+
+    if (applicable === 0) { showToast('Please select at least one applicable policy first.'); return; }
+
+    const score = Math.round((compliant / applicable) * 100);
+    lastAuditData = { score, applicable, high_gaps: highCount, gaps, answers };
+
+    // Update result cards
+    document.getElementById('res-score').textContent = score + '%';
+    
+    document.getElementById('res-high').textContent = highCount;
+    document.getElementById('res-applicable').textContent = applicable;
+    const scoreText = score >= 80 ? 'Strong compliance posture' : score >= 40 ? 'Moderate — action needed' : 'Critical gaps identified';
+    document.getElementById('res-score-text').textContent = scoreText;
+    const accent = document.getElementById('res-score-accent');
+    accent.className = 'accent-line ' + (score >= 80 ? 'success' : score >= 40 ? 'warn' : 'danger');
+
+    document.getElementById('ov-score').textContent = score + '%';
+    document.getElementById('ov-score').className = 'stat-value ' + (score >= 80 ? 'success' : score >= 40 ? 'warn' : 'danger');
+    document.getElementById('ov-high').textContent = highCount;
+
+    const tbody = document.getElementById('gap-table-body');
+    if (gaps.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--success);font-weight:700;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:8px;color:var(--success);"><polyline points="20 6 9 17 4 12"/></svg> No compliance gaps identified. Excellent work.</td></tr>`;
+    } else {
+        gaps.sort((a,b) => a.priority==='high'?-1:1);
+        tbody.innerHTML = gaps.map(g => {
+            const bc = g.priority==='high'?'badge-high':g.priority==='med'?'badge-med':'badge-low';
+            const pt = g.priority==='high'?'High Risk':g.priority==='med'?'Medium':'Low';
+            const sc = (g.status==='Non-Compliant'||g.status==='Requires Investigation')?'status-red':'status-amber';
+            return `<tr><td style="font-weight:600;">${g.title}</td><td class="${sc}">${g.status}</td><td><span class="badge ${bc}">${pt}</span></td><td style="color:var(--text-mid);line-height:1.5;">${g.action}</td></tr>`;
+        }).join('');
+    }
+
+    showView('results');
+    generateAIInsight(gaps, score, applicable);
+}
+
+/* ══════════════════════════════════════════════
+   AI INSIGHT — via secure backend
+══════════════════════════════════════════════ */
+async function generateAIInsight(gaps, score, applicable) {
+    const insightEl = document.getElementById('ai-insight-body');
+    insightEl.innerHTML = '<div class="msg-typing"><div class="dot-pulse"><span></span><span></span><span></span></div></div>';
+
+    try {
+        const data = await apiFetch('/chat?action=insight', {
+            method: 'POST',
+            body: JSON.stringify({ score, applicable, gaps })
+        });
+        const insight = data.insight || '';
+        insightEl.innerHTML = `<p>${insight}</p>`;
+
+        // Auto-save audit with insight
+        if (lastAuditData) {
+            const saved = await apiFetch('/audits', {
+                method: 'POST',
+                body: JSON.stringify({ ...lastAuditData, ai_insight: insight })
+            });
+            loadReportsBadge();
+            showToast('Audit saved to your reports.');
+        }
+    } catch (e) {
+        const fallback = `Based on your ${score}% score across ${applicable} applicable frameworks, ${gaps.length > 0 ? `you have ${gaps.length} compliance gap(s) to address` : 'you are in good standing'}. The Climate Architects team can help you build a concrete remediation plan.`;
+        insightEl.innerHTML = `<p>${fallback}</p>`;
+        // Try to save without insight
+        if (lastAuditData) {
+            try { await apiFetch('/audits', { method: 'POST', body: JSON.stringify({ ...lastAuditData, ai_insight: fallback }) }); loadReportsBadge(); } catch {}
+        }
+    }
+}
+
+/* ══════════════════════════════════════════════
+   MY REPORTS
+══════════════════════════════════════════════ */
+async function loadReportsBadge() {
+    try {
+        const audits = await apiFetch('/audits');
+        const badge = document.getElementById('reports-badge');
+        badge.textContent = audits.length;
+        badge.style.display = audits.length > 0 ? 'inline-flex' : 'none';
+    } catch {}
+}
+
+async function loadReports() {
+    document.getElementById('reports-loading').style.display = 'block';
+    document.getElementById('reports-empty').style.display = 'none';
+    document.getElementById('reports-list').style.display = 'none';
+
+    try {
+        const audits = await apiFetch('/audits');
+        document.getElementById('reports-loading').style.display = 'none';
+
+        if (audits.length === 0) {
+            document.getElementById('reports-empty').style.display = 'block';
+            return;
+        }
+
+        document.getElementById('reports-list').style.display = 'block';
+        document.getElementById('reports-list').innerHTML = audits.map(a => {
+            const scoreColor = a.score >= 80 ? 'success' : a.score >= 40 ? 'warn' : 'danger';
+            const date = new Date(a.created_at).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' });
+            return `
+            <div class="panel" style="margin-bottom:16px;">
+                <div class="panel-head">
+                    <h3>ESG Audit — ${date}</h3>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="badge badge-${a.high_gaps>0?'high':'low'}">${a.high_gaps} High Gaps</span>
+                        <button onclick="deleteAudit('${a.id}', this)" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;">Delete</button>
+                    </div>
+                </div>
+                <div class="panel-body" style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;">
+                    <div style="text-align:center;min-width:90px;">
+                        <div class="stat-value ${scoreColor}" style="font-size:42px;">${a.score}%</div>
+                        <div class="stat-sub">Compliance Score</div>
+                    </div>
+                    <div>
+                        <p style="font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:12px;">${a.ai_insight || 'No AI insight recorded.'}</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            ${a.gaps.slice(0,3).map(g => `<span class="badge badge-${g.priority==='high'?'high':g.priority==='med'?'med':'low'}">${g.title}</span>`).join('')}
+                            ${a.gaps.length > 3 ? `<span class="badge" style="background:var(--teal-10);color:var(--teal-dark);">+${a.gaps.length-3} more</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    } catch (e) {
+        document.getElementById('reports-loading').innerHTML = `<p style="color:var(--danger);">Could not load reports: ${e.message}</p>`;
+    }
+}
+
+function showMarketModal() {
+    document.getElementById('auth-modal').style.display = 'flex';
+    document.getElementById('auth-login-form').style.display = 'none';
+    document.getElementById('auth-register-form').style.display = 'none';
+    document.getElementById('auth-market-form').style.display = 'block';
+    document.getElementById('auth-modal-title').textContent = 'Switch Market';
+    document.getElementById('auth-modal-sub').textContent = 'Choose which regulatory dashboard to view.';
+}
+
+async function deleteAudit(id, btn) {
+    if (!confirm('Delete this audit?')) return;
+    btn.textContent = '…'; btn.disabled = true;
+    try {
+        await apiFetch('/audits?id=' + id, { method: 'DELETE' });
+        loadReports(); loadReportsBadge();
+        showToast('Audit deleted.');
+    } catch (e) { showToast(e.message); btn.textContent = 'Delete'; btn.disabled = false; }
+}
+
+/* ══════════════════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════════════════ */
+let adminPage = 1;
+
+async function loadAdminStats() {
+    try {
+        const s = await apiFetch('/admin?action=stats');
+        document.getElementById('adm-users').textContent  = s.totalUsers;
+        document.getElementById('adm-new').textContent    = '+' + s.newThisWeek;
+        document.getElementById('adm-audits').textContent = s.totalAudits;
+        document.getElementById('adm-avg').textContent    = s.avgScore + '%';
+        loadAdminUsers(1);
+    } catch (e) { showToast('Admin load failed: ' + e.message); }
+}
+
+async function loadAdminUsers(page = 1, search = '') {
+    adminPage = page;
+    const tbody = document.getElementById('admin-users-body');
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-soft);">Loading…</td></tr>`;
+
+    try {
+        const data = await apiFetch(`/admin?action=users&page=${page}${search ? '&search='+encodeURIComponent(search) : ''}`);
+        if (data.users.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-soft);">No users found.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = data.users.map(u => `
+            <tr>
+                <td style="font-weight:600;">${u.full_name}</td>
+                <td style="color:var(--text-mid);">${u.email}</td>
+                <td style="color:var(--text-soft);">${u.company || '—'}</td>
+                <td><span class="badge ${u.plan==='pro'?'badge-med':u.plan==='enterprise'?'badge-high':'badge-low'}">${u.plan}</span></td>
+                <td style="color:var(--text-mid);">—</td>
+                <td style="color:var(--text-soft);font-size:12px;">${new Date(u.created_at).toLocaleDateString('en-SG')}</td>
+                <td>
+                    <select onchange="adminUpdatePlan('${u.id}', this.value)" style="font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border);">
+                        <option ${u.plan==='free'?'selected':''} value="free">Free</option>
+                        <option ${u.plan==='pro'?'selected':''} value="pro">Pro</option>
+                        <option ${u.plan==='enterprise'?'selected':''} value="enterprise">Enterprise</option>
+                    </select>
+                    ${u.id !== currentUser?.id ? `<button onclick="adminDeleteUser('${u.id}', this)" style="margin-left:8px;background:none;border:none;cursor:pointer;color:var(--danger);font-size:13px;">Delete</button>` : ''}
+                </td>
+            </tr>
+        `).join('');
+
+        // Pagination
+        const pag = document.getElementById('admin-pagination');
+        pag.innerHTML = '';
+        for (let i = 1; i <= data.pages; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'btn ' + (i === page ? 'btn-solid' : 'btn-ghost');
+            btn.style.padding = '6px 14px'; btn.style.fontSize = '13px';
+            btn.textContent = i;
+            btn.onclick = () => loadAdminUsers(i, document.getElementById('admin-search').value);
+            pag.appendChild(btn);
+        }
+    } catch (e) { showToast(e.message); }
+}
+
+async function adminUpdatePlan(userId, plan) {
+    try {
+        await apiFetch('/admin?action=user&id=' + userId, { method: 'PATCH', body: JSON.stringify({ plan }) });
+        showToast('Plan updated to ' + plan);
+    } catch (e) { showToast(e.message); }
+}
+
+async function adminDeleteUser(userId, btn) {
+    if (!confirm('Permanently delete this user and all their data?')) return;
+    btn.textContent = '…'; btn.disabled = true;
+    try {
+        await apiFetch('/admin?action=user&id=' + userId, { method: 'DELETE' });
+        loadAdminUsers(adminPage); loadAdminStats();
+        showToast('User deleted.');
+    } catch (e) { showToast(e.message); btn.textContent = 'Delete'; btn.disabled = false; }
+}
+
+let adminSearchTimeout;
+function adminSearch(val) {
+    clearTimeout(adminSearchTimeout);
+    adminSearchTimeout = setTimeout(() => loadAdminUsers(1, val), 350);
+}
+
+/* ══════════════════════════════════════════════
+   ARIA CHAT (MULTIPLE CONVERSATIONS PERSISTED IN LOCALSTORAGE)
+   and mobile drawer collapsible logic
+══════════════════════════════════════════════ */
+function loadConversations() {
+    try {
+        const raw = safeStorage.getItem('aria_conversations');
+        return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveConversations(convs) {
+    try {
+        safeStorage.setItem('aria_conversations', JSON.stringify(convs));
+    } catch (e) {}
+}
+
+function createConversation() {
+    const id = 'conv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    const convs = loadConversations();
+    const newConv = {
+        id: id,
+        title: 'New Chat',
+        messages: [],
+        created_at: Date.now(),
+        updated_at: Date.now()
+    };
+    convs[id] = newConv;
+    saveConversations(convs);
+    safeStorage.setItem('aria_active_id', id);
+    
+    const body = document.getElementById('ariaBody');
+    if (body) {
+        body.innerHTML = `
+        <div id="aria-welcome" style="text-align:center;padding:60px 40px;max-width:480px;margin:0 auto;">
+          <div style="width:52px;height:52px;border-radius:14px;background:var(--db-accent-tint);border:1px solid var(--db-accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--db-accent)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:var(--db-ink);letter-spacing:-0.02em;margin-bottom:8px;">Ask Aria anything</h2>
+          <p style="font-size:14px;color:var(--db-ink-muted);line-height:1.65;margin-bottom:32px;">Your ESG compliance advisor for Singapore and EU markets.</p>
+        </div>`;
+    }
+    
+    renderHistoryList();
+    closeAriaDrawers();
+    return newConv;
+}
+
+function newAriaChat() {
+    createConversation();
+}
+
+function loadConversation(id) {
+    const convs = loadConversations();
+    const conv = convs[id];
+    if (!conv) return;
+    
+    safeStorage.setItem('aria_active_id', id);
+    renderHistoryList();
+    
+    const body = document.getElementById('ariaBody');
+    if (!body) return;
+    body.innerHTML = '';
+    
+    if (conv.messages.length === 0) {
+        body.innerHTML = `
+        <div id="aria-welcome" style="text-align:center;padding:60px 40px;max-width:480px;margin:0 auto;">
+          <div style="width:52px;height:52px;border-radius:14px;background:var(--db-accent-tint);border:1px solid var(--db-accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--db-accent)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:var(--db-ink);letter-spacing:-0.02em;margin-bottom:8px;">Ask Aria anything</h2>
+          <p style="font-size:14px;color:var(--db-ink-muted);line-height:1.65;margin-bottom:32px;">Your ESG compliance advisor for Singapore and EU markets.</p>
+        </div>`;
+    } else {
+        conv.messages.forEach(msg => {
+            const div = document.createElement('div');
+            div.className = msg.role === 'user' ? 'aria-msg-user' : 'aria-msg-bot';
+            if (msg.role === 'user') {
+                div.textContent = msg.content;
+            } else {
+                div.innerHTML = msg.content;
+            }
+            body.appendChild(div);
+        });
+    }
+    body.scrollTop = body.scrollHeight;
+    closeAriaDrawers();
+}
+
+function deleteConversation(id, event) {
+    if (event) event.stopPropagation();
+    const convs = loadConversations();
+    delete convs[id];
+    saveConversations(convs);
+    
+    const activeId = safeStorage.getItem('aria_active_id');
+    if (activeId === id) {
+        const keys = Object.keys(convs);
+        if (keys.length > 0) {
+            keys.sort((a, b) => convs[b].updated_at - convs[a].updated_at);
+            loadConversation(keys[0]);
+        } else {
+            createConversation();
+        }
+    } else {
+        renderHistoryList();
+    }
+}
+
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
+
+function renderHistoryList() {
+    const list = document.getElementById('aria-history-list');
+    if (!list) return;
+    
+    const convs = loadConversations();
+    const activeId = safeStorage.getItem('aria_active_id');
+    const sorted = Object.values(convs).sort((a, b) => b.updated_at - a.updated_at);
+    
+    list.innerHTML = sorted.map(c => {
+        const isActive = c.id === activeId;
+        const escTitle = escapeHtml(c.title);
+        return `
+        <div class="aria-history-item ${isActive ? 'active' : ''}" 
+             onclick="loadConversation('${c.id}')"
+             style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;margin-bottom:4px;cursor:pointer;font-size:13px;color:${isActive ? 'var(--db-accent)' : 'var(--db-ink-mid)'};background:${isActive ? 'var(--db-accent-tint)' : 'transparent'};transition:all 0.15s ease;position:relative;"
+             onmouseover="this.style.background='var(--db-bg)'"
+             onmouseout="this.style.background='${isActive ? 'var(--db-accent-tint)' : 'transparent'}'">
+             <div style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:8px;font-weight:${isActive ? '500' : '400'};">
+                 ${escTitle}
+             </div>
+             <button class="delete-chat-btn" 
+                     onclick="deleteConversation('${c.id}', event)" 
+                     style="display:${isActive ? 'flex' : 'none'};background:transparent;border:none;cursor:pointer;color:var(--db-ink-muted);padding:2px;border-radius:4px;transition:all 0.15s ease;position:absolute;right:10px;top:50%;transform:translateY(-50%);align-items:center;justify-content:center;"
+                     onmouseover="this.style.color='var(--danger)';event.stopPropagation()"
+                     onmouseout="this.style.color='var(--db-ink-muted)'">
+                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+             </button>
+        </div>
+        `;
+    }).join('');
+}
+
+async function sendAriaMessage(presetText) {
+    const input = document.getElementById('ariaInput');
+    const text = presetText || (input ? input.value.trim() : '');
+    if (!text) return;
+
+    let activeId = safeStorage.getItem('aria_active_id');
+    let convs = loadConversations();
+    let conv = convs[activeId];
+    if (!conv) {
+        conv = createConversation();
+        activeId = conv.id;
+        convs = loadConversations();
+        conv = convs[activeId];
+    }
+
+    // Hide welcome screen
+    const welcome = document.getElementById('aria-welcome');
+    if (welcome) welcome.remove();
+
+    if (input) { input.value = ''; input.style.height = 'auto'; }
+
+    const body = document.getElementById('ariaBody');
+    const btn = document.getElementById('ariaSendBtn');
+    if (btn) btn.disabled = true;
+
+    // Append user message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'aria-msg-user';
+    userDiv.textContent = text;
+    body.appendChild(userDiv);
+
+    // Typing indicator
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'aria-typing';
+    typingDiv.id = 'aria-typing';
+    typingDiv.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(typingDiv);
+    body.scrollTop = body.scrollHeight;
+
+    conv.messages.push({ role: 'user', content: text });
+    
+    // Auto title on first message
+    if (conv.messages.length === 1 || conv.title === 'New Chat') {
+        let title = text;
+        if (title.length > 30) {
+            title = title.substring(0, 27) + '...';
+        }
+        conv.title = title;
+    }
+    conv.updated_at = Date.now();
+    convs[activeId] = conv;
+    saveConversations(convs);
+    renderHistoryList();
+
+    try {
+        const data = await apiFetch('/chat', {
+            method: 'POST',
+            body: JSON.stringify({ messages: conv.messages })
+        });
+        typingDiv.remove();
+        const botDiv = document.createElement('div');
+        botDiv.className = 'aria-msg-bot';
+        botDiv.innerHTML = data.reply;
+        body.appendChild(botDiv);
+        
+        conv.messages.push({ role: 'assistant', content: data.reply });
+        conv.updated_at = Date.now();
+        convs[activeId] = conv;
+        saveConversations(convs);
+    } catch (e) {
+        typingDiv.remove();
+        const fallback = getFallbackResponse(text.toLowerCase());
+        const botDiv = document.createElement('div');
+        botDiv.className = 'aria-msg-bot';
+        botDiv.innerHTML = fallback;
+        body.appendChild(botDiv);
+        
+        conv.messages.push({ role: 'assistant', content: fallback });
+        conv.updated_at = Date.now();
+        convs[activeId] = conv;
+        saveConversations(convs);
+    }
+
+    if (btn) btn.disabled = false;
+    body.scrollTop = body.scrollHeight;
+}
+
+// Collapsible sidebar & mobile drawers functions
+function toggleAriaHistoryCollapse() {
+    const panel = document.getElementById('aria-history-panel');
+    const restoreBtn = document.getElementById('aria-restore-history');
+    if (panel) {
+        panel.classList.toggle('collapsed');
+        const isCollapsed = panel.classList.contains('collapsed');
+        if (restoreBtn) {
+            restoreBtn.style.display = isCollapsed ? 'flex' : 'none';
+        }
+    }
+}
+
+function toggleAriaHistoryDrawer() {
+    const panel = document.getElementById('aria-history-panel');
+    const backdrop = document.getElementById('aria-backdrop');
+    const contextPanel = document.getElementById('aria-context-panel');
+    if (panel) {
+        panel.classList.toggle('open');
+        const isOpen = panel.classList.contains('open');
+        if (backdrop) backdrop.style.display = isOpen ? 'block' : 'none';
+        if (isOpen && contextPanel) {
+            contextPanel.classList.remove('open');
+        }
+    }
+}
+
+function toggleAriaContextDrawer() {
+    const panel = document.getElementById('aria-context-panel');
+    const backdrop = document.getElementById('aria-backdrop');
+    const historyPanel = document.getElementById('aria-history-panel');
+    if (panel) {
+        panel.classList.toggle('open');
+        const isOpen = panel.classList.contains('open');
+        if (backdrop) backdrop.style.display = isOpen ? 'block' : 'none';
+        if (isOpen && historyPanel) {
+            historyPanel.classList.remove('open');
+        }
+    }
+}
+
+function closeAriaDrawers() {
+    const historyPanel = document.getElementById('aria-history-panel');
+    const contextPanel = document.getElementById('aria-context-panel');
+    const backdrop = document.getElementById('aria-backdrop');
+    if (historyPanel) historyPanel.classList.remove('open');
+    if (contextPanel) contextPanel.classList.remove('open');
+    if (backdrop) backdrop.style.display = 'none';
+}
+
+function getFallbackResponse(q) {
+    if (q.includes('carbon')||q.includes('tax')||q.includes('emission')) return '<strong>Carbon Tax:</strong> Applies to industrial facilities with emissions ≥25,000 tCO2e/year. Rising to $45/tonne in 2026-27. Register with NEA.';
+    if (q.includes('water')||q.includes('wemp')) return '<strong>WEMP:</strong> Applies to premises consuming ≥60,000 m³ annually. Appoint a Water Efficiency Manager and submit records to PUB.';
+    if (q.includes('energy')||q.includes('tj')) return '<strong>Energy Management:</strong> ≥54 TJ/year triggers mandatory certified Energy Manager appointment and annual NEA reporting.';
+    if (q.includes('deadline')||q.includes('when')) return '<strong>Key Deadlines:</strong><br>• Apr 1, 2026 — Beverage Container Return Scheme<br>• FY2026-27 — Carbon Tax rises to $45/tonne<br>• FY2027 — Non-listed company climate reporting';
+    return 'Great question! For precise guidance, book a <a href="index.html#bookCallModal" style="color:var(--teal-dark);font-weight:700;">Discovery Call</a> with our experts.';
+}
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+function showToast(msg) {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const t = document.createElement('div');
+    t.className = 'toast'; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+renderQuestions();
+boot();
+
+
+</script>
+</body>
+</html>
